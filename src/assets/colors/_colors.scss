@@ -1,0 +1,144 @@
+@function hexToRGB($hex) {
+  @return red($hex), green($hex), blue($hex);
+}
+
+:root {
+  // Primary --------------------
+  --color-primary-950: #23190D;
+  --color-primary-950-rgb: #{hexToRGB(#23190D)};
+  --color-primary-900: #3B2811;
+  --color-primary-800: #85561E;
+  --color-primary-700: #B67427;
+  --color-primary-600: #E67716;
+  --color-primary-600-rgb: #{hexToRGB(#E67716)};
+  --color-primary-500: #FFAC49;
+  --color-primary-400: #FFB865;
+  --color-primary-300: #FFC989;
+  --color-primary-200: #FFD39F;
+  --color-primary-100: #FFDDB4;
+  --color-primary-50: #FFF0DF;
+  --color-primary-10: #FFFAF4;
+
+  // Secondary ----------------
+  --color-secondary-600: #46AC88;
+
+  // Black --------------------
+  --color-black-950-rgb: #{hexToRGB(#020303)};
+  --color-black-950: #020303;
+  --color-black-900: #16191D;
+  --color-black-800: #2E3338;
+  --color-black-700: #464C53;
+  --color-black-600: #5E656E;
+  --color-black-500: #777F88;
+  --color-black-400: #93999F;
+  --color-black-300: #AFB2B6;
+  --color-black-200: #CACCCE;
+  --color-black-100: #E5E5E6;
+  --color-black-50: #F2F2F3;
+  --color-black-50-rgb: #{hexToRGB(#F2F2F3)};
+  --color-black-10: #FCFCFC;
+
+  // System ------------------
+  --color-system-green: #00CCA3;
+  --color-system-softBlue: #4BC1FB;
+  --color-system-blue: #005FCC;
+  --color-system-indigo: #5858DA;
+  --color-system-purple: #B150E2;
+  --color-system-pink: #FF3369;
+  --color-system-red: #FF2E1F;
+  --color-system-orange: #FF8800;
+  --color-system-yellow: #FFCC00;
+
+  // Background --------------
+  --color-background: #EBE7E6;
+  --color-background-rgb:#{hexToRGB(#EBE7E6)};
+}
+
+:root.dark-theme {
+  // Primary --------------------
+  --color-primary-10: #23190D;
+  --color-primary-50: #3B2811;
+  --color-primary-100: #85561E;
+  --color-primary-200: #B67427;
+  --color-primary-300: #FFA234;
+  --color-primary-400: #FFAC49;
+  --color-primary-500: #FFB865;
+  --color-primary-600-rgb: #{hexToRGB(#E67716)};
+  --color-primary-600: #E67716;
+  --color-primary-700: #FFD39F;
+  --color-primary-800: #FFDDB4;
+  --color-primary-900: #FFF0DF;
+  --color-primary-950-rgb: #{hexToRGB(#FFFAF4)};
+  --color-primary-950: #FFFAF4;
+
+  // Secondary ----------------
+  --color-secondary-600: #46AC88;
+
+  // Black --------------------
+  --color-black-10: #020303;
+  --color-black-50: #16191D;
+  --color-black-50-rgb: #{hexToRGB(#16191D)};
+  --color-black-100: #2E3338;
+  --color-black-200: #464C53;
+  --color-black-300: #5E656E;
+  --color-black-400: #777F88;
+  --color-black-500: #93999F;
+  --color-black-600: #AFB2B6;
+  --color-black-700: #CACCCE;
+  --color-black-800: #E5E5E6;
+  --color-black-900: #F2F2F3;
+  --color-black-950: #FCFCFC;
+  --color-black-950-rgb: #{hexToRGB(#FCFCFC)};
+
+  // System ------------------
+  --color-system-green: #00D6AB;
+  --color-system-softBlue: #55C4FB;
+  --color-system-blue: #0064D6;
+  --color-system-indigo: #6060DC;
+  --color-system-purple: #B558E4;
+  --color-system-pink: #FF3D6A;
+  --color-system-red: #FF3729;
+  --color-system-orange: #FF8C00;
+  --color-system-yellow: #FFD400;
+
+  // Background --------------
+  --color-background: #16191D;
+  --color-background-rgb:#{hexToRGB(#16191D)};
+}
+
+
+$variants: 950, 900, 800, 700, 600, 500, 400, 300, 200, 100, 50, 10;
+$system-variants: 'green', 'softBlue', 'blue', 'indigo', 'purple', 'pink', 'red', 'orange', 'yellow';
+$types: 'primary', 'secondary', 'black';
+
+@each $variant in $variants {
+  @each $type in $types {
+    .color-#{$type}--#{$variant} {
+      color: var(--color-#{$type}-#{$variant}),
+    }
+    .background-color-#{$type}--#{$variant} {
+      background-color: var(--color-#{$type}-#{$variant}),
+    }
+
+    .icon-fill-color-#{$type}--#{$variant} {
+      path {
+        fill: var(--color-#{$type}-#{$variant}),
+      }
+    }
+    .icon-stroke-color-#{$type}--#{$variant} {
+      path {
+        stroke: var(--color-#{$type}-#{$variant}),
+      }
+    }
+  }
+}
+
+@each $variant in $system-variants {
+  .color-system--#{$variant} {
+    color: var(--color-system-#{$variant}),
+  }
+  .background-color-system--#{$variant} {
+    background-color: var(--color-system-#{$variant}),
+  }
+}
+

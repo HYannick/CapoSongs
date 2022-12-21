@@ -1,0 +1,28 @@
+@import "./base";
+@import "./sidebar";
+@import "./fonts/fonts";
+@import "./colors/colors";
+@import "./radius/radius";
+
+#app {
+  padding: 1.5rem;
+  font-weight: normal;
+  font-family: var(--text-font-regular);
+}
+
+a {
+  text-decoration: none;
+  transition: 0.4s;
+}
+
+@media (hover: hover) {
+  a:hover {
+    color: var(--color-black-950)
+  }
+}
+
+@media (min-width: 1024px) {
+  #app {
+    padding: 0 1.5rem;
+  }
+}

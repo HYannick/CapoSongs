@@ -1,0 +1,96 @@
+<template>
+  <header class="heading-container">
+    <IconButton
+      type="button"
+      icon-name="favourite-outline"
+      radius="circle"
+      @click="showFavouriteSongs"
+    />
+    <div class="heading-greetings">
+      <img class="heading-logo" src="@/assets/img/logo.webp" alt="logo" />
+      <div class="text-dot -centered">
+        <p>
+          <span class="text -black color-secondary--600">Bom</span>
+          <span class="text">dia!</span>
+        </p>
+      </div>
+    </div>
+    <IconButton
+      type="button"
+      icon-name="settings"
+      radius="circle"
+      @click="showSettings"
+    />
+  </header>
+</template>
+
+<script setup lang="ts">
+import IconButton from "@/components/component-library/IconButton.vue";
+import { useAppStore } from "@/stores/app.store";
+
+const appStore = useAppStore();
+const showFavouriteSongs = () => {
+  appStore.showFavouriteSongs();
+};
+
+const showSettings = () => {
+  appStore.showSettings();
+};
+</script>
+<style lang="scss">
+.heading-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.heading-logo {
+  width: 6.5rem;
+  height: 6.5rem;
+}
+
+.text-dot {
+  position: relative;
+  &:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    width: 0.6rem;
+    height: 0.6rem;
+    background: var(--color-primary-600);
+    border-radius: 1rem;
+  }
+  &.-left {
+    &:after {
+      left: 0.2rem;
+    }
+  }
+  &.-right {
+    &:after {
+      right: 0.2rem;
+    }
+  }
+  &.-centered {
+    &:after {
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  }
+}
+
+.heading-greetings {
+  flex: 1;
+  margin-left: 0.5rem;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  span {
+    font-size: 3.2rem;
+    margin-right: 0.2rem;
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+</style>

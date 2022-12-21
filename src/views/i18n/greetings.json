@@ -1,0 +1,16 @@
+{
+  "en": {
+    "caption": "Give a second life to your pair!",
+    "actions": {
+      "login": "Login",
+      "register": "Register"
+    }
+  },
+  "fr": {
+    "caption": "Donne une seconde vie à tes paires !",
+    "actions": {
+      "login": "Se connecter",
+      "register": "S'enregistrer"
+    }
+  }
+}

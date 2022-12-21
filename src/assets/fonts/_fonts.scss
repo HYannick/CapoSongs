@@ -1,0 +1,146 @@
+@font-face {
+  font-family: "Barlow Regular";
+  src: local("Barlow Regular"),
+  url(@/assets/fonts/barlow/Barlow-Regular.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: "Barlow Light";
+  src: local("Barlow Light"),
+  url(@/assets/fonts/barlow/Barlow-Light.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: "Barlow Bold";
+  src: local("Barlow Bold"),
+  url(@/assets/fonts/barlow/Barlow-Bold.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: "Barlow Extra Bold";
+  src: local("Barlow Bold"),
+  url(@/assets/fonts/barlow/Barlow-ExtraBold.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: "Barlow Black";
+  src: local("Barlow Black"),
+  url(@/assets/fonts/barlow/Barlow-Black.ttf) format("truetype");
+}
+
+:root {
+  /*fonts*/
+  --text-font-light: 'Barlow Light', sans-serif;
+  --text-font-regular: 'Barlow Regular', sans-serif;
+  --text-font-bold: 'Barlow Bold', sans-serif;
+  --text-font-extra-bold: 'Barlow Extra Bold', sans-serif;
+  --text-font-black: 'Barlow Black', sans-serif;
+
+  /*sizes*/
+  --text-size-body: 1.7rem;
+  --text-size-large-body: 2.2rem;
+  --text-size-callout: 1.6rem;
+  --text-size-caption-1: 1.2rem;
+  --text-size-caption-2: 1.1rem;
+  --text-size-footnote: 1.3rem;
+
+  --text-size-overline: 1.5rem;
+  --text-size-headline: 1.7rem;
+  --text-size-subheadline: 1.5rem;
+
+  --text-size-display-title: 9.6rem;
+  --text-size-large-display-title: 11.4rem;
+
+  --text-size-title-1: 3.4rem;
+  --text-size-title-2: 2.2rem;
+  --text-size-title-3: 2.0rem;
+  --text-size-title-faded: 5.4rem;
+}
+
+.text {
+  font-family: var(--text-font-regular);
+
+  &.-light {
+    font-family: var(--text-font-light)
+  }
+
+  &.-regular {
+    font-family: var(--text-font-regular)
+  }
+
+  &.-bold {
+    font-family: var(--text-font-bold)
+  }
+
+  &.-extra-bold {
+    font-family: var(--text-font-extra-bold)
+  }
+
+  &.-black {
+    font-family: var(--text-font-black)
+  }
+}
+
+.text {
+  font-size: var(--text-size-body);
+
+  &.-large-body {
+    font-size: var(--text-size-large-body);
+  }
+
+  &.-body {
+    font-size: var(--text-size-body);
+  }
+
+  &.-callout {
+    font-size: var(--text-size-callout);
+  }
+
+  &.-caption-1 {
+    font-size: var(--text-size-caption-1);
+  }
+
+  &.-caption-2 {
+    font-size: var(--text-size-caption-2);
+  }
+
+  &.-footnote {
+    font-size: var(--text-size-footnote);
+  }
+
+  &.overline {
+    font-size: var(--text-size-overline);
+  }
+
+  &.-headline {
+    font-size: var(--text-size-headline);
+  }
+
+  &.-subheadline {
+    font-size: var(--text-size-subheadline);
+  }
+
+  &.-display-title {
+    font-size: var(--text-size-display-title);
+  }
+
+  &.-large-display-title {
+    font-size: var(--text-size-large-display-title);
+  }
+
+  &.-title-1 {
+    font-size: var(--text-size-title-1);
+  }
+
+  &.-title-2 {
+    font-size: var(--text-size-title-2);
+  }
+
+  &.-title-3 {
+    font-size: var(--text-size-title-3);
+  }
+
+  &.-title-faded {
+    font-size: var(--text-size-title-faded);
+  }
+}
