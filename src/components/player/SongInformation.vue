@@ -1,7 +1,7 @@
 <template>
   <div ref="containerRef" class="player-song">
     <div ref="songThumbnail" class="player-song-thumbnail">
-      <Thumbnail :src="song.thumbnail" alt="song-thumbnail" />
+      <Thumbnail :src="picture" alt="song-thumbnail" />
     </div>
     <p ref="songTitle" class="player-song-title text -black">
       {{ song.title }}
@@ -29,13 +29,19 @@ import type { PropType } from "vue";
 import type { Song } from "@/domain/Song";
 import FavouriteIcon from "@/components/common/FavouriteIcon.vue";
 import IconButton from "@/components/component-library/IconButton.vue";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import Thumbnail from "@/components/common/Thumbnail.vue";
 const containerRef = ref();
 
-defineProps({
+const props = defineProps({
   song: Object as PropType<Song>,
 });
+
+const picture = computed(() =>
+  props.song
+    ? `https://capoeira-songs.s3.eu-west-3.amazonaws.com/pictures/${props.song.thumbnail}`
+    : ""
+);
 
 defineEmits(["viewInformationClick"]);
 

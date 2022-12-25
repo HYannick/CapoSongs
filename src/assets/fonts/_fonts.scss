@@ -2,30 +2,35 @@
   font-family: "Catamaran Regular";
   src: local("Catamaran Regular"),
   url(@/assets/fonts/catamaran/Catamaran-Regular.ttf) format("truetype");
+  font-display: swap;
 }
 
 @font-face {
   font-family: "Catamaran Light";
   src: local("Catamaran Light"),
   url(@/assets/fonts/catamaran/Catamaran-Light.ttf) format("truetype");
+  font-display: swap;
 }
 
 @font-face {
   font-family: "Catamaran Bold";
   src: local("Catamaran Bold"),
   url(@/assets/fonts/catamaran/Catamaran-Bold.ttf) format("truetype");
+  font-display: swap;
 }
 
 @font-face {
   font-family: "Catamaran Extra Bold";
   src: local("Catamaran Bold"),
   url(@/assets/fonts/catamaran/Catamaran-ExtraBold.ttf) format("truetype");
+  font-display: swap;
 }
 
 @font-face {
   font-family: "Catamaran Black";
   src: local("Catamaran Black"),
   url(@/assets/fonts/catamaran/Catamaran-Black.ttf) format("truetype");
+  font-display: swap;
 }
 
 :root {

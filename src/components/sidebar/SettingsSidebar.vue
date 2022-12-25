@@ -50,6 +50,7 @@
         </div>
       </div>
       <div class="settings-footer">
+        <button @click="clearCache"> clearCache</button>
         <button class="mentions-button" @click="showMentions">Mentions
           spéciales</button>
       </div>
@@ -79,7 +80,9 @@ const { t, locale } = useI18n();
 const { settingsVisible } = storeToRefs(useAppStore());
 const { hideSettings, showMentions } = useAppStore();
 const { isDarkMode, switchTheme } = useTheme();
+const clearCache = async () => {
 
+}
 const sidebarClasses = computed(() => ({
   "-open": settingsVisible.value,
   "sidebar-left": props.from === SidebarOrigin.LEFT,

@@ -1,15 +1,7 @@
-// stores/counter.spec.ts
 import { createPinia, setActivePinia } from "pinia";
 import { vi, beforeEach, describe, it, expect } from "vitest";
-import type { SpyInstance } from "vitest";
 import { useSongStore } from "@/stores/song.store";
-import { mockSong } from "@/domain/song-data";
-
-const mockLocalStorage = (): any => ({
-  getItem: vi.fn(),
-  setItem: vi.fn(),
-  removeItem: vi.fn(),
-});
+import { mockSong } from "@/unit/fixtures/song.fixture";
 
 let songStore: any;
 
@@ -34,15 +26,15 @@ describe("Song Store", () => {
 
   it("should add song to favourite and save it to the localStorage", () => {
     const expected = [
-      mockSong({ id: "1" }),
-      mockSong({ id: "2" }),
-      mockSong({ id: "3" }),
+      mockSong({ id: 1 }),
+      mockSong({ id: 2 }),
+      mockSong({ id: 3 }),
     ];
     expect(songStore.favouriteSongs).toEqual([]);
     const setItem = vi.spyOn(Storage.prototype, "setItem");
-    songStore.addToFavourite(mockSong({ id: "1" }));
-    songStore.addToFavourite(mockSong({ id: "2" }));
-    songStore.addToFavourite(mockSong({ id: "3" }));
+    songStore.addToFavourite(mockSong({ id: 1 }));
+    songStore.addToFavourite(mockSong({ id: 2 }));
+    songStore.addToFavourite(mockSong({ id: 3 }));
     expect(songStore.favouriteSongs).toEqual(expected);
     expect(setItem).toHaveBeenCalledWith(
       "favourite_songs",
@@ -51,13 +43,13 @@ describe("Song Store", () => {
   });
 
   it("should remove a song from favourite and update localStorage", () => {
-    const expected = [mockSong({ id: "1" }), mockSong({ id: "3" })];
+    const expected = [mockSong({ id: 1 }), mockSong({ id: 3 })];
     expect(songStore.favouriteSongs).toEqual([]);
     const setItem = vi.spyOn(Storage.prototype, "setItem");
-    songStore.addToFavourite(mockSong({ id: "1" }));
-    songStore.addToFavourite(mockSong({ id: "2" }));
-    songStore.addToFavourite(mockSong({ id: "3" }));
-    songStore.removeFromFavourite("2");
+    songStore.addToFavourite(mockSong({ id: 1 }));
+    songStore.addToFavourite(mockSong({ id: 2 }));
+    songStore.addToFavourite(mockSong({ id: 3 }));
+    songStore.removeFromFavourite(2);
     expect(songStore.favouriteSongs).toEqual(expected);
     expect(setItem).toHaveBeenCalledWith(
       "favourite_songs",
@@ -66,7 +58,7 @@ describe("Song Store", () => {
   });
 
   it("should retrieve favourite song from storage", async () => {
-    const favouriteSongs = [mockSong({ id: "1" }), mockSong({ id: "3" })];
+    const favouriteSongs = [mockSong({ id: 1 }), mockSong({ id: 3 })];
     const getItem = vi
       .spyOn(Storage.prototype, "getItem")
       .mockResolvedValue(JSON.stringify(favouriteSongs));

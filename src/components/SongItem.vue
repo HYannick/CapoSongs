@@ -5,7 +5,7 @@
       <div class="song-item-icon">
         <Icon name="play" :size="28" />
       </div>
-      <Thumbnail :src="song.thumbnail" :alt="song.title" />
+      <Thumbnail :src="picture" :alt="song.title" />
     </div>
     <div class="song-item-title" @click="$emit('selected', song)">
       <p class="text -bold">{{ song.title }}</p>
@@ -20,12 +20,18 @@ import FavouriteIcon from "@/components/common/FavouriteIcon.vue";
 import Icon from "@/components/component-library/Icon.vue";
 import type { PropType } from "vue";
 import type { Song } from "@/domain/Song";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import Thumbnail from "@/components/common/Thumbnail.vue";
 
-defineProps({
+const props = defineProps({
   song: Object as PropType<Song>,
 });
+
+const picture = computed(() =>
+  props.song
+    ? `https://capoeira-songs.s3.eu-west-3.amazonaws.com/pictures/${props.song.thumbnail}`
+    : ""
+);
 
 defineEmits(["selected"]);
 
