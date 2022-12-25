@@ -113,6 +113,7 @@ onMounted(() => {
     object-fit: cover;
     border-radius: 1rem;
     overflow: hidden;
+    -webkit-mask-image: -webkit-radial-gradient(white, black);
     position: relative;
 
     img {
