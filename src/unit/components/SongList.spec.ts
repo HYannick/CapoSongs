@@ -2,7 +2,7 @@ import { vi, describe, it, expect, beforeEach } from "vitest";
 
 import { shallowMount, VueWrapper } from "@vue/test-utils";
 import SongList from "@/components/SongList.vue";
-import { mockSong } from "@/domain/song-data";
+import { mockSong } from "@/unit/fixtures/song.fixture";
 import { createTestingPinia } from "@pinia/testing";
 import { useAppStore } from "@/stores/app.store";
 import { useSongStore } from "@/stores/song.store";
@@ -14,14 +14,14 @@ const mockWrapper = () => {
   const pinia = createTestingPinia({ createSpy: vi.fn });
   appStore = useAppStore(pinia);
   songStore = useSongStore(pinia);
-  songStore.favouriteSongs = [mockSong({ id: "2" })];
+  songStore.favouriteSongs = [mockSong({ id: 2 })];
   appStore.showPlayer = vi.fn();
   songStore.loadSong = vi.fn();
   songStore.addToFavourite = vi.fn();
   const wrapper: VueWrapper<SongList> = shallowMount(SongList, {
     plugins: [pinia],
     props: {
-      songs: [mockSong({ id: "1" }), mockSong({ id: "2" })],
+      songs: [mockSong({ id: 1 }), mockSong({ id: 2 })],
     },
   });
   component = wrapper.vm;
@@ -48,8 +48,8 @@ describe("SongList", () => {
   });
 
   it("should remove from favourite if the song already exists", () => {
-    component.addToFavourite(mockSong({ id: "2" }));
-    expect(songStore.removeFromFavourite).toHaveBeenCalledWith("2");
+    component.addToFavourite(mockSong({ id: 2 }));
+    expect(songStore.removeFromFavourite).toHaveBeenCalledWith(2);
     expect(songStore.addToFavourite).not.toHaveBeenCalled();
   });
 });

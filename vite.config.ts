@@ -13,6 +13,9 @@ export default defineConfig({
     svgLoader(),
     VitePWA({
       registerType: "autoUpdate",
+      workbox: {
+        globPatterns: ["**/*.{js,css,html,json,ico,png,svg}"],
+      },
       manifest: {
         name: "CapoSongs",
         short_name: "CapoSongs",
