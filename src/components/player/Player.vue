@@ -20,16 +20,21 @@
             @viewInformationClick="viewInformation"
           />
           <div class="player-controls">
+            <audio
+              ref="audioElementEl"
+              :src="songSource"
+              @timeupdate="getTime"
+            ></audio>
             <div
               ref="playerProgressEl"
               class="progress-wrapper"
               @click="scrub"
               @mousedown="mousedown = true"
               @mouseup="mousedown = false"
-              @mousemove="mousedown && scrub($event)"
+              @mousemove="updateProgress($event)"
               @touchstart="mousedown = true"
               @touchend="mousedown = false"
-              @touchmove="mousedown && scrub($event)"
+              @touchmove="updateProgress($event)"
             >
               <div class="progress" ref="progressBarEl">
                 <div class="current-progress" :style="{ width: percent }"></div>
@@ -45,11 +50,6 @@
             </button>
           </div>
         </div>
-        <audio
-          ref="audioElementEl"
-          :src="songSource"
-          @timeupdate="getTime"
-        ></audio>
       </div>
       <div class="information-view">
         <SongDetails
@@ -130,6 +130,17 @@ const closeSong = () => {
   });
 };
 
+const updateProgress = ($event: any) => {
+  if(!mousedown.value) return
+  audioElementEl.value.pause();
+  isPlaying.value = false;
+  scrub($event)
+  if(!audioElementEl.value.paused) {
+    audioElementEl.value.play();
+    isPlaying.value = true;
+  }
+}
+
 const playPause = () => {
   if (audioContext.value.state === "suspended") {
     audioContext.value.resume();
@@ -177,7 +188,11 @@ const initAudioFile = () => {
   );
 
   track.connect(audioContext.value.destination);
-  track.mediaElement.addEventListener("canplaythrough", setTimers);
+  track.mediaElement.addEventListener("canplaythrough", () => {
+    setTimers();
+    isPlaying.value = true;
+    audioElementEl.value.play();
+  });
   track.mediaElement.addEventListener("ended", () => {
     isPlaying.value = false;
   });
@@ -348,7 +363,6 @@ onMounted(() => {
   width: 0;
   border-radius: 1rem 0 0 1rem;
   background: var(--color-black-950);
-  transition: width 0.1s ease;
 
   &:after {
     content: "";
