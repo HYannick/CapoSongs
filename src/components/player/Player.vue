@@ -24,10 +24,12 @@
               ref="audioElementEl"
               :src="songSource"
               @timeupdate="getTime"
+              preload="metadata"
             ></audio>
             <div
               ref="playerProgressEl"
               class="progress-wrapper"
+              :class="{'-disabled': !isPlaying }"
               @click="scrub"
               @mousedown="mousedown = true"
               @mouseup="mousedown = false"
@@ -67,7 +69,7 @@ import Icon from "@/components/component-library/Icon.vue";
 import { useAppStore } from "@/stores/app.store";
 import { storeToRefs } from "pinia";
 import { useSongStore } from "@/stores/song.store";
-import { computed, onMounted, onUnmounted, ref } from "vue";
+import { computed, onMounted, onUnmounted, ref, watch } from "vue";
 import { usePlayerProgress } from "@/composables/usePlayerProgress";
 import { useI18n } from "vue-i18n";
 import gsap from "gsap";
@@ -182,8 +184,8 @@ const initAudioFile = () => {
   );
 
   track.connect(audioContext.value.destination);
+  track.mediaElement.addEventListener("loadedmetadata", setTimers);
   track.mediaElement.addEventListener("canplaythrough", () => {
-    setTimers();
     isPlaying.value = true;
     audioElementEl.value.play();
   });
@@ -192,21 +194,8 @@ const initAudioFile = () => {
   });
 };
 
-onUnmounted(() => {
-  window.removeEventListener("popstate", () => {});
-});
 
 onMounted(() => {
-  // window.onpopstate = (event) =>
-  //   setTimeout(() => {
-  //     console.log(window.history.state);
-  //     if (event.state && event.state.player) {
-  //       closeSong();
-  //     } else if (event.state.info) {
-  //       viewPlayer();
-  //     }
-  //   }, 0);
-
   const t1 = gsap.timeline();
   t1.from(playerContainerEl.value, {
     duration: 0.7,
