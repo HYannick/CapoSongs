@@ -17,7 +17,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, toRefs, watch } from "vue";
+import { computed, toRefs } from "vue";
 
 export interface Props {
   name: string;
@@ -55,6 +55,8 @@ const updateValue = ($event: any) => {
   justify-content: center;
   border: transparent;
   border-radius: 1rem;
+  padding: 0.5rem 1rem;
+  min-width: 15rem;
   box-shadow: 0 0 0 0.3rem var(--color-black-700);
   background-color: var(--color-black-50);
   color: var(--color-black-950);
@@ -70,48 +72,5 @@ const updateValue = ($event: any) => {
     background-color: var(--color-black-950);
     color: var(--color-black-50);
   }
-}
-
-input[type="radio"] {
-  /* Add if not using autoprefixer */
-  -webkit-appearance: none;
-  /* Remove most all native input styles */
-  appearance: none;
-  /* For iOS < 15 */
-  background-color: var(--form-background);
-  /* Not removed via appearance */
-  margin: 0;
-
-  font: inherit;
-  color: currentColor;
-  width: 1.15em;
-  height: 1.15em;
-  border: 0.15em solid currentColor;
-  border-radius: 50%;
-  transform: translateY(-0.075em);
-
-  display: grid;
-  place-content: center;
-}
-
-input[type="radio"]::before {
-  content: "";
-  width: 0.65em;
-  height: 0.65em;
-  border-radius: 50%;
-  transform: scale(0);
-  transition: 120ms transform cubic-bezier(0.83, 0, 0.17, 1);
-  box-shadow: inset 1em 1em var(--form-control-color);
-  /* Windows High Contrast Mode */
-  background-color: red;
-}
-
-input[type="radio"]:checked::before {
-  transform: scale(1);
-}
-
-input[type="radio"]:focus {
-  outline: max(2px, 0.15em) solid currentColor;
-  outline-offset: max(2px, 0.15em);
 }
 </style>

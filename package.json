@@ -17,6 +17,7 @@
     "@vueuse/core": "^9.6.0",
     "@vueuse/motion": "^2.0.0-beta.12",
     "gsap": "^3.11.3",
+    "imagesloaded": "^5.0.0",
     "liricle": "^4.0.1",
     "pinia": "^2.0.28",
     "uuid": "^9.0.0",
@@ -27,6 +28,7 @@
   "devDependencies": {
     "@intlify/unplugin-vue-i18n": "^0.8.1",
     "@rushstack/eslint-patch": "^1.1.4",
+    "@types/imagesloaded": "^4.1.2",
     "@types/jsdom": "^20.0.1",
     "@types/node": "^18.11.12",
     "@types/uuid": "^9.0.0",

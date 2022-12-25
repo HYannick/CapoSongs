@@ -1,16 +1,24 @@
 <template>
   <div class="sidebar" :class="sidebarClasses">
-    <div class="sidebar-content">
+    <div class="sidebar-content settings">
       <div class="settings-heading">
-        <h4 class="text -extra-bold -title-3">
-          {{ t("sidebars.settings.title") }}
-        </h4>
+        <div class="settings-label -center">
+          <Icon name="settings" :size="25" />
+          <h4 class="text -extra-bold -title-3">
+            {{ t("sidebars.settings.title") }}
+          </h4>
+        </div>
         <IconButton icon-name="close" @click="hideSettings" :size="24" />
       </div>
       <div class="settings-body">
         <hr />
         <div class="settings-option">
-          <p class="text -bold">{{ t("sidebars.settings.languages.title") }}</p>
+          <div class="settings-label">
+            <Icon class="lang" name="lang" :size="20" />
+            <p class="text -bold">
+              {{ t("sidebars.settings.languages.title") }}
+            </p>
+          </div>
           <div class="input-radio-wrapper">
             <InputRadio
               name="language"
@@ -34,16 +42,16 @@
         </div>
         <hr />
         <div class="settings-option">
-          <p class="text -bold">{{ t("sidebars.settings.theme") }}</p>
-          <div class="button-container">
-            <IconButton
-              v-if="themeLabel === 'moon'"
-              icon-name="sun"
-              @click="switchTheme"
-            />
-            <IconButton v-else icon-name="moon" @click="switchTheme" />
+          <div class="settings-label">
+            <Icon class="dark-mode" name="moon" :size="20" />
+            <p class="text -bold">{{ t("sidebars.settings.theme") }}</p>
           </div>
+          <SwitchInput :checked="isDarkMode" @change="switchTheme" />
         </div>
+      </div>
+      <div class="settings-footer">
+        <button class="mentions-button" @click="showMentions">Mentions
+          spéciales</button>
       </div>
     </div>
     <div class="sidebar-overlay" @click="hideSettings"></div>
@@ -55,35 +63,55 @@ import { useAppStore } from "@/stores/app.store";
 import { storeToRefs } from "pinia";
 import type { PropType } from "vue";
 import { SidebarOrigin } from "@/domain/enums/SideBarOrigin";
-import { computed } from "vue";
+import { computed, watch } from "vue";
 import IconButton from "@/components/component-library/IconButton.vue";
 import InputRadio from "@/components/component-library/InputRadio.vue";
 import { useTheme } from "@/composables/useTheme";
 import { useI18n } from "vue-i18n";
+import SwitchInput from "@/components/common/SwitchInput.vue";
+import Icon from "@/components/component-library/Icon.vue";
 
 const props = defineProps({
   from: String as PropType<SidebarOrigin>,
 });
-const { t } = useI18n();
+
+const { t, locale } = useI18n();
 const { settingsVisible } = storeToRefs(useAppStore());
-const { hideSettings } = useAppStore();
-const { themeLabel, switchTheme } = useTheme();
+const { hideSettings, showMentions } = useAppStore();
+const { isDarkMode, switchTheme } = useTheme();
+
 const sidebarClasses = computed(() => ({
   "-open": settingsVisible.value,
   "sidebar-left": props.from === SidebarOrigin.LEFT,
   "sidebar-right": props.from === SidebarOrigin.RIGHT,
 }));
+
+watch(
+  () => locale.value,
+  (locale) => {
+    localStorage.setItem("lang", locale);
+  }
+);
 </script>
 
 <style lang="scss">
+.settings {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
 .settings-heading {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 1rem;
+  path {
+    stroke: var(--color-primary-950);
+  }
 }
 
 .settings-body {
+  flex: 1;
   hr {
     margin-bottom: 2rem;
     height: 0.2rem;
@@ -92,13 +120,31 @@ const sidebarClasses = computed(() => ({
     border: none;
   }
 }
+.mentions-button {
+  width: 100%;
+  background: var(--color-black-950);
+  color: var(--color-black-50);
+  border: none;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  font-size: 1.6rem;
+}
 
+.settings-label {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
 .settings-option {
   margin-bottom: 2rem;
   display: flex;
   justify-content: space-between;
-  p {
-    margin-bottom: 1rem;
+  align-items: flex-start;
+  .lang path {
+    fill: var(--color-primary-950);
+  }
+  .dark-mode path {
+    stroke: var(--color-primary-950);
   }
 
   .button-container {
@@ -115,21 +161,5 @@ const sidebarClasses = computed(() => ({
   gap: 1rem;
   flex: 0.5;
   justify-content: space-between;
-}
-
-.temporary-theme-button {
-  border: transparent;
-  background: var(--color-black-900);
-  color: var(--color-black-50);
-  font-family: var(--text-font-extra-bold);
-  border-radius: 10rem;
-  width: 3rem;
-  height: 3rem;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  -webkit-appearance: none;
-  box-shadow: 0 0 0 0.4rem rgba(var(--color-primary-950-rgb), 0.7);
 }
 </style>

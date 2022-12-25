@@ -1,5 +1,5 @@
 <template>
-  <header class="heading-container">
+  <header ref="containerRef" class="heading-container">
     <IconButton
       type="button"
       icon-name="favourite-outline"
@@ -27,7 +27,8 @@
 <script setup lang="ts">
 import IconButton from "@/components/component-library/IconButton.vue";
 import { useAppStore } from "@/stores/app.store";
-
+import { ref } from "vue";
+const containerRef = ref();
 const appStore = useAppStore();
 const showFavouriteSongs = () => {
   appStore.showFavouriteSongs();
@@ -36,6 +37,8 @@ const showFavouriteSongs = () => {
 const showSettings = () => {
   appStore.showSettings();
 };
+
+defineExpose({ containerRef });
 </script>
 <style lang="scss">
 .heading-container {

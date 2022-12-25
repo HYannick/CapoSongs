@@ -1,0 +1,385 @@
+<template>
+  <div
+    ref="playerContainerEl"
+    class="player-container"
+    :class="{ 'player-container-open': playerVisible }"
+  >
+    <div ref="playerBodyEl" class="player-body">
+      <div class="player-view">
+        <div class="gradient-fade"></div>
+        <BackButton @click="closeSong" />
+        <LyricReader
+          ref="lyricsEl"
+          :lyrics="lyrics"
+          :current-line-index="currentLineIndex"
+        />
+        <div class="player-wrapper" v-if="currentSong">
+          <SongInformation
+            ref="songInformationEl"
+            :song="currentSong"
+            @viewInformationClick="viewInformation"
+          />
+          <div class="player-controls">
+            <div
+              ref="playerProgressEl"
+              class="progress-wrapper"
+              @click="scrub"
+              @mousedown="mousedown = true"
+              @mouseup="mousedown = false"
+              @mousemove="mousedown && scrub($event)"
+              @touchstart="mousedown = true"
+              @touchend="mousedown = false"
+              @touchmove="mousedown && scrub($event)"
+            >
+              <div class="progress" ref="progressBarEl">
+                <div class="current-progress" :style="{ width: percent }"></div>
+              </div>
+            </div>
+            <div ref="playerTimerEl" class="timers">
+              <p>{{ currentTime }}</p>
+              <p>{{ songDuration }}</p>
+            </div>
+            <button ref="playButtonEl" class="player-button" @click="playPause">
+              <Icon v-if="isPlaying" name="pause" :size="30" />
+              <Icon v-else name="play" :size="30" />
+            </button>
+          </div>
+        </div>
+        <audio
+          ref="audioElementEl"
+          :src="songSource"
+          @timeupdate="getTime"
+        ></audio>
+      </div>
+      <div class="information-view">
+        <SongDetails
+          @goBack="viewPlayer"
+          :history="currentSong.history"
+          :song-translation="songTranslation"
+        />
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup lang="ts">
+import Icon from "@/components/component-library/Icon.vue";
+import { useAppStore } from "@/stores/app.store";
+import { storeToRefs } from "pinia";
+import { useSongStore } from "@/stores/song.store";
+import { computed, onMounted, onUnmounted, ref } from "vue";
+import { usePlayerProgress } from "@/composables/usePlayerProgress";
+import { useI18n } from "vue-i18n";
+import gsap from "gsap";
+import LyricReader from "@/components/player/LyricReader.vue";
+import SongInformation from "@/components/player/SongInformation.vue";
+import SongDetails from "@/components/player/SongDetails.vue";
+import { useLiricle } from "@/composables/useLiricle";
+import BackButton from "@/components/common/BackButton.vue";
+import { useBackHistory } from "@/composables/useBackHistory";
+
+const { hidePlayer } = useAppStore();
+const { playerVisible } = storeToRefs(useAppStore());
+const { currentSong } = storeToRefs(useSongStore());
+const { resetSong } = useSongStore();
+const { t } = useI18n();
+
+const isPlaying = ref(false);
+const mousedown = ref(false);
+
+const audioContext = ref();
+
+const audioElementEl = ref();
+const progressBarEl = ref();
+
+const playerContainerEl = ref();
+const songInformationEl = ref();
+const playerProgressEl = ref();
+const playerTimerEl = ref();
+const playButtonEl = ref();
+const lyricsEl = ref();
+const playerBodyEl = ref();
+
+const { lyrics, currentLineIndex, initLyricReader } = useLiricle();
+
+const { percent, currentTime, songDuration, scrub, setTimers, getTime } =
+  usePlayerProgress(audioElementEl, progressBarEl);
+
+const songSource = computed(() =>
+  currentSong.value
+    ? `https://capoeira-songs.s3.eu-west-3.amazonaws.com/songs/${currentSong.value.source}`
+    : ""
+);
+
+const songTranslation = computed(() => {
+  if (!(currentSong.value && currentSong.value.translation)) return [];
+
+  return currentSong.value.translation.split("\n");
+});
+
+const closeSong = () => {
+  gsap.to(playerContainerEl.value, {
+    duration: 0.7,
+    ease: "power4.out",
+    opacity: 0.7,
+    y: "100vh",
+    onComplete: () => {
+      resetSong();
+      hidePlayer();
+    },
+  });
+};
+
+const playPause = () => {
+  if (audioContext.value.state === "suspended") {
+    audioContext.value.resume();
+  }
+  if (isPlaying.value === false) {
+    audioElementEl.value.play();
+    isPlaying.value = true;
+  } else if (isPlaying.value === true) {
+    audioElementEl.value.pause();
+    isPlaying.value = false;
+  }
+
+  gsap.from(playButtonEl.value, {
+    duration: 0.2,
+    scale: 0.9,
+  });
+};
+
+const viewInformation = () => {
+  window.history.pushState({ player: false, info: true }, "");
+  gsap.to(playerBodyEl.value, {
+    x: "-100vw",
+    ease: "circ.inOut",
+    duration: "0.6",
+  });
+};
+
+const viewPlayer = () => {
+  window.history.pushState({ player: true, info: false }, "");
+  gsap.to(playerBodyEl.value, {
+    x: "0",
+    ease: "circ.inOut",
+    duration: "0.6",
+  });
+};
+
+const initAudioFile = () => {
+  audioContext.value = new AudioContext();
+  audioElementEl.value.crossOrigin = "anonymous";
+
+  const track = audioContext.value.createMediaElementSource(
+    audioElementEl.value
+  );
+
+  track.connect(audioContext.value.destination);
+  track.mediaElement.addEventListener("canplaythrough", setTimers);
+  track.mediaElement.addEventListener("ended", () => {
+    isPlaying.value = false;
+  });
+};
+
+onUnmounted(() => {
+  window.removeEventListener("popstate", () => {});
+});
+
+onMounted(() => {
+  // window.onpopstate = (event) =>
+  //   setTimeout(() => {
+  //     console.log(window.history.state);
+  //     if (event.state && event.state.player) {
+  //       closeSong();
+  //     } else if (event.state.info) {
+  //       viewPlayer();
+  //     }
+  //   }, 0);
+
+  const t1 = gsap.timeline();
+  t1.from(playerContainerEl.value, {
+    duration: 0.7,
+    ease: "expo.out",
+    opacity: 0.7,
+    y: "100vh",
+  })
+    .from(
+      songInformationEl.value.containerRef,
+      {
+        duration: 0.7,
+        ease: "back",
+        opacity: 0,
+        y: "10px",
+      },
+      "-=0.45"
+    )
+    .from(
+      lyricsEl.value.containerRef,
+      {
+        opacity: 0,
+        y: "10px",
+        ease: "back",
+      },
+      "-=0.55"
+    )
+    .from(
+      playerProgressEl.value,
+      {
+        duration: 0.7,
+        ease: "back",
+        opacity: 0,
+        y: "10px",
+      },
+      "-=0.5"
+    )
+    .from(
+      playerTimerEl.value,
+      {
+        duration: 0.7,
+        ease: "back",
+        opacity: 0,
+        y: "10px",
+      },
+      "-=0.6"
+    )
+    .from(
+      playButtonEl.value,
+      {
+        duration: 0.7,
+        ease: "back",
+        opacity: 0,
+        y: "10px",
+      },
+      "-=0.7"
+    );
+  initAudioFile();
+  initLyricReader(audioElementEl.value, currentSong.value!.lyrics_link);
+});
+</script>
+
+<style lang="scss">
+.player-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 200vw;
+  height: 100vh;
+  z-index: 10;
+  background: var(--color-background);
+}
+
+.player-body {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  & > div {
+    flex: 1;
+  }
+}
+
+.gradient-fade {
+  position: absolute;
+  background: rgb(245, 245, 245);
+  background: linear-gradient(
+    0deg,
+    rgba(var(--color-background-rgb), 0) 0%,
+    rgba(var(--color-background-rgb), 1) 40%
+  );
+  height: 6rem;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+.player-wrapper {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 30rem;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 2.5rem;
+  background: rgb(245, 245, 245);
+  background: linear-gradient(
+    180deg,
+    rgba(var(--color-background-rgb), 0) 0%,
+    rgba(var(--color-background-rgb), 1) 25%
+  );
+}
+
+.player-song {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.player-controls {
+  width: 100%;
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.progress-wrapper {
+  width: 100%;
+  height: 3rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.progress {
+  width: 100%;
+  height: 0.4rem;
+  background: var(--color-black-200);
+  border-radius: 1rem;
+}
+
+.current-progress {
+  height: 100%;
+  width: 0;
+  border-radius: 1rem 0 0 1rem;
+  background: var(--color-black-950);
+  transition: width 0.1s ease;
+
+  &:after {
+    content: "";
+    position: absolute;
+    right: -0.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    border-radius: 1.5rem;
+    width: 1rem;
+    height: 1rem;
+    background: var(--color-black-950);
+  }
+}
+
+.timers {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.player-button {
+  background-color: var(--color-black-950);
+  border-radius: 50%;
+  width: 8.5rem;
+  height: 8.5rem;
+  border: none;
+  box-shadow: 0 0 0 0.4rem rgba(var(--color-black-950-rgb), 0.1);
+  cursor: pointer;
+
+  > .icon-wrapper {
+    path {
+      stroke: var(--color-black-50);
+    }
+  }
+}
+</style>

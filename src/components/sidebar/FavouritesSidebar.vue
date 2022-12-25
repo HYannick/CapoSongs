@@ -1,6 +1,6 @@
 <template>
   <div class="sidebar" :class="sidebarClasses">
-    <div class="sidebar-content">
+    <div ref="contentRef" class="sidebar-content">
       <div class="favourite-song-heading">
         <IconButton icon-name="trash" @click="clearFavourites" :size="24" />
         <h4 class="text -extra-bold -title-3">
@@ -9,10 +9,14 @@
         <IconButton icon-name="close" @click="hideFavouriteSongs" :size="24" />
       </div>
       <div class="favourite-song-list">
-        <div class="no-results" v-if="!favouriteSongs.length">
-          {{ t("common.notFound") }}
-        </div>
+        <NotFound
+          v-if="!favouriteSongs.length"
+          :title="t('sidebars.favourite.notFound')"
+          :sub-title="t('sidebars.favourite.notFoundDetails')"
+          :icon-size="100"
+        />
         <div
+          ref="favouriteSongItemRef"
           class="favourite-song-item"
           v-for="song in favouriteSongs"
           :key="song.id"
@@ -45,18 +49,20 @@
 <script setup lang="ts">
 import { useAppStore } from "@/stores/app.store";
 import { storeToRefs } from "pinia";
-import { computed, PropType } from "vue";
+import { computed, PropType, ref, watch } from "vue";
 import { SidebarOrigin } from "@/domain/enums/SideBarOrigin";
 import IconButton from "@/components/component-library/IconButton.vue";
 import { useSongStore } from "@/stores/song.store";
 import type { Song } from "@/domain/Song";
 import Icon from "@/components/component-library/Icon.vue";
 import { useI18n } from "vue-i18n";
+import gsap from "gsap";
+import NotFound from "@/components/common/NotFound.vue";
 
 const props = defineProps({
   from: String as PropType<SidebarOrigin>,
 });
-
+const favouriteSongItemRef = ref();
 const { favouriteSongsVisible } = storeToRefs(useAppStore());
 const { hideFavouriteSongs, showPlayer } = useAppStore();
 const { favouriteSongs } = storeToRefs(useSongStore());
@@ -73,6 +79,45 @@ const setSong = (song: Song) => {
   hideFavouriteSongs();
   showPlayer();
 };
+
+watch(
+  () => favouriteSongsVisible.value,
+  (value) => {
+    if (value) {
+      gsap.fromTo(
+        favouriteSongItemRef.value,
+        {
+          opacity: 0,
+          x: "-5px",
+        },
+        {
+          delay: 0.3,
+          duration: 0.7,
+          ease: "back",
+          opacity: 1,
+          x: "0",
+          stagger: 0.05,
+        }
+      );
+    } else {
+      gsap.fromTo(
+        favouriteSongItemRef.value,
+        {
+          opacity: 1,
+          x: "0",
+        },
+        {
+          delay: 0.3,
+          duration: 0.7,
+          ease: "back",
+          opacity: 0,
+          x: "-5px",
+          stagger: 0.05,
+        }
+      );
+    }
+  }
+);
 </script>
 
 <style lang="scss">
@@ -99,7 +144,6 @@ const setSong = (song: Song) => {
 }
 .favourite-song-item-icon {
   display: flex;
-  margin-left: 0.2rem;
   path {
     stroke: var(--color-black-950);
   }

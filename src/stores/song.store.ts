@@ -7,7 +7,7 @@ import songData from "@/domain/song-data.json";
 const FAVOURITE_SONGS_STORAGE_KEY = "favourite_songs";
 
 export const useSongStore = defineStore("songs", () => {
-  const songs: Ref<Song[]> = ref(songData);
+  const songs: Ref<Song[]> = ref(songData.songs);
   const currentSong: Ref<Song | null> = ref(null);
   const favouriteSongs: Ref<Song[]> = ref([]);
   const loadSong = (songToLoad: Song) => {
@@ -18,7 +18,7 @@ export const useSongStore = defineStore("songs", () => {
     currentSong.value = null;
   };
 
-  const isFavourite = (songId: string) =>
+  const isFavourite = (songId: number) =>
     computed(() => !!favouriteSongs.value.find((song) => song.id === songId));
 
   const addToFavourite = async (songToAdd: Song) => {
@@ -36,7 +36,7 @@ export const useSongStore = defineStore("songs", () => {
     );
   };
 
-  const removeFromFavourite = async (songId: string) => {
+  const removeFromFavourite = async (songId: number) => {
     favouriteSongs.value = favouriteSongs.value.filter(
       (song) => song.id !== songId
     );

@@ -1,10 +1,10 @@
 export interface Song {
-  id: string;
+  id: number;
   thumbnail: string;
   title: string;
   source: string;
   description: string;
   lyrics_link: string;
-  lyrics_translation?: string;
+  translation?: string;
   history?: string;
 }
