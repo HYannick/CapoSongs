@@ -132,13 +132,7 @@ const closeSong = () => {
 
 const updateProgress = ($event: any) => {
   if(!mousedown.value) return
-  audioElementEl.value.pause();
-  isPlaying.value = false;
-  scrub($event)
-  if(!audioElementEl.value.paused) {
-    audioElementEl.value.play();
-    isPlaying.value = true;
-  }
+  scrub($event);
 }
 
 const playPause = () => {
