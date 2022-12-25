@@ -50,7 +50,6 @@
         </div>
       </div>
       <div class="settings-footer">
-        <button @click="clearCache"> clearCache</button>
         <button class="mentions-button" @click="showMentions">Mentions
           spéciales</button>
       </div>
@@ -135,8 +134,13 @@ watch(
 
 .settings-label {
   display: flex;
-  gap: 1rem;
   align-items: center;
+  h4 {
+    margin-left: 1rem;
+  }
+  p {
+    margin-left: 1rem;
+  }
 }
 .settings-option {
   margin-bottom: 2rem;
@@ -161,8 +165,10 @@ watch(
   display: flex;
   align-items: center;
   flex-direction: column;
-  gap: 1rem;
   flex: 0.5;
   justify-content: space-between;
+  .input-radio-container:not(:last-child) {
+    margin-bottom: 1.5rem;
+  }
 }
 </style>

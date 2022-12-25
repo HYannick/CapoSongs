@@ -29,7 +29,7 @@
             <div
               ref="playerProgressEl"
               class="progress-wrapper"
-              :class="{'-disabled': !isPlaying }"
+              :class="{ '-disabled': !isPlaying }"
               @click="scrub"
               @mousedown="mousedown = true"
               @mouseup="mousedown = false"
@@ -69,7 +69,7 @@ import Icon from "@/components/component-library/Icon.vue";
 import { useAppStore } from "@/stores/app.store";
 import { storeToRefs } from "pinia";
 import { useSongStore } from "@/stores/song.store";
-import { computed, onMounted, onUnmounted, ref, watch } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { usePlayerProgress } from "@/composables/usePlayerProgress";
 import { useI18n } from "vue-i18n";
 import gsap from "gsap";
@@ -78,7 +78,6 @@ import SongInformation from "@/components/player/SongInformation.vue";
 import SongDetails from "@/components/player/SongDetails.vue";
 import { useLiricle } from "@/composables/useLiricle";
 import BackButton from "@/components/common/BackButton.vue";
-import { useBackHistory } from "@/composables/useBackHistory";
 
 const { hidePlayer } = useAppStore();
 const { playerVisible } = storeToRefs(useAppStore());
@@ -133,9 +132,9 @@ const closeSong = () => {
 };
 
 const updateProgress = ($event: any) => {
-  if(!mousedown.value) return
+  if (!mousedown.value) return;
   scrub($event);
-}
+};
 
 const playPause = () => {
   if (audioContext.value.state === "suspended") {
@@ -184,6 +183,7 @@ const initAudioFile = () => {
   );
 
   track.connect(audioContext.value.destination);
+
   track.mediaElement.addEventListener("loadedmetadata", setTimers);
   track.mediaElement.addEventListener("canplaythrough", () => {
     isPlaying.value = true;
@@ -193,7 +193,6 @@ const initAudioFile = () => {
     isPlaying.value = false;
   });
 };
-
 
 onMounted(() => {
   const t1 = gsap.timeline();
@@ -258,6 +257,14 @@ onMounted(() => {
 </script>
 
 <style lang="scss">
+.player-view {
+  @media only screen and (max-device-width: 1024px) {
+    margin-bottom: 10rem;
+  }
+  @media only screen and (max-device-width: 767px) {
+    margin-bottom: 0;
+  }
+}
 .player-container {
   position: fixed;
   top: 0;
@@ -309,13 +316,6 @@ onMounted(() => {
     rgba(var(--color-background-rgb), 0) 0%,
     rgba(var(--color-background-rgb), 1) 25%
   );
-}
-
-.player-song {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-  width: 100%;
 }
 
 .player-controls {

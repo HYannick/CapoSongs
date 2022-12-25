@@ -48,6 +48,12 @@ defineEmits(["viewInformationClick"]);
 defineExpose({ containerRef });
 </script>
 <style lang="scss">
+.player-song {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
 .player-song-thumbnail {
   width: 5rem;
   height: 5rem;
@@ -55,7 +61,7 @@ defineExpose({ containerRef });
   overflow: hidden;
   -webkit-mask-image: -webkit-radial-gradient(white, black);
   box-shadow: 0 0.4rem 0.4rem rgba(var(--color-primary-950-rgb), 0.25);
-
+  margin-right: 1.5rem;
   img {
     width: 100%;
     height: 100%;

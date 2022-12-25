@@ -161,6 +161,8 @@ watch(
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 1.5rem;
+}
+.favourite-song-item-thumbnail {
+  margin-right: 1.5rem;
 }
 </style>
