@@ -167,6 +167,8 @@ const viewPlayer = () => {
 };
 
 const initAudioFile = () => {
+  const AudioContext =
+    window.AudioContext || (window as any).webkitAudioContext;
   audioContext.value = new AudioContext();
   audioElementEl.value.crossOrigin = "anonymous";
 
