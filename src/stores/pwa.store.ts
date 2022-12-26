@@ -3,23 +3,20 @@ import { defineStore } from "pinia";
 
 export const usePWAInstallation = defineStore("pwa", () => {
   const deferredPrompt = ref();
-  const appInstalled = ref(false);
+  const appInstalled = ref(true);
   const appInstallationDismissed = ref(false);
   const initInstall = () => {
     if (isAppleDevice) return;
     window.addEventListener("beforeinstallprompt", (e) => {
       // Stash the event so it can be triggered later.
-      alert('Install')
       deferredPrompt.value = e;
-      alert(deferredPrompt.value)
       // Update UI notify the user they can install the PWA
+      appInstalled.value = false;
     });
     window.addEventListener("appinstalled", () => {
-      alert("???");
       // Hide the app-provided install promotion
       // Clear the deferredPrompt so it can be garbage collected
       appInstalled.value = true;
-      alert(appInstalled.value);
       // Optionally, send analytics event to indicate successful install
       console.log("PWA was installed");
     });

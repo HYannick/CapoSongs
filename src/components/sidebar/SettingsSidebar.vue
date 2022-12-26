@@ -230,12 +230,6 @@ onMounted(initInstall);
   justify-content: flex-end;
 }
 
-.pwa-installation-spacer {
-  @media all and (display-mode: standalone) {
-    display: none;
-  }
-}
-
 .pwa-installation-prompt {
   background: var(--color-primary-600);
   padding: 1.5rem;
@@ -243,9 +237,6 @@ onMounted(initInstall);
 
   p {
     color: var(--color-primary-300);
-  }
-  @media all and (display-mode: standalone) {
-    display: none;
   }
 
   .dismiss-install {
