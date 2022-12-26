@@ -234,8 +234,12 @@ onMounted(initInstall);
   background: var(--color-primary-600);
   padding: 1.5rem;
   border-radius: 1rem;
+  display: none;
   p {
     color: var(--color-primary-300);
+  }
+  @media (display-mode: browser) {
+    display: block;
   }
 
   .dismiss-install {
