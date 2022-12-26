@@ -17,7 +17,7 @@
       </div>
       <div class="settings-body">
         <template v-if="!(appInstalled || appInstallationDismissed)">
-          <hr />
+          <hr class="pwa-installation-spacer" />
           <div class="pwa-installation-prompt">
             <p class="text -regular -bold" v-html="t('pwaPrompt.text')"></p>
             <div class="pwa-installation-footer">
@@ -230,16 +230,22 @@ onMounted(initInstall);
   justify-content: flex-end;
 }
 
+.pwa-installation-spacer {
+  @media all and (display-mode: standalone) {
+    display: none;
+  }
+}
+
 .pwa-installation-prompt {
   background: var(--color-primary-600);
   padding: 1.5rem;
   border-radius: 1rem;
-  display: none;
+
   p {
     color: var(--color-primary-300);
   }
-  @media (display-mode: browser) {
-    display: block;
+  @media all and (display-mode: standalone) {
+    display: none;
   }
 
   .dismiss-install {

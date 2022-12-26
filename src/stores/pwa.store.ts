@@ -9,11 +9,14 @@ export const usePWAInstallation = defineStore("pwa", () => {
     if (isAppleDevice) return;
     window.addEventListener("beforeinstallprompt", (e) => {
       // Stash the event so it can be triggered later.
+      alert('Install')
       deferredPrompt.value = e;
+      alert(deferredPrompt.value)
       // Update UI notify the user they can install the PWA
     });
     window.addEventListener("appinstalled", () => {
-        // Hide the app-provided install promotion
+      alert("???");
+      // Hide the app-provided install promotion
       // Clear the deferredPrompt so it can be garbage collected
       appInstalled.value = true;
       alert(appInstalled.value);
