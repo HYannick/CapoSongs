@@ -18,6 +18,7 @@ export const usePWAInstallation = defineStore("pwa", () => {
       // Hide the app-provided install promotion
       // Clear the deferredPrompt so it can be garbage collected
       appInstalled.value = true;
+      alert(appInstalled);
       // Optionally, send analytics event to indicate successful install
       console.log("PWA was installed");
     });
@@ -47,6 +48,8 @@ export const usePWAInstallation = defineStore("pwa", () => {
     const { outcome } = await deferredPrompt.value.userChoice;
 
     appInstalled.value = outcome !== "dismissed";
+
+    alert(appInstalled);
 
     deferredPrompt.value = null;
   };
