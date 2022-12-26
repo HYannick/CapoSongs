@@ -1,7 +1,7 @@
 <template>
   <div class="lyrics" ref="lyricsContainerEl">
     <p
-      class="lyric-line text -large-body -bold"
+      class="lyric-line text -bold"
       :key="lyric.index"
       v-for="lyric in lyrics"
       :class="{
@@ -42,7 +42,7 @@ defineExpose({ containerRef: lyricsContainerEl });
 }
 .lyric-line {
   text-align: center;
-  font-size: 2.5rem;
+  font-size: 4rem;
   color: var(--color-black-500);
   margin-bottom: 1rem;
   &.-passed {
@@ -51,6 +51,12 @@ defineExpose({ containerRef: lyricsContainerEl });
   &.-highlighted {
     font-weight: bold;
     color: var(--color-primary-600);
+  }
+  @media only screen and (max-device-width: 1024px) {
+    font-size: 4rem;
+  }
+  @media only screen and (max-device-width: 767px) {
+    font-size: 2.2rem;
   }
 }
 </style>

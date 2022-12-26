@@ -29,6 +29,29 @@
       transform: translateX(-90vw);
     }
   }
+  @media only screen and (min-device-width: 1024px) {
+    .sidebar-content {
+      position: fixed;
+      z-index: 10;
+      background: var(--color-black-50);
+      width: 40vw;
+      height: 100%;
+      padding: 1.5rem;
+      transition: transform 0.5s cubic-bezier(0.83, 0, 0.17, 1), opacity 1s cubic-bezier(0.83, 0, 0.17, 1);
+    }
+    .sidebar-right {
+      .sidebar-content {
+        right: 0;
+        transform: translateX(40vw);
+      }
+    }
+    .sidebar-left {
+      .sidebar-content {
+        left: 0;
+        transform: translateX(-40vw);
+      }
+    }
+  }
   &.-open {
     opacity: 1;
     visibility: visible;
