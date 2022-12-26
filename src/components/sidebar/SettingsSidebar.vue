@@ -16,7 +16,7 @@
         />
       </div>
       <div class="settings-body">
-        <template v-if="!appInstalled || !appInstallationDismissed">
+        <template v-if="!(appInstalled || appInstallationDismissed)">
           <hr />
           <div class="pwa-installation-prompt">
             <p class="text -regular -bold" v-html="t('pwaPrompt.text')"></p>
@@ -111,13 +111,10 @@ const props = defineProps({
 const { t, locale } = useI18n();
 const { settingsVisible } = storeToRefs(useAppStore());
 const { hideSettings, showMentions } = useAppStore();
-const {
-  appInstalled,
-  initInstall,
-  installApp,
-  closeInstallPrompt,
-  appInstallationDismissed,
-} = usePWAInstallation();
+const { appInstalled, appInstallationDismissed } = storeToRefs(
+  usePWAInstallation()
+);
+const { initInstall, installApp, closeInstallPrompt } = usePWAInstallation();
 const { isDarkMode, switchTheme } = useTheme();
 
 const sidebarClasses = computed(() => ({

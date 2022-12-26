@@ -6,7 +6,6 @@ export const usePWAInstallation = defineStore("pwa", () => {
   const appInstalled = ref(false);
   const appInstallationDismissed = ref(false);
   const initInstall = () => {
-    alert(isAppleDevice);
     if (isAppleDevice) return;
     window.addEventListener("beforeinstallprompt", (e) => {
       // Stash the event so it can be triggered later.
@@ -19,7 +18,6 @@ export const usePWAInstallation = defineStore("pwa", () => {
       // Hide the app-provided install promotion
       // Clear the deferredPrompt so it can be garbage collected
       appInstalled.value = true;
-      alert(appInstalled.value);
       // Optionally, send analytics event to indicate successful install
       console.log("PWA was installed");
     });
@@ -27,7 +25,6 @@ export const usePWAInstallation = defineStore("pwa", () => {
 
   const closeInstallPrompt = () => {
     appInstallationDismissed.value = true;
-    alert(appInstallationDismissed.value);
   };
 
   const isAppleDevice = [
@@ -45,13 +42,16 @@ export const usePWAInstallation = defineStore("pwa", () => {
       return;
     }
 
+    if (!deferredPrompt.value) {
+      appInstallationDismissed.value = true;
+      return;
+    }
+
     deferredPrompt.value.prompt();
 
     const { outcome } = await deferredPrompt.value.userChoice;
 
     appInstalled.value = outcome !== "dismissed";
-
-    alert(appInstalled.value);
 
     deferredPrompt.value = null;
   };
