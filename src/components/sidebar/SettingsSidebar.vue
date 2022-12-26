@@ -55,6 +55,8 @@
         </div>
       </div>
       <div class="settings-footer">
+        prompt fired: {{promptFired}}
+        installed: {{appInstalled}}
         <button
           aria-label="view special mentions"
           class="mentions-button"
@@ -73,7 +75,7 @@ import { useAppStore } from "@/stores/app.store";
 import { storeToRefs } from "pinia";
 import type { PropType } from "vue";
 import { SidebarOrigin } from "@/domain/enums/SideBarOrigin";
-import { computed, watch } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import IconButton from "@/components/component-library/IconButton.vue";
 import InputRadio from "@/components/component-library/InputRadio.vue";
 import { useTheme } from "@/composables/useTheme";
@@ -102,6 +104,29 @@ watch(
     localStorage.setItem("lang", locale);
   }
 );
+
+const appInstalled = ref(false);
+const promptFired = ref(false);
+
+onMounted(() => {
+  let deferredPrompt;
+  window.addEventListener("beforeinstallprompt", (e) => {
+    // Stash the event so it can be triggered later.
+    deferredPrompt = e;
+    promptFired.value = true;
+    // Update UI notify the user they can install the PWA
+    // Optionally, send analytics event that PWA install promo was shown.
+    console.log(`'beforeinstallprompt' event was fired.`);
+  });
+  window.addEventListener('appinstalled', () => {
+    // Hide the app-provided install promotion
+    // Clear the deferredPrompt so it can be garbage collected
+    deferredPrompt = null;
+    appInstalled.value = true;
+    // Optionally, send analytics event to indicate successful install
+    console.log('PWA was installed');
+  });
+});
 </script>
 
 <style lang="scss">
