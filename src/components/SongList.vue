@@ -1,9 +1,10 @@
 <template>
   <div ref="containerRef" class="song-list">
     <div class="song-list-heading">
-      <h2 class="text-dot -left text -extra-bold">
-        <span class="color-secondary--600">C</span>anções
-      </h2>
+      <h2
+        class="text-dot -left text -extra-bold"
+        v-html="t('songList.title')"
+      ></h2>
     </div>
     <NotFound
       v-if="!songs.length"

@@ -9,10 +9,7 @@
     <div class="heading-greetings">
       <img class="heading-logo" src="@/assets/img/logo.webp" alt="logo" />
       <div class="text-dot -centered">
-        <p>
-          <span class="text -black color-secondary--600">Bom</span>
-          <span class="text">dia!</span>
-        </p>
+        <p class="text -title-1" v-html="t('greetings')"></p>
       </div>
     </div>
     <IconButton
@@ -28,11 +25,14 @@
 import IconButton from "@/components/component-library/IconButton.vue";
 import { useAppStore } from "@/stores/app.store";
 import { ref } from "vue";
+import { useI18n } from "vue-i18n";
 const containerRef = ref();
 const appStore = useAppStore();
 const showFavouriteSongs = () => {
   appStore.showFavouriteSongs();
 };
+
+const {t} = useI18n();
 
 const showSettings = () => {
   appStore.showSettings();
@@ -90,7 +90,6 @@ defineExpose({ containerRef });
   flex-direction: column;
   span {
     font-size: 3.2rem;
-    margin-right: 0.2rem;
     &:last-child {
       margin-right: 0;
     }

@@ -2,6 +2,9 @@ import { createI18n } from "vue-i18n";
 
 const commonI18n = {
   en: {
+    greetings:
+      '<span class="text -title-1 -black' +
+      ' color-secondary--600">H</span>ello!',
     common: {
       notFound: "No song found :(",
       backButton: "Go back",
@@ -11,6 +14,7 @@ const commonI18n = {
       placeholder: "What song do you want to sing?",
     },
     songList: {
+      title: '<span class="color-secondary--600">S</span>ongs',
       notFound: "Songs not found :(",
       notFoundDetails: "Reset your search!",
     },
@@ -44,6 +48,9 @@ const commonI18n = {
     },
   },
   fr: {
+    greetings:
+      '<span class="text -title-1 -black' +
+      ' color-secondary--600">H</span>ey !',
     common: {
       backButton: "Retour",
       backPlayer: "Lecteur",
@@ -56,6 +63,7 @@ const commonI18n = {
       placeholder: "Quelle chanson veux-tu chanter ?",
     },
     songList: {
+      title: '<span class="color-secondary--600">M</span>usiques',
       notFound: "Aucune chanson trouvée :(",
       notFoundDetails: "Réinitialise ta recherche !",
     },
@@ -85,8 +93,17 @@ const commonI18n = {
     },
   },
   pt: {
+    songList: {
+      title: '<span class="color-secondary--600">C</span>anções',
+    },
+    greetings:
+      '<span class="text -title-1 -black' +
+      ' color-secondary--600">Bom</span> dia!',
     common: {
       hey: "Bom dia!",
+    },
+    search: {
+      placeholder: "Que música queres cantar?",
     },
   },
 };
