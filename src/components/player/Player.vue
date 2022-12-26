@@ -257,14 +257,6 @@ onMounted(() => {
 </script>
 
 <style lang="scss">
-.player-view {
-  @media only screen and (max-device-width: 1024px) {
-    margin-bottom: 10rem;
-  }
-  @media only screen and (max-device-width: 767px) {
-    margin-bottom: 0;
-  }
-}
 .player-container {
   position: fixed;
   top: 0;
@@ -285,6 +277,18 @@ onMounted(() => {
   }
 }
 
+.player-view {
+  @media only screen and (max-device-width: 1024px) {
+    margin-bottom: 10rem;
+  }
+  @media only screen and (max-device-width: 767px) {
+    margin-bottom: 5rem;
+  }
+  @media all and (display-mode: standalone) {
+    margin-bottom: 0;
+  }
+}
+
 .gradient-fade {
   position: absolute;
   background: rgb(245, 245, 245);
@@ -299,6 +303,7 @@ onMounted(() => {
   left: 0;
   right: 0;
 }
+
 .player-wrapper {
   position: absolute;
   bottom: 0;
