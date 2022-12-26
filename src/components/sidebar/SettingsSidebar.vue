@@ -55,8 +55,8 @@
         </div>
       </div>
       <div class="settings-footer">
-        prompt fired: {{promptFired}}
-        installed: {{appInstalled}}
+        <button v-if="!appInstalled" @click="installApp">Install</button>
+        user res: {{ userRes }}
         <button
           aria-label="view special mentions"
           class="mentions-button"
@@ -91,7 +91,7 @@ const { t, locale } = useI18n();
 const { settingsVisible } = storeToRefs(useAppStore());
 const { hideSettings, showMentions } = useAppStore();
 const { isDarkMode, switchTheme } = useTheme();
-
+const deferredPrompt = ref();
 const sidebarClasses = computed(() => ({
   "-open": settingsVisible.value,
   "sidebar-left": props.from === SidebarOrigin.LEFT,
@@ -106,25 +106,27 @@ watch(
 );
 
 const appInstalled = ref(false);
-const promptFired = ref(false);
+const userRes = ref("");
+const installApp = async () => {
+  // Hide the app provided install promotion
+  // Show the install prompt
+  deferredPrompt.value.prompt();
+  // Wait for the user to respond to the prompt
+  const { outcome } = await deferredPrompt.value.userChoice;
+  // Optionally, send analytics event with outcome of user choice
+  userRes.value = `User response to the install prompt: ${outcome}`;
+  console.log(`User response to the install prompt: ${outcome}`);
+  // We've used the prompt, and can't use it again, throw it away
+  deferredPrompt.value = null;
+};
 
 onMounted(() => {
-  let deferredPrompt;
-  window.addEventListener("beforeinstallprompt", (e) => {
-    // Stash the event so it can be triggered later.
-    deferredPrompt = e;
-    promptFired.value = true;
-    // Update UI notify the user they can install the PWA
-    // Optionally, send analytics event that PWA install promo was shown.
-    console.log(`'beforeinstallprompt' event was fired.`);
-  });
-  window.addEventListener('appinstalled', () => {
+  window.addEventListener("appinstalled", () => {
     // Hide the app-provided install promotion
     // Clear the deferredPrompt so it can be garbage collected
-    deferredPrompt = null;
     appInstalled.value = true;
     // Optionally, send analytics event to indicate successful install
-    console.log('PWA was installed');
+    console.log("PWA was installed");
   });
 });
 </script>
