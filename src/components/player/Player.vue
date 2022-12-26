@@ -46,7 +46,12 @@
               <p>{{ currentTime }}</p>
               <p>{{ songDuration }}</p>
             </div>
-            <button ref="playButtonEl" class="player-button" @click="playPause">
+            <button
+              :aria-label="isPlaying ? 'pause song' : 'play song'"
+              ref="playButtonEl"
+              class="player-button"
+              @click="playPause"
+            >
               <Icon v-if="isPlaying" name="pause" :size="30" />
               <Icon v-else name="play" :size="30" />
             </button>

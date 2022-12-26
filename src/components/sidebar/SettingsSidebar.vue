@@ -8,7 +8,12 @@
             {{ t("sidebars.settings.title") }}
           </h4>
         </div>
-        <IconButton icon-name="close" @click="hideSettings" :size="24" />
+        <IconButton
+          aria-label="close settings"
+          icon-name="close"
+          @click="hideSettings"
+          :size="24"
+        />
       </div>
       <div class="settings-body">
         <hr />
@@ -50,8 +55,13 @@
         </div>
       </div>
       <div class="settings-footer">
-        <button class="mentions-button" @click="showMentions">Mentions
-          spéciales</button>
+        <button
+          aria-label="view special mentions"
+          class="mentions-button"
+          @click="showMentions"
+        >
+          {{ t("mentions.button") }}
+        </button>
       </div>
     </div>
     <div class="sidebar-overlay" @click="hideSettings"></div>
@@ -79,9 +89,7 @@ const { t, locale } = useI18n();
 const { settingsVisible } = storeToRefs(useAppStore());
 const { hideSettings, showMentions } = useAppStore();
 const { isDarkMode, switchTheme } = useTheme();
-const clearCache = async () => {
 
-}
 const sidebarClasses = computed(() => ({
   "-open": settingsVisible.value,
   "sidebar-left": props.from === SidebarOrigin.LEFT,
@@ -127,6 +135,7 @@ watch(
   background: var(--color-black-950);
   color: var(--color-black-50);
   border: none;
+  font-weight: bold;
   border-radius: 1rem;
   padding: 1.5rem;
   font-size: 1.6rem;

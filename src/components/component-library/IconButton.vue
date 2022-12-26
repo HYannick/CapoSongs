@@ -1,6 +1,7 @@
 <template>
   <button
     class="icon-button"
+    :aria-label="ariaLabel"
     :class="[radiusClass, outlinedClass]"
     :disabled="disabled"
   >
@@ -18,6 +19,7 @@ export interface Props {
   label?: string;
   radius?: "rounded" | "circle" | "";
   disabled?: boolean;
+  ariaLabel?: string;
   outlined?: boolean;
   iconName: string;
   size?: number;
@@ -26,6 +28,7 @@ export interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
   radius: "",
+  ariaLabel: "Icon button",
   disabled: false,
   outlined: false,
   filled: false,

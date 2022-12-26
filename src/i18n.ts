@@ -40,6 +40,7 @@ const commonI18n = {
       },
     },
     mentions: {
+      button: 'Special mentions',
       title: "Resources and mentions",
       appDev: "Application development",
       stackLib: "Stack / Libraries",
@@ -85,6 +86,7 @@ const commonI18n = {
       },
     },
     mentions: {
+      button: 'Mentions spéciales',
       title: "Ressources et mentions",
       appDev: "Développement de l'app",
       stackLib: "Stack / Librairies",

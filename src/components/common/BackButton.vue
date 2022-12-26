@@ -1,5 +1,5 @@
 <template>
-  <button class="button-return">
+  <button class="button-return" aria-label="go to previous screen">
     <Icon name="chevron-left" />
     <span class="button-return-label text -bold">
       {{ label || t("common.backButton") }}

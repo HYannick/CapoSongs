@@ -10,6 +10,7 @@
       <div ref="infoAction">
         <IconButton
           ref="infoAction"
+          aria-label="See song details"
           v-if="song.translation || song.history"
           type="button"
           icon-name="circle-info"

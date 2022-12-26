@@ -2,6 +2,7 @@
   <header ref="containerRef" class="heading-container">
     <IconButton
       type="button"
+      aria-label="show favourite songs"
       icon-name="favourite-outline"
       radius="circle"
       @click="showFavouriteSongs"
@@ -14,6 +15,7 @@
     </div>
     <IconButton
       type="button"
+      aria-label="show settings"
       icon-name="settings"
       radius="circle"
       @click="showSettings"
