@@ -4,7 +4,9 @@ import { defineStore } from "pinia";
 export const usePWAInstallation = defineStore("pwa", () => {
   const deferredPrompt = ref();
   const appInstalled = ref(false);
+  const appInstallationDismissed = ref(false);
   const initInstall = () => {
+    if (isAppleDevice) return;
     window.addEventListener("beforeinstallprompt", (e) => {
       // Stash the event so it can be triggered later.
       deferredPrompt.value = e;
@@ -21,8 +23,27 @@ export const usePWAInstallation = defineStore("pwa", () => {
     });
   };
 
+  const closeInstallPrompt = () => {
+    appInstallationDismissed.value = true;
+  };
+
+  const isAppleDevice = [
+    "iPad Simulator",
+    "iPhone Simulator",
+    "iPod Simulator",
+    "iPad",
+    "iPhone",
+    "iPod",
+  ].includes(navigator.userAgent);
+
   const installApp = async () => {
-    alert(deferredPrompt.value);
+    if (isAppleDevice) {
+      alert(
+        "Pour iOS, va dans l’option de Partage et Ajouter à l’écran" +
+          " d’accueil"
+      );
+      return;
+    }
 
     deferredPrompt.value.prompt();
 
@@ -35,7 +56,9 @@ export const usePWAInstallation = defineStore("pwa", () => {
 
   return {
     appInstalled,
+    appInstallationDismissed,
     initInstall,
     installApp,
+    closeInstallPrompt,
   };
 });

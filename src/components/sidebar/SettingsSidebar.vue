@@ -16,6 +16,21 @@
         />
       </div>
       <div class="settings-body">
+        <template v-if="!appInstalled || !appInstallationDismissed">
+          <hr />
+          <div class="pwa-installation-prompt">
+            <p class="text -regular -bold">
+              Pour une meilleure expérience,<br />
+              Ajoute l’application à ton écran d’accueil :)
+            </p>
+            <div class="pwa-installation-footer">
+              <button class="dismiss-install" @click="closeInstallPrompt">
+                Not now
+              </button>
+              <button class="install-pwa" @click="installApp">Install</button>
+            </div>
+          </div>
+        </template>
         <hr />
         <div class="settings-option">
           <div class="settings-label">
@@ -55,7 +70,6 @@
         </div>
       </div>
       <div class="settings-footer">
-        <button v-if="!appInstalled" @click="installApp">Install</button>
         <button
           aria-label="view special mentions"
           class="mentions-button"
@@ -74,7 +88,7 @@ import { useAppStore } from "@/stores/app.store";
 import { storeToRefs } from "pinia";
 import type { PropType } from "vue";
 import { SidebarOrigin } from "@/domain/enums/SideBarOrigin";
-import { computed, onMounted, ref, watch } from "vue";
+import { computed, onMounted, watch } from "vue";
 import IconButton from "@/components/component-library/IconButton.vue";
 import InputRadio from "@/components/component-library/InputRadio.vue";
 import { useTheme } from "@/composables/useTheme";
@@ -90,7 +104,13 @@ const props = defineProps({
 const { t, locale } = useI18n();
 const { settingsVisible } = storeToRefs(useAppStore());
 const { hideSettings, showMentions } = useAppStore();
-const { appInstalled, initInstall, installApp } = usePWAInstallation();
+const {
+  appInstalled,
+  initInstall,
+  installApp,
+  closeInstallPrompt,
+  appInstallationDismissed,
+} = usePWAInstallation();
 const { isDarkMode, switchTheme } = useTheme();
 
 const sidebarClasses = computed(() => ({
@@ -106,7 +126,7 @@ watch(
   }
 );
 
-onMounted(initInstall)
+onMounted(initInstall);
 </script>
 
 <style lang="scss">
@@ -115,11 +135,13 @@ onMounted(initInstall)
   flex-direction: column;
   height: 100%;
 }
+
 .settings-heading {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 1rem;
+
   path {
     stroke: var(--color-primary-950);
   }
@@ -127,14 +149,19 @@ onMounted(initInstall)
 
 .settings-body {
   flex: 1;
+
   hr {
-    margin-bottom: 2rem;
+    margin: 1.5rem 0;
     height: 0.2rem;
     background: rgba(var(--color-primary-950-rgb), 0.1);
     border-radius: 2rem;
     border: none;
+    &:first-child {
+      margin-top: 0;
+    }
   }
 }
+
 .mentions-button {
   width: 100%;
   background: var(--color-black-950);
@@ -149,21 +176,26 @@ onMounted(initInstall)
 .settings-label {
   display: flex;
   align-items: center;
+
   h4 {
     margin-left: 1rem;
   }
+
   p {
     margin-left: 1rem;
   }
 }
+
 .settings-option {
   margin-bottom: 2rem;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
+
   .lang path {
     fill: var(--color-primary-950);
   }
+
   .dark-mode path {
     stroke: var(--color-primary-950);
   }
@@ -181,8 +213,41 @@ onMounted(initInstall)
   flex-direction: column;
   flex: 0.5;
   justify-content: space-between;
+
   .input-radio-container:not(:last-child) {
     margin-bottom: 1.5rem;
+  }
+}
+
+.pwa-installation-footer {
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.pwa-installation-prompt {
+  background: var(--color-primary-600);
+  padding: 1.5rem;
+  border-radius: 1rem;
+  p {
+    color: var(--color-primary-300);
+  }
+
+  .dismiss-install {
+    background: transparent;
+    border: transparent;
+    color: var(--color-primary-300);
+    margin-right: 1rem;
+  }
+
+  .install-pwa {
+    background: #ffdab9;
+    border: transparent;
+    color: var(--color-primary-600);
+    padding: 1rem 3rem;
+    border-radius: 4rem;
+    font-weight: bold;
   }
 }
 </style>
