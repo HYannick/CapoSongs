@@ -2,7 +2,7 @@
   <IconButton
     type="button"
     icon-name="favourite-outline"
-    :aria-label="`add ${prop.song.title} to favourite`"
+    :aria-label="`add ${props.song.title} to favourite`"
     radius="circle"
     :filled="songStore.isFavourite(props.song.id).value"
     :size="24"
