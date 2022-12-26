@@ -16,7 +16,6 @@
         />
       </div>
       <div class="settings-body">
-        {{isAppleDevice()}}
         <template
           v-if="
             !(appInstalled || appInstallationDismissed) ||
