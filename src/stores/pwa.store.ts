@@ -6,19 +6,13 @@ export const usePWAInstallation = defineStore("pwa", () => {
   const appInstalled = ref(true);
   const appInstallationDismissed = ref(false);
   const initInstall = () => {
-    if (isAppleDevice) return;
+    if (isAppleDevice.value) return;
     window.addEventListener("beforeinstallprompt", (e) => {
-      // Stash the event so it can be triggered later.
       deferredPrompt.value = e;
-      // Update UI notify the user they can install the PWA
       appInstalled.value = false;
     });
     window.addEventListener("appinstalled", () => {
-      // Hide the app-provided install promotion
-      // Clear the deferredPrompt so it can be garbage collected
       appInstalled.value = true;
-      // Optionally, send analytics event to indicate successful install
-      console.log("PWA was installed");
     });
   };
 
@@ -26,17 +20,10 @@ export const usePWAInstallation = defineStore("pwa", () => {
     appInstallationDismissed.value = true;
   };
 
-  const isAppleDevice = [
-    "iPad Simulator",
-    "iPhone Simulator",
-    "iPod Simulator",
-    "iPad",
-    "iPhone",
-    "iPod",
-  ].includes(navigator.userAgent);
+  const isAppleDevice = ref(/iPad|iPhone|iPod/.test(navigator.userAgent));
 
   const installApp = async (appleDeviceMessage: string) => {
-    if (isAppleDevice) {
+    if (isAppleDevice.value) {
       alert(appleDeviceMessage);
       return;
     }
@@ -61,5 +48,6 @@ export const usePWAInstallation = defineStore("pwa", () => {
     initInstall,
     installApp,
     closeInstallPrompt,
+    isAppleDevice,
   };
 });
