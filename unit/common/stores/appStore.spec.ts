@@ -1,7 +1,7 @@
 // stores/counter.spec.ts
 import { createPinia, setActivePinia } from "pinia";
 import { beforeEach, describe, it, expect } from "vitest";
-import { useAppStore } from "@/stores/app.store";
+import { useAppStore } from "src/stores/app.store";
 
 describe("App Store", () => {
   beforeEach(() => {

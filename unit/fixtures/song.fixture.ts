@@ -1,4 +1,4 @@
-import type { Song } from "@/domain/Song";
+import type { Song } from "src/domain/Song";
 
 export const mockSong = (opts?: Partial<Song>): Song => ({
   id: 1234,

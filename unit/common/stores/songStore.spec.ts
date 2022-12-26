@@ -1,7 +1,7 @@
 import { createPinia, setActivePinia } from "pinia";
 import { vi, beforeEach, describe, it, expect } from "vitest";
-import { useSongStore } from "@/stores/song.store";
-import { mockSong } from "@/unit/fixtures/song.fixture";
+import { useSongStore } from "src/stores/song.store";
+import { mockSong } from "unit/fixtures/song.fixture";
 
 let songStore: any;
 

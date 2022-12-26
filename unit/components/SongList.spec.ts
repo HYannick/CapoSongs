@@ -1,11 +1,11 @@
 import { vi, describe, it, expect, beforeEach } from "vitest";
 
 import { shallowMount, VueWrapper } from "@vue/test-utils";
-import SongList from "@/components/SongList.vue";
-import { mockSong } from "@/unit/fixtures/song.fixture";
+import SongList from "src/components/SongList.vue";
+import { mockSong } from "unit/fixtures/song.fixture";
 import { createTestingPinia } from "@pinia/testing";
-import { useAppStore } from "@/stores/app.store";
-import { useSongStore } from "@/stores/song.store";
+import { useAppStore } from "src/stores/app.store";
+import { useSongStore } from "src/stores/song.store";
 
 let appStore: any;
 let songStore: any;
