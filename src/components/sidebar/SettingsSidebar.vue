@@ -56,8 +56,6 @@
       </div>
       <div class="settings-footer">
         <button v-if="!appInstalled" @click="installApp">Install</button>
-        user res: {{ userRes }}
-        p {{deferredPrompt}}
         <button
           aria-label="view special mentions"
           class="mentions-button"
@@ -83,6 +81,7 @@ import { useTheme } from "@/composables/useTheme";
 import { useI18n } from "vue-i18n";
 import SwitchInput from "@/components/common/SwitchInput.vue";
 import Icon from "@/components/component-library/Icon.vue";
+import { usePWAInstallation } from "@/stores/pwa.store";
 
 const props = defineProps({
   from: String as PropType<SidebarOrigin>,
@@ -91,8 +90,9 @@ const props = defineProps({
 const { t, locale } = useI18n();
 const { settingsVisible } = storeToRefs(useAppStore());
 const { hideSettings, showMentions } = useAppStore();
+const { appInstalled, initInstall, installApp } = usePWAInstallation();
 const { isDarkMode, switchTheme } = useTheme();
-const deferredPrompt = ref();
+
 const sidebarClasses = computed(() => ({
   "-open": settingsVisible.value,
   "sidebar-left": props.from === SidebarOrigin.LEFT,
@@ -106,40 +106,7 @@ watch(
   }
 );
 
-const appInstalled = ref(false);
-const userRes = ref("");
-const installApp = async () => {
-  alert(deferredPrompt.value)
-  // Hide the app provided install promotion
-  // Show the install prompt
-  deferredPrompt.value.prompt();
-  // Wait for the user to respond to the prompt
-  const { outcome } = await deferredPrompt.value.userChoice;
-  alert(outcome)
-  // Optionally, send analytics event with outcome of user choice
-  userRes.value = `User response to the install prompt: ${outcome}`;
-  console.log(`User response to the install prompt: ${outcome}`);
-  // We've used the prompt, and can't use it again, throw it away
-  deferredPrompt.value = null;
-};
-
-
-onMounted(() => {
-  window.addEventListener("beforeinstallprompt", (e) => {
-    // Stash the event so it can be triggered later.
-    deferredPrompt.value = e;
-    // Update UI notify the user they can install the PWA
-    // Optionally, send analytics event that PWA install promo was shown.
-    console.log(`'beforeinstallprompt' event was fired.`);
-  });
-  window.addEventListener("appinstalled", () => {
-    // Hide the app-provided install promotion
-    // Clear the deferredPrompt so it can be garbage collected
-    appInstalled.value = true;
-    // Optionally, send analytics event to indicate successful install
-    console.log("PWA was installed");
-  });
-});
+onMounted(initInstall)
 </script>
 
 <style lang="scss">
