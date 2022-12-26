@@ -20,14 +20,23 @@
           <hr />
           <div class="pwa-installation-prompt">
             <p class="text -regular -bold">
-              Pour une meilleure expérience,<br />
-              Ajoute l’application à ton écran d’accueil :)
+              {{ t("pwaPrompt.text") }}
             </p>
             <div class="pwa-installation-footer">
-              <button class="dismiss-install" @click="closeInstallPrompt">
-                Not now
+              <button
+                aria-label="dismiss pwa install"
+                class="dismiss-install"
+                @click="closeInstallPrompt"
+              >
+                {{ t("pwaPrompt.dismiss") }}
               </button>
-              <button class="install-pwa" @click="installApp">Install</button>
+              <button
+                aria-label="install pwa"
+                class="install-pwa"
+                @click="installApp(t('pwaPrompt.appleDeviceMessage'))"
+              >
+                {{ t("pwaPrompt.install") }}
+              </button>
             </div>
           </div>
         </template>

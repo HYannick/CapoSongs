@@ -5,6 +5,13 @@ const commonI18n = {
     greetings:
       '<span class="text -title-1 -black' +
       ' color-secondary--600">H</span>ello!',
+    pwaPrompt: {
+      text: "For a better user experience<br />Add the app to your homescreen :)",
+      dismiss: "Not now",
+      install: "Install",
+      appleDeviceMessage:
+        "For Apple devices go to Share Options -> Add to" + " homescreen",
+    },
     common: {
       notFound: "No song found :(",
       backButton: "Go back",
@@ -40,7 +47,7 @@ const commonI18n = {
       },
     },
     mentions: {
-      button: 'Special mentions',
+      button: "Special mentions",
       title: "Resources and mentions",
       appDev: "Application development",
       stackLib: "Stack / Libraries",
@@ -52,6 +59,13 @@ const commonI18n = {
     greetings:
       '<span class="text -title-1 -black' +
       ' color-secondary--600">H</span>ey !',
+    pwaPrompt: {
+      text: "Pour une meilleure expérience,<br />Ajoute l’application à ton écran d’accueil :)",
+      dismiss: "Pas maintenant",
+      install: "Installer",
+      appleDeviceMessage:
+        "Pour iOS, va dans l’option de Partage et Ajouter à l’écran d’accueil",
+    },
     common: {
       backButton: "Retour",
       backPlayer: "Lecteur",
@@ -86,7 +100,7 @@ const commonI18n = {
       },
     },
     mentions: {
-      button: 'Mentions spéciales',
+      button: "Mentions spéciales",
       title: "Ressources et mentions",
       appDev: "Développement de l'app",
       stackLib: "Stack / Librairies",

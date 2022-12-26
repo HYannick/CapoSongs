@@ -36,12 +36,9 @@ export const usePWAInstallation = defineStore("pwa", () => {
     "iPod",
   ].includes(navigator.userAgent);
 
-  const installApp = async () => {
+  const installApp = async (appleDeviceMessage: string) => {
     if (isAppleDevice) {
-      alert(
-        "Pour iOS, va dans l’option de Partage et Ajouter à l’écran" +
-          " d’accueil"
-      );
+      alert(appleDeviceMessage);
       return;
     }
 
