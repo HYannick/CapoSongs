@@ -6,7 +6,6 @@ export const usePWAInstallation = defineStore("pwa", () => {
   const appInstalled = ref(true);
   const appInstallationDismissed = ref(false);
   const initInstall = () => {
-    if (isAppleDevice.value) return;
     window.addEventListener("beforeinstallprompt", (e) => {
       deferredPrompt.value = e;
       appInstalled.value = false;
@@ -20,10 +19,17 @@ export const usePWAInstallation = defineStore("pwa", () => {
     appInstallationDismissed.value = true;
   };
 
-  const isAppleDevice = ref(/iPad|iPhone|iPod/.test(navigator.userAgent));
+  const isAppleDevice = () => {
+    const appleExpression = /Apple/i;
+    const safariExpression = /Safari/i;
+    return (
+      appleExpression.test(navigator.vendor) &&
+      safariExpression.test(navigator.userAgent)
+    );
+  };
 
   const installApp = async (appleDeviceMessage: string) => {
-    if (isAppleDevice.value) {
+    if (isAppleDevice()) {
       alert(appleDeviceMessage);
       return;
     }

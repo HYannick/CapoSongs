@@ -16,10 +16,11 @@
         />
       </div>
       <div class="settings-body">
+        {{isAppleDevice()}}
         <template
           v-if="
             !(appInstalled || appInstallationDismissed) ||
-            (isAppleDevice && !appInstallationDismissed)
+            (isAppleDevice() && !appInstallationDismissed)
           "
         >
           <hr class="pwa-installation-spacer" />
@@ -116,11 +117,12 @@ const props = defineProps({
 const { t, locale } = useI18n();
 const { settingsVisible } = storeToRefs(useAppStore());
 const { hideSettings, showMentions } = useAppStore();
-const { isAppleDevice, appInstalled, appInstallationDismissed } = storeToRefs(
+const { appInstalled, appInstallationDismissed } = storeToRefs(
   usePWAInstallation()
 );
 
-const { initInstall, installApp, closeInstallPrompt } = usePWAInstallation();
+const { isAppleDevice, initInstall, installApp, closeInstallPrompt } =
+  usePWAInstallation();
 const { isDarkMode, switchTheme } = useTheme();
 
 const sidebarClasses = computed(() => ({
