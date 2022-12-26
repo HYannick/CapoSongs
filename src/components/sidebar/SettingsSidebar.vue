@@ -19,9 +19,7 @@
         <template v-if="!appInstalled || !appInstallationDismissed">
           <hr />
           <div class="pwa-installation-prompt">
-            <p class="text -regular -bold">
-              {{ t("pwaPrompt.text") }}
-            </p>
+            <p class="text -regular -bold" v-html="t('pwaPrompt.text')"></p>
             <div class="pwa-installation-footer">
               <button
                 aria-label="dismiss pwa install"
