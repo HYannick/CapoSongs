@@ -14,7 +14,7 @@ export default defineConfig({
     VitePWA({
       registerType: "autoUpdate",
       workbox: {
-        globPatterns: ["**/*.{js,css,html,json,ico,png,svg}"],
+        globPatterns: ["**/*.{js,css,html,json,ico,png,svg,jpeg,jpg,mp3,ttf}"],
       },
       manifest: {
         name: "CapoSongs",
