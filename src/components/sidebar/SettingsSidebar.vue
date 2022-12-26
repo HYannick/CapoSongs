@@ -57,6 +57,7 @@
       <div class="settings-footer">
         <button v-if="!appInstalled" @click="installApp">Install</button>
         user res: {{ userRes }}
+        p {{deferredPrompt}}
         <button
           aria-label="view special mentions"
           class="mentions-button"
@@ -108,11 +109,13 @@ watch(
 const appInstalled = ref(false);
 const userRes = ref("");
 const installApp = async () => {
+  alert(deferredPrompt.value)
   // Hide the app provided install promotion
   // Show the install prompt
   deferredPrompt.value.prompt();
   // Wait for the user to respond to the prompt
   const { outcome } = await deferredPrompt.value.userChoice;
+  alert(outcome)
   // Optionally, send analytics event with outcome of user choice
   userRes.value = `User response to the install prompt: ${outcome}`;
   console.log(`User response to the install prompt: ${outcome}`);
