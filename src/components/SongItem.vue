@@ -19,18 +19,17 @@
 import FavouriteIcon from "@/components/common/FavouriteIcon.vue";
 import Icon from "@/components/component-library/Icon.vue";
 import type { PropType } from "vue";
-import type { Song } from "@/domain/Song";
 import { computed, ref } from "vue";
+import type { Song } from "@/domain/Song";
 import Thumbnail from "@/components/common/Thumbnail.vue";
+import { S3_SOURCE_LINK, S3Dir } from "@/domain/enums/aws-link";
 
 const props = defineProps({
   song: Object as PropType<Song>,
 });
 
 const picture = computed(() =>
-  props.song
-    ? `https://capoeira-songs.s3.eu-west-3.amazonaws.com/pictures/${props.song.thumbnail}`
-    : ""
+  props.song ? S3_SOURCE_LINK(S3Dir.PICTURES, props.song.thumbnail) : ""
 );
 
 defineEmits(["selected"]);

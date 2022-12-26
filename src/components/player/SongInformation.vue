@@ -26,11 +26,13 @@
 </template>
 <script lang="ts" setup>
 import type { PropType } from "vue";
+import { computed, ref } from "vue";
 import type { Song } from "@/domain/Song";
 import FavouriteIcon from "@/components/common/FavouriteIcon.vue";
 import IconButton from "@/components/component-library/IconButton.vue";
-import { computed, ref } from "vue";
 import Thumbnail from "@/components/common/Thumbnail.vue";
+import { S3_SOURCE_LINK, S3Dir } from "@/domain/enums/aws-link";
+
 const containerRef = ref();
 
 const props = defineProps({
@@ -38,9 +40,7 @@ const props = defineProps({
 });
 
 const picture = computed(() =>
-  props.song
-    ? `https://capoeira-songs.s3.eu-west-3.amazonaws.com/pictures/${props.song.thumbnail}`
-    : ""
+  props.song ? S3_SOURCE_LINK(S3Dir.PICTURES, props.song.thumbnail) : ""
 );
 
 defineEmits(["viewInformationClick"]);

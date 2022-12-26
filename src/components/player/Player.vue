@@ -78,6 +78,7 @@ import SongInformation from "@/components/player/SongInformation.vue";
 import SongDetails from "@/components/player/SongDetails.vue";
 import { useLiricle } from "@/composables/useLiricle";
 import BackButton from "@/components/common/BackButton.vue";
+import { S3_SOURCE_LINK, S3Dir } from "@/domain/enums/aws-link";
 
 const { hidePlayer } = useAppStore();
 const { playerVisible } = storeToRefs(useAppStore());
@@ -107,9 +108,7 @@ const { percent, currentTime, songDuration, scrub, setTimers, getTime } =
   usePlayerProgress(audioElementEl, progressBarEl);
 
 const songSource = computed(() =>
-  currentSong.value
-    ? `https://capoeira-songs.s3.eu-west-3.amazonaws.com/songs/${currentSong.value.source}`
-    : ""
+  currentSong.value ? S3_SOURCE_LINK(S3Dir.SONGS, currentSong.value.source) : ""
 );
 
 const songTranslation = computed(() => {

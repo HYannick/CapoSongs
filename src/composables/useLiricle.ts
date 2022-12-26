@@ -2,6 +2,7 @@ import type { LyricLine } from "@/domain/LyricLine";
 import type { Ref } from "vue";
 import { ref } from "vue";
 import Liricle from "liricle";
+import { S3_SOURCE_LINK, S3Dir } from "@/domain/enums/aws-link";
 
 export const useLiricle = () => {
   const lyrics: Ref<LyricLine[]> = ref([]);
@@ -22,7 +23,7 @@ export const useLiricle = () => {
       currentLineIndex.value = line.index;
     });
     liricleInstance.load({
-      url: `https://capoeira-songs.s3.eu-west-3.amazonaws.com/lyrics/${lyricsLink}`,
+      url: S3_SOURCE_LINK(S3Dir.LYRICS, lyricsLink),
     });
     audioEl.addEventListener("timeupdate", () => {
       liricleInstance.sync(audioEl.currentTime);
