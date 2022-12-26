@@ -120,7 +120,15 @@ const installApp = async () => {
   deferredPrompt.value = null;
 };
 
+
 onMounted(() => {
+  window.addEventListener("beforeinstallprompt", (e) => {
+    // Stash the event so it can be triggered later.
+    deferredPrompt.value = e;
+    // Update UI notify the user they can install the PWA
+    // Optionally, send analytics event that PWA install promo was shown.
+    console.log(`'beforeinstallprompt' event was fired.`);
+  });
   window.addEventListener("appinstalled", () => {
     // Hide the app-provided install promotion
     // Clear the deferredPrompt so it can be garbage collected
