@@ -14,48 +14,53 @@
           :audio-element-el="audioElementEl"
         />
         <div class="player-wrapper" v-if="currentSong">
-          <SongInformation
-            ref="songInformationEl"
-            :song="currentSong"
-            @viewInformationClick="viewInformation"
-          />
-          <div class="player-controls">
-            <audio
-              ref="audioElementEl"
-              :src="songSource"
-              @timeupdate="getTime"
-              preload="metadata"
-            ></audio>
-            <div
-              ref="playerProgressEl"
-              class="progress-wrapper"
-              :class="{ '-disabled': !isPlaying }"
-              @click="scrub"
-              @mousedown="mousedown = true"
-              @mouseup="mousedown = false"
-              @mousemove="updateProgress($event)"
-              @touchstart="mousedown = true"
-              @touchend="mousedown = false"
-              @touchmove="updateProgress($event)"
-            >
-              <div class="progress" ref="progressBarEl">
-                <div class="current-progress" :style="{ width: percent }"></div>
+          <div class="player-main-information">
+            <SongInformation
+              ref="songInformationEl"
+              :song="currentSong"
+              @viewInformationClick="viewInformation"
+            />
+            <div class="player-controls">
+              <audio
+                ref="audioElementEl"
+                :src="songSource"
+                @timeupdate="getTime"
+                preload="metadata"
+              ></audio>
+              <div
+                ref="playerProgressEl"
+                class="progress-wrapper"
+                :class="{ '-disabled': !isPlaying }"
+                @click="scrub"
+                @mousedown="mousedown = true"
+                @mouseup="mousedown = false"
+                @mousemove="updateProgress($event)"
+                @touchstart="mousedown = true"
+                @touchend="mousedown = false"
+                @touchmove="updateProgress($event)"
+              >
+                <div class="progress" ref="progressBarEl">
+                  <div
+                    class="current-progress"
+                    :style="{ width: percent }"
+                  ></div>
+                </div>
+              </div>
+              <div ref="playerTimerEl" class="timers">
+                <p>{{ currentTime }}</p>
+                <p>{{ songDuration }}</p>
               </div>
             </div>
-            <div ref="playerTimerEl" class="timers">
-              <p>{{ currentTime }}</p>
-              <p>{{ songDuration }}</p>
-            </div>
-            <button
-              :aria-label="isPlaying ? 'pause song' : 'play song'"
-              ref="playButtonEl"
-              class="player-button"
-              @click="playPause"
-            >
-              <Icon v-if="isPlaying" name="pause" :size="30" />
-              <Icon v-else name="play" :size="30" />
-            </button>
           </div>
+          <button
+            :aria-label="isPlaying ? 'pause song' : 'play song'"
+            ref="playButtonEl"
+            class="player-button"
+            @click="playPause"
+          >
+            <Icon v-if="isPlaying" name="pause" :size="30" />
+            <Icon v-else name="play" :size="30" />
+          </button>
         </div>
       </div>
       <div class="information-view" ref="informationViewEl">
@@ -93,7 +98,6 @@ const { t } = useI18n();
 
 const isPlaying = ref(false);
 const mousedown = ref(false);
-const lyricsReaderKey = ref(0);
 
 const audioContext = ref();
 
@@ -296,6 +300,10 @@ onMounted(() => {
 </script>
 
 <style lang="scss">
+.player-main-information {
+  width: 100%;
+}
+
 .player-container {
   position: fixed;
   top: 0;
@@ -423,6 +431,59 @@ onMounted(() => {
     path {
       stroke: var(--color-black-50);
     }
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .player-main-information {
+    flex: 1;
+    margin-right: 3rem;
+  }
+  .player {
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+    background: var(--color-black-50);
+    .gradient-fade {
+      background: var(--color-black-50);
+      background: linear-gradient(
+          0deg,
+          rgba(var(--color-black-50-rgb), 0) 0%,
+          rgba(var(--color-black-50-rgb), 1) 40%
+      );
+    }
+    .player-wrapper {
+      flex-direction: row;
+      height: 16rem;
+      background: var(--color-black-50);
+      background: linear-gradient(
+          180deg,
+          rgba(var(--color-black-50-rgb), 0) 0%,
+          rgba(var(--color-black-50-rgb), 1) 25%
+      );
+    }
+  }
+  .lyrics {
+    height: 100vh;
+    padding-bottom: 16rem;
+  }
+  .player-controls {
+    margin-top: 0;
+  }
+  .player-container {
+    position: relative;
+    width: 100%;
+    z-index: 0;
+    background: var(--color-black-50);
+  }
+  .information-view {
+    position: fixed;
+    right: 0;
+    opacity: 0.5;
+    max-width: 60rem;
+    width: 100%;
+    background: var(--color-background);
+    transform: translateX(60rem);
   }
 }
 </style>

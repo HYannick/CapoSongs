@@ -24,41 +24,108 @@
 </template>
 
 <script setup lang="ts">
-import type { PropType } from "vue";
+import type { PropType, Ref } from "vue";
 import type { Song } from "@/domain/Song";
 import { useAppStore } from "@/stores/app.store";
 import { useSongStore } from "@/stores/song.store";
 import { useI18n } from "vue-i18n";
-import { onMounted, ref } from "vue";
+import { onMounted, ref, watch } from "vue";
 import gsap from "gsap";
 import SongItem from "@/components/SongItem.vue";
 import NotFound from "@/components/common/NotFound.vue";
+import { storeToRefs } from "pinia";
+import type { SongItemRef } from "@/domain/SongItem";
+import { useMediaQuery } from "@vueuse/core";
 
 defineProps({
   songs: Array as PropType<Song[]>,
 });
 const containerRef = ref();
 const songItemRef = ref();
+const songItemRefs: Ref<SongItemRef[]> = ref([]);
 const { showPlayer } = useAppStore();
+const { currentSong } = storeToRefs(useSongStore());
 const { loadSong } = useSongStore();
+const isLargeScreen = useMediaQuery("(min-width: 1024px)");
 const { t } = useI18n();
+
 const setSong = (song: Song) => {
   loadSong(song);
   showPlayer();
 };
+const animateOnSongSelected = (song: Song) => {
+  const currentSongItem = songItemRefs.value.find((el) => el.id === song.id);
+  const songItems = songItemRefs.value
+    .filter((el) => el.id !== currentSongItem!.id)
+    .map((el) => el.container);
 
-defineExpose({ containerRef });
+  if (currentSongItem) {
+    gsap.fromTo(
+      currentSongItem.container,
+      {
+        duration: 0.3,
+        ease: "back",
+        opacity: 0.4,
+      },
+      {
+        duration: 0.3,
+        ease: "back",
+        opacity: 1,
+      }
+    );
+    gsap.to(songItems, {
+      duration: 0.3,
+      ease: "back",
+      opacity: 0.4,
+    });
+  } else {
+    gsap.to(songItems, {
+      duration: 0.3,
+      ease: "back",
+      opacity: 1,
+    });
+  }
+};
+const fadeInAllSongItems = () => {
+  gsap.to(
+    songItemRefs.value.map((el) => el.container),
+    {
+      duration: 0.7,
+      ease: "back",
+      opacity: 1,
+    }
+  );
+};
+const staggerShowAllSongItems = () => {
+  gsap.from(
+    songItemRefs.value.map((el) => el.container),
+    {
+      duration: 0.7,
+      ease: "back",
+      opacity: 0,
+      y: "10px",
+      stagger: 0.1,
+    }
+  );
+};
+
+watch(
+  () => currentSong.value,
+  (song) => {
+    if(!isLargeScreen.value) return;
+    if (!song) {
+      fadeInAllSongItems();
+      return;
+    }
+    animateOnSongSelected(song);
+  }
+);
 
 onMounted(() => {
-  const songItems = Array.from(songItemRef.value, (el: any) => el.container);
-  gsap.from(songItems, {
-    duration: 0.7,
-    ease: "back",
-    opacity: 0,
-    y: "10px",
-    stagger: 0.1,
-  });
+  songItemRefs.value = Array.from(songItemRef.value) as SongItemRef[];
+  staggerShowAllSongItems();
 });
+defineExpose({ containerRef });
 </script>
 
 <style lang="scss">
@@ -75,65 +142,54 @@ onMounted(() => {
     left: 0.8rem;
   }
 }
-
-.song-item {
-  display: flex;
-  align-items: center;
-  margin-bottom: 1.5rem;
-  cursor: pointer;
-
-  &:last-child {
-    margin-bottom: 0;
-  }
-
-  &-icon {
-    position: absolute;
-    z-index: 1;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+@media screen and (min-width: 1024px) {
+  .song-list-container {
     display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  &-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 1;
-    background-color: rgba(var(--color-primary-600-rgb), 0.4);
-  }
-
-  &-thumbnail {
-    width: 6rem;
-    height: 6rem;
-    object-fit: cover;
-    border-radius: 1rem;
+    flex-direction: column;
+    height: 100%;
     overflow: hidden;
-    -webkit-mask-image: -webkit-radial-gradient(white, black);
     position: relative;
 
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
+    .song-list-heading {
+      z-index: 2;
     }
 
-    transition: transform 0.1s cubic-bezier(0, 0.55, 0.45, 1);
+    &:before {
+      content: "";
+      position: absolute;
+      background: rgb(245, 245, 245);
+      background: linear-gradient(
+        0deg,
+        rgba(var(--color-background-rgb), 0) 0%,
+        rgba(var(--color-background-rgb), 1) 40%
+      );
+      height: 6rem;
+      top: 4rem;
+      z-index: 1;
+      left: 0;
+      right: 0;
+    }
 
-    &:active {
-      transform: scale(0.9);
+    &:after {
+      content: "";
+      position: absolute;
+      background: rgb(245, 245, 245);
+      background: linear-gradient(
+        180deg,
+        rgba(var(--color-background-rgb), 0) 0%,
+        rgba(var(--color-background-rgb), 1) 40%
+      );
+      height: 6rem;
+      z-index: 1;
+      bottom: 0rem;
+      left: 0;
+      right: 0;
     }
   }
-
-  &-title {
-    flex: 1;
-    margin-left: 2rem;
-    font-size: 1.6rem;
+  .song-list {
+    overflow-y: auto;
+    height: 100%;
+    padding: 2rem 0 5rem;
   }
 }
 </style>

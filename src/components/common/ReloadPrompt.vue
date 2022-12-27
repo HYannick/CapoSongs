@@ -58,7 +58,7 @@ const { t } = useI18n();
   right: 5rem;
   bottom: 0;
   left: 5rem;
-  z-index: 1;
+  z-index: 999;
   text-align: center;
   margin: 1rem;
   box-shadow: 3px 4px 5px 0 var(--color-black-200);

@@ -48,7 +48,6 @@ const initLyricReader = (lyricsLink: string) => {
     }));
   });
   liricleInstance.on("sync", (line: LyricLine, word: LyricLine) => {
-    console.log(line);
     currentLineIndex.value = line.index;
   });
   liricleInstance.load({
@@ -96,7 +95,7 @@ defineExpose({ containerRef: lyricsContainerEl });
 }
 .lyric-line {
   text-align: center;
-  font-size: 4rem;
+  font-size: 3.5rem;
   color: var(--color-black-500);
   margin-bottom: 1rem;
   transform: scale(1);
