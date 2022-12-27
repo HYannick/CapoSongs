@@ -15,7 +15,10 @@
     </div>
     <SettingsSidebar :from="SidebarOrigin.RIGHT" />
     <FavouritesSidebar :from="SidebarOrigin.LEFT" />
-    <Player v-if="songStore.currentSong" />
+    <div class="player">
+      <Player v-if="songStore.currentSong" />
+      <div class="song-placeholder" v-else>Load some songs bro.</div>
+    </div>
     <Mentions v-if="appStore.mentionsVisible" />
   </main>
 </template>
@@ -99,5 +102,112 @@ onMounted(async () => {
 .search-container {
   margin-top: 3rem;
   margin-bottom: 4rem;
+}
+
+.main-container {
+  padding: 1.5rem;
+}
+
+main {
+  .song-placeholder {
+    display: none;
+  }
+  @media screen and (min-width: 1024px) {
+    display: flex;
+    .song-placeholder {
+      display: flex;
+    }
+    .main-container {
+      flex: 0.25;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      z-index: 9;
+    }
+    .song-list-container {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      overflow: hidden;
+      position: relative;
+      .song-list-heading {
+        z-index: 2;
+      }
+      &:before {
+        content: "";
+        position: absolute;
+        background: rgb(245, 245, 245);
+        background: linear-gradient(
+          0deg,
+          rgba(var(--color-background-rgb), 0) 0%,
+          rgba(var(--color-background-rgb), 1) 40%
+        );
+        height: 6rem;
+        top: 4rem;
+        z-index: 1;
+        left: 0;
+        right: 0;
+      }
+      &:after {
+        content: "";
+        position: absolute;
+        background: rgb(245, 245, 245);
+        background: linear-gradient(
+          180deg,
+          rgba(var(--color-background-rgb), 0) 0%,
+          rgba(var(--color-background-rgb), 1) 40%
+        );
+        height: 6rem;
+        z-index: 1;
+        bottom: 0rem;
+        left: 0;
+        right: 0;
+      }
+    }
+    .song-list {
+      overflow-y: auto;
+      height: 100%;
+      padding: 2rem 0 5rem;
+    }
+    .player {
+      flex: 1;
+      overflow: hidden;
+      position: relative;
+      background: var(--color-black-50);
+      .gradient-fade {
+        background: var(--color-black-50);
+        background: linear-gradient(
+          0deg,
+          rgba(var(--color-black-50-rgb), 0) 0%,
+          rgba(var(--color-black-50-rgb), 1) 40%
+        );
+      }
+      .player-wrapper {
+        background: var(--color-black-50);
+        background: linear-gradient(
+          180deg,
+          rgba(var(--color-black-50-rgb), 0) 0%,
+          rgba(var(--color-black-50-rgb), 1) 25%
+        );
+      }
+    }
+    .player-container {
+      position: relative;
+      width: 100%;
+      z-index: 0;
+      background: var(--color-black-50);
+    }
+    .information-view {
+      position: fixed;
+      right: 0;
+      opacity: 0.5;
+      max-width: 60rem;
+      width: 100%;
+      background: var(--color-background);
+      transform: translateX(60rem);
+    }
+  }
 }
 </style>

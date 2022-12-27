@@ -29,6 +29,7 @@ export default defineConfig({
             src: "/android-chrome-192x192.png",
             sizes: "192x192",
             type: "image/png",
+            purpose: "any maskable",
           },
           {
             src: "/android-chrome-256x256.png",

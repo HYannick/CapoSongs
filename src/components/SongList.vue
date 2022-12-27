@@ -1,5 +1,5 @@
 <template>
-  <div ref="containerRef" class="song-list">
+  <div ref="containerRef" class="song-list-container">
     <div class="song-list-heading">
       <h2
         class="text-dot -left text -extra-bold"

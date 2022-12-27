@@ -5,13 +5,13 @@
     :class="{ 'player-container-open': playerVisible }"
   >
     <div ref="playerBodyEl" class="player-body">
-      <div class="player-view">
+      <div class="player-view" ref="playerViewEl">
         <div class="gradient-fade"></div>
         <BackButton @click="closeSong" />
         <LyricReader
           ref="lyricsEl"
-          :lyrics="lyrics"
-          :current-line-index="currentLineIndex"
+          :song="currentSong"
+          :audio-element-el="audioElementEl"
         />
         <div class="player-wrapper" v-if="currentSong">
           <SongInformation
@@ -58,7 +58,7 @@
           </div>
         </div>
       </div>
-      <div class="information-view">
+      <div class="information-view" ref="informationViewEl">
         <SongDetails
           @goBack="viewPlayer"
           :history="currentSong.history"
@@ -74,16 +74,16 @@ import Icon from "@/components/component-library/Icon.vue";
 import { useAppStore } from "@/stores/app.store";
 import { storeToRefs } from "pinia";
 import { useSongStore } from "@/stores/song.store";
-import { computed, onMounted, ref } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import { usePlayerProgress } from "@/composables/usePlayerProgress";
 import { useI18n } from "vue-i18n";
 import gsap from "gsap";
 import LyricReader from "@/components/player/LyricReader.vue";
 import SongInformation from "@/components/player/SongInformation.vue";
 import SongDetails from "@/components/player/SongDetails.vue";
-import { useLiricle } from "@/composables/useLiricle";
 import BackButton from "@/components/common/BackButton.vue";
 import { S3_SOURCE_LINK, S3Dir } from "@/domain/enums/aws-link";
+import { useMediaQuery } from "@vueuse/core";
 
 const { hidePlayer } = useAppStore();
 const { playerVisible } = storeToRefs(useAppStore());
@@ -93,6 +93,7 @@ const { t } = useI18n();
 
 const isPlaying = ref(false);
 const mousedown = ref(false);
+const lyricsReaderKey = ref(0);
 
 const audioContext = ref();
 
@@ -107,7 +108,10 @@ const playButtonEl = ref();
 const lyricsEl = ref();
 const playerBodyEl = ref();
 
-const { lyrics, currentLineIndex, initLyricReader } = useLiricle();
+const informationViewEl = ref();
+const playerViewEl = ref();
+
+const isLargeScreen = useMediaQuery("(min-width: 1024px)");
 
 const { percent, currentTime, songDuration, scrub, setTimers, getTime } =
   usePlayerProgress(audioElementEl, progressBarEl);
@@ -140,16 +144,24 @@ const updateProgress = ($event: any) => {
   scrub($event);
 };
 
+const playSong = () => {
+  audioElementEl.value.play();
+  isPlaying.value = true;
+};
+
+const pauseSong = () => {
+  audioElementEl.value.pause();
+  isPlaying.value = false;
+};
+
 const playPause = () => {
   if (audioContext.value.state === "suspended") {
     audioContext.value.resume();
   }
   if (isPlaying.value === false) {
-    audioElementEl.value.play();
-    isPlaying.value = true;
+    playSong();
   } else if (isPlaying.value === true) {
-    audioElementEl.value.pause();
-    isPlaying.value = false;
+    pauseSong();
   }
 
   gsap.from(playButtonEl.value, {
@@ -157,9 +169,22 @@ const playPause = () => {
     scale: 0.9,
   });
 };
-
 const viewInformation = () => {
   window.history.pushState({ player: false, info: true }, "");
+  if (isLargeScreen.value) {
+    gsap.to(playerViewEl.value, {
+      opacity: "0.3",
+      ease: "circ.inOut",
+      duration: "0.6",
+    });
+    gsap.to(informationViewEl.value, {
+      x: "0",
+      opacity: "1",
+      ease: "circ.inOut",
+      duration: "0.6",
+    });
+    return;
+  }
   gsap.to(playerBodyEl.value, {
     x: "-100vw",
     ease: "circ.inOut",
@@ -169,6 +194,20 @@ const viewInformation = () => {
 
 const viewPlayer = () => {
   window.history.pushState({ player: true, info: false }, "");
+  if (isLargeScreen.value) {
+    gsap.to(playerViewEl.value, {
+      opacity: "1",
+      ease: "circ.inOut",
+      duration: "0.6",
+    });
+    gsap.to(informationViewEl.value, {
+      x: "60rem",
+      opacity: "0.5",
+      ease: "circ.inOut",
+      duration: "0.6",
+    });
+    return;
+  }
   gsap.to(playerBodyEl.value, {
     x: "0",
     ease: "circ.inOut",
@@ -189,10 +228,7 @@ const initAudioFile = () => {
   track.connect(audioContext.value.destination);
 
   track.mediaElement.addEventListener("loadedmetadata", setTimers);
-  track.mediaElement.addEventListener("canplaythrough", () => {
-    isPlaying.value = true;
-    audioElementEl.value.play();
-  });
+  track.mediaElement.addEventListener("canplaythrough", playSong);
   track.mediaElement.addEventListener("ended", () => {
     isPlaying.value = false;
   });
@@ -256,7 +292,6 @@ onMounted(() => {
       "-=0.7"
     );
   initAudioFile();
-  initLyricReader(audioElementEl.value, currentSong.value!.lyrics_link);
 });
 </script>
 
