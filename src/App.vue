@@ -10,7 +10,7 @@ onMounted(() => {
   locale.value = localStorage.getItem("lang") || "fr";
   async function detectSWUpdate() {
     const registration = await navigator.serviceWorker.ready;
-
+    alert('registration')
     registration.addEventListener("updatefound", event => {
       alert('updateFound')
       const newSW = registration.installing!;
