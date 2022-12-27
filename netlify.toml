@@ -4,7 +4,7 @@ NODE_VERSION = "14"
 
 [build]
 publish = "dist"
-command = "npx pnpm run build-only"
+command = "vite build-only"
 
 [[redirects]]
 from = "/*"
