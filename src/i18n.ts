@@ -5,7 +5,13 @@ const commonI18n = {
     greetings:
       '<span class="text -title-1 -black' +
       ' color-secondary--600">H</span>ello!',
-    pwaPrompt: {
+    pwaUpdate: {
+      offlineReady: "App ready to work offline",
+      updateReady: "New version available!",
+      dismiss: "Close",
+      reload: "Reload",
+    },
+    pwaInstall: {
       text: "For a better user experience<br />Add the app to your homescreen :)",
       dismiss: "Not now",
       install: "Install",
@@ -59,7 +65,13 @@ const commonI18n = {
     greetings:
       '<span class="text -title-1 -black' +
       ' color-secondary--600">H</span>ey !',
-    pwaPrompt: {
+    pwaUpdate: {
+      offlineReady: "App disponible hors ligne",
+      updateReady: "Nouvelle version disponible !",
+      dismiss: "Fermer",
+      reload: "Recharger",
+    },
+    pwaInstall: {
       text: "Pour une meilleure expérience,<br />Ajoute l’application à ton écran d’accueil :)",
       dismiss: "Pas maintenant",
       install: "Installer",

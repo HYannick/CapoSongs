@@ -1,63 +1,105 @@
 <script setup lang="ts">
-import { useRegisterSW } from 'virtual:pwa-register/vue'
+import { useRegisterSW } from "virtual:pwa-register/vue";
+import { useI18n } from "vue-i18n";
 
-const {
-  offlineReady,
-  needRefresh,
-  updateServiceWorker,
-} = useRegisterSW()
+const { offlineReady, needRefresh, updateServiceWorker } = useRegisterSW();
 
 const close = async () => {
-  offlineReady.value = false
-  needRefresh.value = false
-}
+  offlineReady.value = false;
+  needRefresh.value = false;
+};
+
+const { t } = useI18n();
 </script>
 
 <template>
   <div
-    v-if="offlineReady || needRefresh"
     class="pwa-toast"
+    :class="{ '-visible': needRefresh }"
     role="alert"
   >
     <div class="message">
-      <span v-if="offlineReady">
-        App ready to work offline
-      </span>
-      <span v-else>
-        New content available, click on reload button to update.
+      <span class="text -body" v-html="t('pwaUpdate.updateReady')">
       </span>
     </div>
-    <button v-if="needRefresh" @click="updateServiceWorker()">
-      Reload
-    </button>
-    <button @click="close">
-      Close
-    </button>
+    <div class="pwa-toast-footer">
+      <button class="dismiss-reload" @click="close">
+        {{ t("pwaUpdate.dismiss") }}
+      </button>
+      <button
+        class="reload-pwa"
+        @click="updateServiceWorker()"
+      >
+        {{ t("pwaUpdate.reload") }}
+      </button>
+    </div>
+  </div>
+  <div
+    class="pwa-toast"
+    :class="{ '-visible': offlineReady }"
+    role="alert"
+  >
+    <div class="message">
+      <span class="text -body">
+        {{ t("pwaUpdate.offlineReady") }}
+      </span>
+    </div>
+    <div class="pwa-toast-footer">
+      <button class="dismiss-offline" @click="close">
+        {{ t("pwaUpdate.dismiss") }}
+      </button>
+    </div>
   </div>
 </template>
 
-<style>
+<style lang="scss">
 .pwa-toast {
   position: fixed;
-  right: 0;
+  right: 5rem;
   bottom: 0;
-  margin: 16px;
-  padding: 12px;
-  border: 1px solid #8885;
-  border-radius: 4px;
+  left: 5rem;
   z-index: 1;
-  text-align: left;
-  box-shadow: 3px 4px 5px 0 #8885;
-  background-color: white;
+  text-align: center;
+  margin: 1rem;
+  box-shadow: 3px 4px 5px 0 var(--color-black-200);
+  background: var(--color-secondary-600);
+  padding: 0.5rem 0 1rem;
+  border-radius: 1rem;
+  opacity: 0;
+  transform: translateY(10rem);
+  transition: transform 0.7s cubic-bezier(0.83, 0, 0.17, 1),
+    opacity 0.7s cubic-bezier(0.83, 0, 0.17, 1);
+
+  span {
+    color: var(--color-primary-300);
+  }
+
+  &.-visible {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
-.pwa-toast .message {
-  margin-bottom: 8px;
+
+.pwa-toast-footer {
+  margin-top: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.pwa-toast button {
-  border: 1px solid #8885;
-  outline: none;
-  margin-right: 5px;
-  border-radius: 2px;
-  padding: 3px 10px;
+
+.dismiss-reload {
+  background: transparent;
+  border: transparent;
+  color: var(--color-primary-300);
+  margin-right: 1rem;
+}
+
+.reload-pwa, .dismiss-offline {
+  background: #ffdab9;
+  border: transparent;
+  color: var(--color-secondary-600);
+  padding: 1rem 3rem;
+  border-radius: 4rem;
+  font-weight: bold;
 }
 </style>

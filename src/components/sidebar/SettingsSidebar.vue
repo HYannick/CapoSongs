@@ -24,21 +24,21 @@
         >
           <hr class="pwa-installation-spacer" />
           <div class="pwa-installation-prompt">
-            <p class="text -regular -bold" v-html="t('pwaPrompt.text')"></p>
+            <p class="text -regular -bold" v-html="t('pwaInstall.text')"></p>
             <div class="pwa-installation-footer">
               <button
                 aria-label="dismiss pwa install"
                 class="dismiss-install"
                 @click="closeInstallPrompt"
               >
-                {{ t("pwaPrompt.dismiss") }}
+                {{ t("pwaInstall.dismiss") }}
               </button>
               <button
                 aria-label="install pwa"
                 class="install-pwa"
-                @click="installApp(t('pwaPrompt.appleDeviceMessage'))"
+                @click="installApp(t('pwaInstall.appleDeviceMessage'))"
               >
-                {{ t("pwaPrompt.install") }}
+                {{ t("pwaInstall.install") }}
               </button>
             </div>
           </div>
@@ -244,7 +244,7 @@ onMounted(initInstall);
 }
 
 .pwa-installation-prompt {
-  background: var(--color-primary-600);
+  background: var(--color-secondary-600);
   padding: 1.5rem;
   border-radius: 1rem;
 
@@ -266,7 +266,7 @@ onMounted(initInstall);
   .install-pwa {
     background: #ffdab9;
     border: transparent;
-    color: var(--color-primary-600);
+    color: var(--color-secondary-600);
     padding: 1rem 3rem;
     border-radius: 4rem;
     font-weight: bold;

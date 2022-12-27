@@ -2,7 +2,6 @@
   <main>
     <div class="main-container">
       <Heading ref="headingEl" />
-      patate
       <div ref="searchEl" class="search-container">
         <InputField
           name="query"
@@ -14,6 +13,7 @@
       </div>
       <SongList ref="songListEl" :songs="filteredSongs" />
     </div>
+    <SettingsSidebar :from="SidebarOrigin.RIGHT" />
     <FavouritesSidebar :from="SidebarOrigin.LEFT" />
     <Player v-if="songStore.currentSong" />
     <Mentions v-if="appStore.mentionsVisible" />
