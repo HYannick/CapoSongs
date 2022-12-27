@@ -4,7 +4,7 @@ NODE_VERSION = "14"
 
 [build]
 publish = "dist"
-command = "vite build-only"
+command = "vite build"
 
 [[redirects]]
 from = "/*"
