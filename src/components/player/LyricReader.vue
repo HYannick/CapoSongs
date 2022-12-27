@@ -91,6 +91,7 @@ defineExpose({ containerRef: lyricsContainerEl });
 .lyrics {
   height: 75vh;
   overflow-y: scroll;
+  overflow-x: hidden;
   padding: 10rem 2rem;
 }
 .lyric-line {
