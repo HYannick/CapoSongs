@@ -14,7 +14,6 @@
       <SongList ref="songListEl" :songs="filteredSongs" />
     </div>
     <SettingsSidebar :from="SidebarOrigin.RIGHT" />
-    <FavouritesSidebar :from="SidebarOrigin.LEFT" />
     <Player v-if="songStore.currentSong" />
     <Mentions v-if="appStore.mentionsVisible" />
   </main>
