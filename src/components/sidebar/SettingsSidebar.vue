@@ -16,6 +16,7 @@
         />
       </div>
       <div class="settings-body">
+        <p>patate</p>
         <template
           v-if="
             !(appInstalled || appInstallationDismissed) ||
