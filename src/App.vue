@@ -16,9 +16,12 @@ onMounted(() => {
       const newSW = registration.installing!;
       alert(newSW);
       newSW.addEventListener("statechange", event => {
+        alert(newSW.state);
         if (newSW.state == "installed") {
-          // New service worker is installed, but waiting activation
           alert('everything is installed')
+        }
+        if (newSW.state == "activated") {
+          alert('sw activated')
         }
       });
     })
