@@ -237,10 +237,20 @@ onMounted(initInstall);
   justify-content: flex-end;
 }
 
+.pwa-installation-spacer {
+  @media all and (display-mode: standalone) {
+    display: none;
+  }
+}
+
 .pwa-installation-prompt {
   background: var(--color-primary-600);
   padding: 1.5rem;
   border-radius: 1rem;
+
+  @media all and (display-mode: standalone) {
+    display: none;
+  }
 
   p {
     color: var(--color-primary-300);
