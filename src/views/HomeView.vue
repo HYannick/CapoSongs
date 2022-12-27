@@ -1,7 +1,6 @@
 <template>
   <main>
     <div class="main-container">
-      patate
       <Heading ref="headingEl" />
       <div ref="searchEl" class="search-container">
         <InputField
