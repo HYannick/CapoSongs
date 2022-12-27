@@ -120,13 +120,8 @@ const { appInstalled, appInstallationDismissed } = storeToRefs(
   usePWAInstallation()
 );
 
-const {
-  detectSWUpdate,
-  isAppleDevice,
-  initInstall,
-  installApp,
-  closeInstallPrompt,
-} = usePWAInstallation();
+const { isAppleDevice, initInstall, installApp, closeInstallPrompt } =
+  usePWAInstallation();
 const { isDarkMode, switchTheme } = useTheme();
 
 const sidebarClasses = computed(() => ({
@@ -142,10 +137,7 @@ watch(
   }
 );
 
-onMounted(() => {
-  initInstall();
-  detectSWUpdate();
-});
+onMounted(initInstall);
 </script>
 
 <style lang="scss">

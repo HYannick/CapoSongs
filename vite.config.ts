@@ -12,7 +12,7 @@ export default defineConfig({
     vue(),
     svgLoader(),
     VitePWA({
-      registerType: "autoUpdate",
+      registerType: "prompt",
       workbox: {
         globPatterns: [
           "**/*.{js,css,html,json,ico,png,svg,jpeg,jpg,mp3,ttf,webp}",
