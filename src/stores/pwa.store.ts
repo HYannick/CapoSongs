@@ -15,6 +15,21 @@ export const usePWAInstallation = defineStore("pwa", () => {
     });
   };
 
+  const detectSWUpdate = async () => {
+    const registration = await navigator.serviceWorker.ready;
+
+    registration.addEventListener("updatefound", () => {
+      alert('updateFound')
+      const newSW = registration.installing!;
+      newSW.addEventListener("statechange", () => {
+        console.log('???')
+        if (newSW.state == "installed") {
+          // New service worker is installed, but waiting activation
+        }
+      });
+    })
+  }
+
   const closeInstallPrompt = () => {
     appInstallationDismissed.value = true;
   };
@@ -55,5 +70,6 @@ export const usePWAInstallation = defineStore("pwa", () => {
     installApp,
     closeInstallPrompt,
     isAppleDevice,
+    detectSWUpdate,
   };
 });
