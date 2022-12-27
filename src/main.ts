@@ -31,6 +31,5 @@ const app = createApp(App);
 app.use(MotionPlugin)
 app.use(i18n);
 app.use(createPinia());
-app.provide('updateSw', updateSW)
 
 app.mount("#app");
