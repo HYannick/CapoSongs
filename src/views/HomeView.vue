@@ -3,6 +3,7 @@
     <div class="main-container">
       <Heading ref="headingEl" />
       <div ref="searchEl" class="search-container">
+        {{patate}}
         <InputField
           name="query"
           type="text"
