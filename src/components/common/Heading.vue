@@ -12,6 +12,10 @@
       <div class="text-dot -centered">
         <p class="text -title-1" v-html="t('greetings')"></p>
       </div>
+      <div class="heading-greetings-desktop">
+        <span>Capoeria</span>
+        <span>Songs</span>
+      </div>
     </div>
     <IconButton
       type="button"
@@ -107,8 +111,23 @@ defineExpose({ containerRef });
     }
   }
 }
-
+.heading-greetings-desktop {
+  display: none;
+}
 @media screen and (min-width: 1024px) {
+  .heading-greetings-desktop {
+    display: block;
+    span {
+      display: block;
+      line-height: 1;
+      font-size: 1.3rem;
+      color: var(--color-black-900);
+      font-family: var(--text-font-black);
+      &:last-child {
+        font-family: var(--text-font-light);
+      }
+    }
+  }
   .heading-container {
     align-items: center;
     margin-left: -1rem;
