@@ -124,6 +124,18 @@ const songSource = computed(() =>
   currentSong.value ? S3_SOURCE_LINK(S3Dir.SONGS, currentSong.value.source) : ""
 );
 
+const fadeInAnimation = {
+  duration: 0.7,
+  ease: "back",
+  opacity: 0,
+  y: "10px",
+};
+
+const playerContainerEase = {
+  ease: "circ.inOut",
+  duration: "0.6",
+};
+
 const songTranslation = computed(() => {
   if (!(currentSong.value && currentSong.value.translation)) return [];
 
@@ -173,42 +185,36 @@ const playPause = () => {
     scale: 0.9,
   });
 };
+
 const viewInformation = () => {
-  window.history.pushState({ player: false, info: true }, "");
   if (isLargeScreen.value) {
     gsap.to(playerViewEl.value, {
       opacity: "0.3",
-      ease: "circ.inOut",
-      duration: "0.6",
+      ...playerContainerEase,
     });
     gsap.to(informationViewEl.value, {
       x: "0",
       opacity: "1",
-      ease: "circ.inOut",
-      duration: "0.6",
+      ...playerContainerEase,
     });
     return;
   }
   gsap.to(playerBodyEl.value, {
     x: "-100vw",
-    ease: "circ.inOut",
-    duration: "0.6",
+    ...playerContainerEase,
   });
 };
 
 const viewPlayer = () => {
-  window.history.pushState({ player: true, info: false }, "");
   if (isLargeScreen.value) {
     gsap.to(playerViewEl.value, {
       opacity: "1",
-      ease: "circ.inOut",
-      duration: "0.6",
+      ...playerContainerEase,
     });
     gsap.to(informationViewEl.value, {
       x: "60rem",
       opacity: "0.5",
-      ease: "circ.inOut",
-      duration: "0.6",
+      ...playerContainerEase,
     });
     return;
   }
@@ -246,55 +252,11 @@ onMounted(() => {
     opacity: 0.7,
     y: "100vh",
   })
-    .from(
-      songInformationEl.value.containerRef,
-      {
-        duration: 0.7,
-        ease: "back",
-        opacity: 0,
-        y: "10px",
-      },
-      "-=0.45"
-    )
-    .from(
-      lyricsEl.value.containerRef,
-      {
-        opacity: 0,
-        y: "10px",
-        ease: "back",
-      },
-      "-=0.55"
-    )
-    .from(
-      playerProgressEl.value,
-      {
-        duration: 0.7,
-        ease: "back",
-        opacity: 0,
-        y: "10px",
-      },
-      "-=0.5"
-    )
-    .from(
-      playerTimerEl.value,
-      {
-        duration: 0.7,
-        ease: "back",
-        opacity: 0,
-        y: "10px",
-      },
-      "-=0.6"
-    )
-    .from(
-      playButtonEl.value,
-      {
-        duration: 0.7,
-        ease: "back",
-        opacity: 0,
-        y: "10px",
-      },
-      "-=0.7"
-    );
+    .from(songInformationEl.value.containerRef, fadeInAnimation, "-=0.45")
+    .from(lyricsEl.value.containerRef, fadeInAnimation, "-=0.55")
+    .from(playerProgressEl.value, fadeInAnimation, "-=0.5")
+    .from(playerTimerEl.value, fadeInAnimation, "-=0.6")
+    .from(playButtonEl.value, fadeInAnimation, "-=0.7");
   initAudioFile();
 });
 </script>
@@ -447,9 +409,9 @@ onMounted(() => {
     .gradient-fade {
       background: var(--color-black-50);
       background: linear-gradient(
-          0deg,
-          rgba(var(--color-black-50-rgb), 0) 0%,
-          rgba(var(--color-black-50-rgb), 1) 40%
+        0deg,
+        rgba(var(--color-black-50-rgb), 0) 0%,
+        rgba(var(--color-black-50-rgb), 1) 40%
       );
     }
     .player-wrapper {
@@ -457,9 +419,9 @@ onMounted(() => {
       height: 16rem;
       background: var(--color-black-50);
       background: linear-gradient(
-          180deg,
-          rgba(var(--color-black-50-rgb), 0) 0%,
-          rgba(var(--color-black-50-rgb), 1) 25%
+        180deg,
+        rgba(var(--color-black-50-rgb), 0) 0%,
+        rgba(var(--color-black-50-rgb), 1) 25%
       );
     }
   }

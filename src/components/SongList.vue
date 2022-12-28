@@ -49,6 +49,11 @@ const { loadSong } = useSongStore();
 const isLargeScreen = useMediaQuery("(min-width: 1024px)");
 const { t } = useI18n();
 
+const opacity = (opacity: number) => ({
+  duration: 0.3,
+  opacity,
+});
+
 const setSong = (song: Song) => {
   loadSong(song);
   showPlayer();
@@ -60,30 +65,10 @@ const animateOnSongSelected = (song: Song) => {
     .map((el) => el.container);
 
   if (currentSongItem) {
-    gsap.fromTo(
-      currentSongItem.container,
-      {
-        duration: 0.3,
-        ease: "back",
-        opacity: 0.4,
-      },
-      {
-        duration: 0.3,
-        ease: "back",
-        opacity: 1,
-      }
-    );
-    gsap.to(songItems, {
-      duration: 0.3,
-      ease: "back",
-      opacity: 0.4,
-    });
+    gsap.fromTo(currentSongItem.container, opacity(0.4), opacity(1));
+    gsap.to(songItems, opacity(0.4));
   } else {
-    gsap.to(songItems, {
-      duration: 0.3,
-      ease: "back",
-      opacity: 1,
-    });
+    gsap.to(songItems, opacity(1));
   }
 };
 const fadeInAllSongItems = () => {
@@ -91,7 +76,6 @@ const fadeInAllSongItems = () => {
     songItemRefs.value.map((el) => el.container),
     {
       duration: 0.7,
-      ease: "back",
       opacity: 1,
     }
   );
@@ -112,7 +96,7 @@ const staggerShowAllSongItems = () => {
 watch(
   () => currentSong.value,
   (song) => {
-    if(!isLargeScreen.value) return;
+    if (!isLargeScreen.value) return;
     if (!song) {
       fadeInAllSongItems();
       return;

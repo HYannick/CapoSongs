@@ -15,7 +15,7 @@
     </div>
     <div class="player">
       <Player v-if="songStore.currentSong" />
-      <div class="song-placeholder" v-else>Load some songs bro.</div>
+      <HomePlaceholder v-else />
     </div>
     <SettingsSidebar :from="SidebarOrigin.RIGHT" />
     <FavouritesSidebar :from="SidebarOrigin.LEFT" />
@@ -37,6 +37,8 @@ import { useI18n } from "vue-i18n";
 import gsap from "gsap";
 import { useAppStore } from "@/stores/app.store";
 import Mentions from "@/components/Mentions.vue";
+import Icon from "@/components/component-library/Icon.vue";
+import HomePlaceholder from "@/components/HomePlaceholder.vue";
 
 const query = ref("");
 const songStore = useSongStore();
@@ -109,17 +111,11 @@ onMounted(async () => {
 }
 
 main {
-  .song-placeholder {
-    display: none;
-  }
   @media screen and (min-width: 1024px) {
     #query {
       font-size: 1.4rem;
     }
     display: flex;
-    .song-placeholder {
-      display: flex;
-    }
     .main-container {
       flex: 0.25;
       height: 100vh;
@@ -128,6 +124,7 @@ main {
       flex-direction: column;
       position: relative;
       z-index: 9;
+      border-right: 0.1rem solid var(--color-black-100);
     }
   }
 }
