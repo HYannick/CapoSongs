@@ -11,6 +11,10 @@ const commonI18n = {
       dismiss: "Close",
       reload: "Reload",
     },
+    homePlaceholder: {
+      title: 'Ready to sing ?',
+      subtitle: ' Select a song on the left and start!',
+    },
     pwaInstall: {
       text: "For a better user experience<br />Add the app to your homescreen :)",
       dismiss: "Not now",
@@ -70,6 +74,10 @@ const commonI18n = {
       updateReady: "Nouvelle version disponible !",
       dismiss: "Fermer",
       reload: "Recharger",
+    },
+    homePlaceholder: {
+      title: 'Prêt à chanter ?',
+      subtitle: 'Sélectionne une musique à droite pour commencer !',
     },
     pwaInstall: {
       text: "Pour une meilleure expérience,<br />Ajoute l’application à ton écran d’accueil :)",

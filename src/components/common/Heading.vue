@@ -101,9 +101,14 @@ defineExpose({ containerRef });
 @media screen and (min-width: 1024px) {
   .heading-container {
     align-items: center;
+    margin-left: -1rem;
+    margin-right: -1rem;
     .heading-greetings {
       flex-direction: revert;
       justify-content: flex-start;
+      .text-dot {
+        display: none;
+      }
     }
     button:first-child {
       order: 1;
