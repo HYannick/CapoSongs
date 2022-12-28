@@ -77,7 +77,7 @@ const commonI18n = {
     },
     homePlaceholder: {
       title: 'Prêt à chanter ?',
-      subtitle: 'Sélectionne une musique à droite pour commencer !',
+      subtitle: 'Sélectionne une musique à gauche pour commencer !',
     },
     pwaInstall: {
       text: "Pour une meilleure expérience,<br />Ajoute l’application à ton écran d’accueil :)",
