@@ -13,32 +13,20 @@ const { t } = useI18n();
 </script>
 
 <template>
-  <div
-    class="pwa-toast"
-    :class="{ '-visible': needRefresh }"
-    role="alert"
-  >
+  <div class="pwa-toast" :class="{ '-visible': needRefresh }" role="alert">
     <div class="message">
-      <span class="text -body" v-html="t('pwaUpdate.updateReady')">
-      </span>
+      <span class="text -body" v-html="t('pwaUpdate.updateReady')"> </span>
     </div>
     <div class="pwa-toast-footer">
       <button class="dismiss-reload" @click="close">
         {{ t("pwaUpdate.dismiss") }}
       </button>
-      <button
-        class="reload-pwa"
-        @click="updateServiceWorker()"
-      >
+      <button class="reload-pwa" @click="updateServiceWorker()">
         {{ t("pwaUpdate.reload") }}
       </button>
     </div>
   </div>
-  <div
-    class="pwa-toast"
-    :class="{ '-visible': offlineReady }"
-    role="alert"
-  >
+  <div class="pwa-toast" :class="{ '-visible': offlineReady }" role="alert">
     <div class="message">
       <span class="text -body">
         {{ t("pwaUpdate.offlineReady") }}
@@ -92,14 +80,17 @@ const { t } = useI18n();
   border: transparent;
   color: var(--color-primary-300);
   margin-right: 1rem;
+  cursor: pointer;
 }
 
-.reload-pwa, .dismiss-offline {
+.reload-pwa,
+.dismiss-offline {
   background: #ffdab9;
   border: transparent;
   color: var(--color-secondary-600);
   padding: 1rem 3rem;
   border-radius: 4rem;
   font-weight: bold;
+  cursor: pointer;
 }
 </style>

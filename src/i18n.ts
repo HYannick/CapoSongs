@@ -12,8 +12,8 @@ const commonI18n = {
       reload: "Reload",
     },
     homePlaceholder: {
-      title: 'Ready to sing ?',
-      subtitle: ' Select a song on the left and start!',
+      title: "Ready to sing ?",
+      subtitle: " Select a song on the left and start!",
     },
     pwaInstall: {
       text: "For a better user experience<br />Add the app to your homescreen :)",
@@ -32,8 +32,10 @@ const commonI18n = {
     },
     songList: {
       title: '<span class="color-secondary--600">S</span>ongs',
-      notFound: "Songs not found :(",
-      notFoundDetails: "Reset your search!",
+      notFound: "Song not found :(",
+      notFoundDetails:
+        "Reset your search or send a new song at<br>" +
+        "<a href='mailto:capocancoes@gmail.com?subject=Nouvelle chanson à ajouter'>capocancoes@gmail.com</a>",
     },
     songDetails: {
       translate: "Translation",
@@ -76,8 +78,8 @@ const commonI18n = {
       reload: "Recharger",
     },
     homePlaceholder: {
-      title: 'Prêt à chanter ?',
-      subtitle: 'Sélectionne une musique à gauche pour commencer !',
+      title: "<span>P</span>rêt à chanter ?",
+      subtitle: "Sélectionne une musique à gauche pour commencer !",
     },
     pwaInstall: {
       text: "Pour une meilleure expérience,<br />Ajoute l’application à ton écran d’accueil :)",
@@ -90,17 +92,19 @@ const commonI18n = {
       backButton: "Retour",
       backPlayer: "Lecteur",
     },
-    songDetails: {
-      translate: "Traduction",
-      history: "Derrière cette chanson",
-    },
     search: {
       placeholder: "Quelle chanson veux-tu chanter ?",
     },
     songList: {
       title: '<span class="color-secondary--600">M</span>usiques',
       notFound: "Aucune chanson trouvée :(",
-      notFoundDetails: "Réinitialise ta recherche !",
+      notFoundDetails:
+        "Réinitialise ta recherche, ou envoie une nouvelle musique à<br>" +
+        "<a href='mailto:capocancoes@gmail.com?subject=Nouvelle chanson à ajouter'>capocancoes@gmail.com</a>",
+    },
+    songDetails: {
+      translate: "Traduction",
+      history: "Derrière cette chanson",
     },
     sidebars: {
       favourite: {
@@ -129,9 +133,6 @@ const commonI18n = {
     },
   },
   pt: {
-    songList: {
-      title: '<span class="color-secondary--600">C</span>anções',
-    },
     greetings:
       '<span class="text -title-1 -black' +
       ' color-secondary--600">Bom</span> dia!',
@@ -140,6 +141,9 @@ const commonI18n = {
     },
     search: {
       placeholder: "Que música queres cantar?",
+    },
+    songList: {
+      title: '<span class="color-secondary--600">C</span>anções',
     },
   },
 };

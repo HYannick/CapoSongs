@@ -2,7 +2,7 @@
   <div class="no-results">
     <Icon name="not-found" :size="iconSize" />
     <h4 class="text -title-3 -bold">{{ title }}</h4>
-    <p class="text -body">{{ subTitle }}</p>
+    <p class="subtitle text -body" v-html="subTitle"></p>
   </div>
 </template>
 <script lang="ts" setup>
@@ -37,6 +37,13 @@ withDefaults(defineProps<Props>(), {
   color: var(--color-black-400);
   h4 {
     margin-top: 2.5rem;
+  }
+  .subtitle {
+    text-align: center;
+    a {
+      color: var(--color-primary-600);
+      font-weight: bold;
+    }
   }
 }
 </style>

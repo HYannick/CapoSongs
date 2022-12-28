@@ -7,9 +7,12 @@
       <Icon name="fighters" size="600" />
     </div>
     <div ref="contentRef" class="song-placeholder-content">
-      <h2 class="text -title-4 color-black--500">{{t('homePlaceholder.title')}}</h2>
+      <h2
+        class="text -title-4 color-black--500"
+        v-html="t('homePlaceholder.title')"
+      ></h2>
       <p class="text -regular -large-body color-black--400">
-        {{t('homePlaceholder.subtitle')}}
+        {{ t("homePlaceholder.subtitle") }}
       </p>
     </div>
   </div>
@@ -20,7 +23,7 @@ import { onMounted, ref } from "vue";
 import gsap from "gsap";
 import { useI18n } from "vue-i18n";
 
-const {t} = useI18n();
+const { t } = useI18n();
 
 const imageRef = ref();
 const contentRef = ref();
@@ -58,6 +61,10 @@ onMounted(() => {
       h2 {
         font-family: fantasy, var(--text-font-bold), sans-serif;
         font-weight: bold;
+        span {
+          font-weight: bold;
+          color: var(--color-secondary-600);
+        }
       }
     }
     &-img {
