@@ -26,14 +26,19 @@ export default defineConfig({
         display: "standalone",
         icons: [
           {
-            src: "/android-chrome-192x192.png",
+            src: "/android/android-launchericon-192-192.png",
             sizes: "192x192",
             type: "image/png",
             purpose: "any maskable",
           },
           {
-            src: "/android-chrome-256x256.png",
+            src: "/android/android-launchericon-192-192.png",
             sizes: "256x256",
+            type: "image/png",
+          },
+          {
+            src: "/android/android-launchericon-512-512.png",
+            sizes: "512x512",
             type: "image/png",
           },
         ],

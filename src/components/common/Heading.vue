@@ -8,7 +8,7 @@
       @click="showFavouriteSongs"
     />
     <div class="heading-greetings">
-      <img class="heading-logo" src="@/assets/img/logo.webp" alt="logo" />
+      <Icon class="heading-logo" size="200" name="logo" />
       <div class="text-dot -centered">
         <p class="text -title-1" v-html="t('greetings')"></p>
       </div>
@@ -28,6 +28,7 @@ import IconButton from "@/components/component-library/IconButton.vue";
 import { useAppStore } from "@/stores/app.store";
 import { ref } from "vue";
 import { useI18n } from "vue-i18n";
+import Icon from "@/components/component-library/Icon.vue";
 const containerRef = ref();
 const appStore = useAppStore();
 const showFavouriteSongs = () => {
@@ -51,6 +52,15 @@ defineExpose({ containerRef });
 .heading-logo {
   width: 6.5rem;
   height: 6.5rem;
+  .logo-outline {
+    fill: var(--color-logo-outline);
+  }
+  .logo-inline {
+    fill: var(--color-logo-inline);
+  }
+  path {
+    fill: var(--color-logo-path);
+  }
 }
 
 .text-dot {
