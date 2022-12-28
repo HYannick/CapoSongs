@@ -2,7 +2,7 @@
   <div class="lyrics" ref="lyricsContainerEl">
     <p
       class="lyric-line text -bold"
-      :key="lyric.index"
+      :key="`${song.id}-${lyric.index}`"
       v-for="lyric in lyrics"
       :class="{
         '-highlighted': lyric.index === currentLineIndex,
@@ -36,9 +36,9 @@ let liricleInstance: any;
 const resetLineIndex = () => {
   currentLineIndex.value = 0;
 };
+
 const initLyricReader = (lyricsLink: string) => {
   if (!lyricsLink) return;
-
   liricleInstance = new Liricle();
   liricleInstance.offset = 200;
   liricleInstance.on("load", (data: any) => {
@@ -47,17 +47,23 @@ const initLyricReader = (lyricsLink: string) => {
       index,
     }));
   });
-  liricleInstance.on("sync", (line: LyricLine, word: LyricLine) => {
+  liricleInstance.on("sync", (line: LyricLine) => {
     currentLineIndex.value = line.index;
   });
   liricleInstance.load({
     url: S3_SOURCE_LINK(S3Dir.LYRICS, lyricsLink),
   });
   props.audioElementEl.addEventListener("timeupdate", () => {
-    liricleInstance.sync(props.audioElementEl.currentTime);
+    try {
+      liricleInstance.sync(props.audioElementEl.currentTime);
+    } catch (e) {
+      // Lib issue on lyrics reloading
+      return;
+    }
   });
   return liricleInstance;
 };
+
 const scrollIntoLine = () => {
   const currentLine = lyricsContainerEl.value.querySelector(".-highlighted");
   currentLine.scrollIntoView({
@@ -66,6 +72,7 @@ const scrollIntoLine = () => {
     inline: "center",
   });
 };
+
 const reloadLyrics = (song?: Song) => {
   if (!song) return;
   resetLineIndex();
@@ -74,6 +81,7 @@ const reloadLyrics = (song?: Song) => {
 };
 
 watch(() => currentLineIndex.value, scrollIntoLine);
+
 watch(
   () => props.audioElementEl,
   (audioRef) => {
@@ -82,6 +90,7 @@ watch(
   },
   { immediate: true }
 );
+
 watch(() => props.song, reloadLyrics);
 
 defineExpose({ containerRef: lyricsContainerEl });

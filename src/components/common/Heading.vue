@@ -34,7 +34,7 @@ const showFavouriteSongs = () => {
   appStore.showFavouriteSongs();
 };
 
-const {t} = useI18n();
+const { t } = useI18n();
 
 const showSettings = () => {
   appStore.showSettings();
@@ -94,6 +94,22 @@ defineExpose({ containerRef });
     font-size: 3.2rem;
     &:last-child {
       margin-right: 0;
+    }
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .heading-container {
+    align-items: center;
+    .heading-greetings {
+      flex-direction: revert;
+      justify-content: flex-start;
+    }
+    button:first-child {
+      order: 1;
+    }
+    button:last-child {
+      order: 2;
     }
   }
 }

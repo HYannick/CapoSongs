@@ -108,29 +108,14 @@ onMounted(async () => {
   padding: 1.5rem;
 }
 
-@media screen and (min-width: 1024px) {
-  #query {
-    font-size: 1.4rem;
-  }
-  .heading-container {
-    align-items: center;
-    .heading-greetings {
-      flex-direction: revert;
-      justify-content: flex-start;
-    }
-    button:first-child {
-      order: 1;
-    }
-    button:last-child {
-      order: 2;
-    }
-  }
-}
 main {
   .song-placeholder {
     display: none;
   }
   @media screen and (min-width: 1024px) {
+    #query {
+      font-size: 1.4rem;
+    }
     display: flex;
     .song-placeholder {
       display: flex;

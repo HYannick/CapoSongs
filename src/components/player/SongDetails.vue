@@ -11,7 +11,11 @@
       <h3 class="text -title-2 -extra-bold">
         {{ t("songDetails.translate") }}
       </h3>
-      <div class="translation-line" v-for="line in songTranslation" :key="line">
+      <div
+        class="translation-line"
+        v-for="(line, index) in songTranslation"
+        :key="`${line}-${index}`"
+      >
         <p class="text -regular -title-3">
           {{ line }}
         </p>
