@@ -1,6 +1,7 @@
-# capo-songs
+# CapoSongs
 
-This template should help get you started developing with Vue 3 in Vite.
+CapoSongs is a progressive webapp to learn capoeira songs.
+Link of the live app -> https://caposongs.netlify.app/
 
 ## Recommended IDE Setup
 
