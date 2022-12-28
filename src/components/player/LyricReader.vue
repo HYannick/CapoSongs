@@ -40,7 +40,7 @@ const resetLineIndex = () => {
 const initLyricReader = (lyricsLink: string) => {
   if (!lyricsLink) return;
   liricleInstance = new Liricle();
-  liricleInstance.offset = 200;
+  liricleInstance.offset = 1000;
   liricleInstance.on("load", (data: any) => {
     lyrics.value = data.lines.map((line: any, index: number) => ({
       ...line,
