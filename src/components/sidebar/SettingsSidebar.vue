@@ -154,7 +154,7 @@ onMounted(initInstall);
   margin-bottom: 1rem;
 
   path {
-    stroke: var(--color-primary-950);
+    stroke: var(--color-black-950);
   }
 }
 
@@ -204,11 +204,11 @@ onMounted(initInstall);
   align-items: flex-start;
 
   .lang path {
-    fill: var(--color-primary-950);
+    fill: var(--color-black-950);
   }
 
   .dark-mode path {
-    stroke: var(--color-primary-950);
+    stroke: var(--color-black-950);
   }
 
   .button-container {
