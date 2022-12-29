@@ -11,10 +11,10 @@
       :title="t('songList.notFound')"
       :sub-title="t('songList.notFoundDetails')"
     />
-    <div class="song-list" v-else>
+    <div ref="el" class="song-list" v-else>
       <SongItem
         ref="songItemRef"
-        v-for="song in songs"
+        v-for="song in songList"
         :song="song"
         :key="song.id"
         @selected="setSong"
@@ -35,19 +35,35 @@ import SongItem from "@/components/SongItem.vue";
 import NotFound from "@/components/common/NotFound.vue";
 import { storeToRefs } from "pinia";
 import type { SongItemRef } from "@/domain/SongItem";
-import { useMediaQuery } from "@vueuse/core";
+import { useInfiniteScroll, useMediaQuery } from "@vueuse/core";
 
-defineProps({
+const props = defineProps({
   songs: Array as PropType<Song[]>,
 });
 const containerRef = ref();
 const songItemRef = ref();
+const el = ref<HTMLElement>();
 const songItemRefs: Ref<SongItemRef[]> = ref([]);
 const { showPlayer } = useAppStore();
 const { currentSong } = storeToRefs(useSongStore());
 const { loadSong } = useSongStore();
 const isLargeScreen = useMediaQuery("(min-width: 1024px)");
 const { t } = useI18n();
+const songList = ref(props.songs);
+if (isLargeScreen.value) {
+  const end = ref(10);
+  songList.value = props.songs!.slice(0, end.value);
+
+  useInfiniteScroll(
+    el,
+    () => {
+      const start = (end.value += 1);
+      end.value = end.value + 5;
+      songList.value!.push(...props.songs!.slice(start, end.value));
+    },
+    { distance: 10 }
+  );
+}
 
 const opacity = (opacity: number) => ({
   duration: 0.3,
@@ -58,8 +74,10 @@ const setSong = (song: Song) => {
   loadSong(song);
   showPlayer();
 };
+
 const animateOnSongSelected = (song: Song) => {
   const currentSongItem = songItemRefs.value.find((el) => el.id === song.id);
+  if (!currentSongItem) return;
   const songItems = songItemRefs.value
     .filter((el) => el.id !== currentSongItem!.id)
     .map((el) => el.container);

@@ -79,7 +79,7 @@ import Icon from "@/components/component-library/Icon.vue";
 import { useAppStore } from "@/stores/app.store";
 import { storeToRefs } from "pinia";
 import { useSongStore } from "@/stores/song.store";
-import { computed, onMounted, ref, watch } from "vue";
+import { computed, onMounted, ref, watch, watchEffect } from "vue";
 import { usePlayerProgress } from "@/composables/usePlayerProgress";
 import { useI18n } from "vue-i18n";
 import gsap from "gsap";
@@ -88,7 +88,7 @@ import SongInformation from "@/components/player/SongInformation.vue";
 import SongDetails from "@/components/player/SongDetails.vue";
 import BackButton from "@/components/common/BackButton.vue";
 import { S3_SOURCE_LINK, S3Dir } from "@/domain/enums/aws-link";
-import { useMediaQuery } from "@vueuse/core";
+import { onKeyStroke, useMagicKeys, useMediaQuery } from "@vueuse/core";
 
 const { hidePlayer } = useAppStore();
 const { playerVisible } = storeToRefs(useAppStore());
@@ -243,6 +243,26 @@ const initAudioFile = () => {
     isPlaying.value = false;
   });
 };
+
+onKeyStroke(" ", (e) => {
+  e.preventDefault();
+  playPause();
+});
+
+onKeyStroke("ArrowLeft", (e) => {
+  e.preventDefault();
+  audioElementEl.value.currentTime -= 1;
+});
+
+onKeyStroke("ArrowRight", (e) => {
+  e.preventDefault();
+  audioElementEl.value.currentTime += 1;
+});
+
+onKeyStroke("Escape", (e) => {
+  e.preventDefault();
+  closeSong();
+});
 
 onMounted(() => {
   const t1 = gsap.timeline();

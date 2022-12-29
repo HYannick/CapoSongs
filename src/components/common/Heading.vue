@@ -9,9 +9,6 @@
     />
     <div class="heading-greetings">
       <Icon class="heading-logo" size="200" name="logo" />
-      <div class="text-dot -centered">
-        <p class="text -title-1" v-html="t('greetings')"></p>
-      </div>
       <div class="heading-greetings-desktop">
         <span>Capoeria</span>
         <span>Songs</span>
