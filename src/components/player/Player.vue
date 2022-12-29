@@ -100,9 +100,13 @@ const isPlaying = ref(false);
 const mousedown = ref(false);
 
 const audioContext = ref();
-
+enum VIEWS {
+  PLAYER = "PLAYER",
+  DETAILS = "DETAILS",
+}
 const audioElementEl = ref();
 const progressBarEl = ref();
+const currentView = ref(VIEWS.PLAYER);
 
 const playerContainerEl = ref();
 const songInformationEl = ref();
@@ -187,6 +191,7 @@ const playPause = () => {
 };
 
 const viewInformation = () => {
+  currentView.value = VIEWS.DETAILS;
   if (isLargeScreen.value) {
     gsap.to(playerViewEl.value, {
       opacity: "0.3",
@@ -206,6 +211,7 @@ const viewInformation = () => {
 };
 
 const viewPlayer = () => {
+  currentView.value = VIEWS.PLAYER;
   if (isLargeScreen.value) {
     gsap.to(playerViewEl.value, {
       opacity: "1",
@@ -261,7 +267,20 @@ onKeyStroke("ArrowRight", (e) => {
 
 onKeyStroke("Escape", (e) => {
   e.preventDefault();
-  closeSong();
+  if (currentView.value === VIEWS.PLAYER) {
+    closeSong();
+  } else {
+    viewPlayer();
+  }
+});
+
+onKeyStroke("i", (e) => {
+  e.preventDefault();
+  if (currentView.value === VIEWS.PLAYER) {
+    viewInformation();
+  } else {
+    viewPlayer();
+  }
 });
 
 onMounted(() => {
