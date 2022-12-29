@@ -60,6 +60,7 @@ if (isLargeScreen.value) {
       const start = (end.value += 1);
       end.value = end.value + 5;
       songList.value!.push(...props.songs!.slice(start, end.value));
+      songItemRefs.value = Array.from(songItemRef.value) as SongItemRef[];
     },
     { distance: 10 }
   );
@@ -127,6 +128,7 @@ onMounted(() => {
   songItemRefs.value = Array.from(songItemRef.value) as SongItemRef[];
   staggerShowAllSongItems();
 });
+
 defineExpose({ containerRef });
 </script>
 
