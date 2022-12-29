@@ -1,9 +1,5 @@
 <template>
-  <div
-    ref="container"
-    class="song-item"
-    @click="$emit('selected', song)"
-  >
+  <div ref="container" class="song-item" @click="$emit('selected', song)">
     <div class="song-item-thumbnail">
       <div class="song-item-overlay"></div>
       <div class="song-item-icon">
@@ -12,7 +8,14 @@
       <Thumbnail :src="picture" :alt="song.title" />
     </div>
     <div class="song-item-title">
-      <p class="text -bold">{{ song.title }}</p>
+      <p class="text -bold">
+        {{ song.title }}
+        <span
+          style="display: block"
+          class="text -bold -caption-2 color-black--300"
+          >{{ song.description || t('common.unknownArtist') }}</span
+        >
+      </p>
     </div>
     <div class="song-item-action">
       <FavouriteIcon :song="song" />
@@ -23,10 +26,13 @@
 import FavouriteIcon from "@/components/common/FavouriteIcon.vue";
 import Icon from "@/components/component-library/Icon.vue";
 import type { PropType } from "vue";
-import { computed, ref, watch } from "vue";
+import { computed, ref } from "vue";
 import type { Song } from "@/domain/Song";
 import Thumbnail from "@/components/common/Thumbnail.vue";
 import { S3_SOURCE_LINK, S3Dir } from "@/domain/enums/aws-link";
+import { useI18n } from "vue-i18n";
+
+const {t} = useI18n()
 
 const props = defineProps({
   song: Object as PropType<Song>,

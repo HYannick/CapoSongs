@@ -27,6 +27,7 @@ const commonI18n = {
       backButton: "Go back",
       backPlayer: "Player",
       comingSoon: "Coming soon",
+      unknownArtist: "Unknown",
     },
     search: {
       placeholder: "What song do you want to sing?",
@@ -93,6 +94,7 @@ const commonI18n = {
       backButton: "Retour",
       backPlayer: "Lecteur",
       comingSoon: "A venir",
+      unknownArtist: "Inconnu",
     },
     search: {
       placeholder: "Quelle chanson veux-tu chanter ?",

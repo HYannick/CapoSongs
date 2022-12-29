@@ -5,6 +5,10 @@
     </div>
     <p ref="songTitle" class="player-song-title text -black">
       {{ song.title }}
+      <span
+        style="display: block"
+        class="text -bold -caption-2 color-black--300"
+        >{{ song.description }}</span>
     </p>
     <div class="player-song-action">
       <div ref="infoAction">
