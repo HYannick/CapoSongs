@@ -353,6 +353,11 @@ onMounted(() => {
   height: 0.4rem;
   background: var(--color-black-200);
   border-radius: 1rem;
+  &:active {
+    .current-progress:after {
+      transform: translateY(-50%) scale(2);
+    }
+  }
 }
 
 .current-progress {
@@ -360,7 +365,6 @@ onMounted(() => {
   width: 0;
   border-radius: 1rem 0 0 1rem;
   background: var(--color-black-950);
-
   &:after {
     content: "";
     position: absolute;
@@ -371,6 +375,7 @@ onMounted(() => {
     width: 1rem;
     height: 1rem;
     background: var(--color-black-950);
+    transition: transform 0.2s cubic-bezier(0.83, 0, 0.17, 1);
   }
 }
 

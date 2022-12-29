@@ -4,7 +4,7 @@
       <Thumbnail :src="picture" alt="song-thumbnail" />
     </div>
     <p ref="songTitle" class="player-song-title text -black">
-      {{ song.title }}
+      <span class="title-wrapper">{{ song.title }}</span>
       <span
         style="display: block"
         class="text -bold -caption-2 color-black--300"
@@ -76,6 +76,14 @@ defineExpose({ containerRef });
 
 .player-song-title {
   flex: 1;
+  .title-wrapper {
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 12rem;
+    width: 100%;
+    display: block;
+    text-overflow: ellipsis;
+  }
 }
 
 .player-song-action {
