@@ -77,12 +77,14 @@ defineExpose({ containerRef });
 .player-song-title {
   flex: 1;
   .title-wrapper {
-    white-space: nowrap;
-    overflow: hidden;
-    max-width: 12rem;
-    width: 100%;
-    display: block;
-    text-overflow: ellipsis;
+    @media only screen and (max-device-width: 1024px) {
+      white-space: nowrap;
+      overflow: hidden;
+      max-width: 12rem;
+      width: 100%;
+      display: block;
+      text-overflow: ellipsis;
+    }
   }
 }
 
