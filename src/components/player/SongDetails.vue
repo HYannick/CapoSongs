@@ -5,19 +5,26 @@
       <h3 class="text -title-2 -extra-bold">
         {{ t("songDetails.history") }}
       </h3>
-      <p class="text -body">{{ history }}</p>
+      <p class="text -body" v-html="history"></p>
     </div>
     <div class="translation" :class="{ '-extra-padding': !history }">
       <h3 class="text -title-2 -extra-bold">
         {{ t("songDetails.translate") }}
       </h3>
-      <div
-        class="translation-line"
-        v-for="(line, index) in songTranslation"
-        :key="`${line}-${index}`"
-      >
-        <p class="text -regular -title-3">
-          {{ line }}
+      <template v-if="songTranslation.length">
+        <div
+          class="translation-line"
+          v-for="(line, index) in songTranslation"
+          :key="`${line}-${index}`"
+        >
+          <p class="text -regular -title-3">
+            {{ line }}
+          </p>
+        </div>
+      </template>
+      <div class="translation-line">
+        <p class="text -regular -body color-black--400">
+          {{ t("common.comingSoon") }}
         </p>
       </div>
     </div>
