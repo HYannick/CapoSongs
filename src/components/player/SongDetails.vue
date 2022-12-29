@@ -22,7 +22,7 @@
           </p>
         </div>
       </template>
-      <div class="translation-line">
+      <div class="translation-line" v-else>
         <p class="text -regular -body color-black--400">
           {{ t("common.comingSoon") }}
         </p>
