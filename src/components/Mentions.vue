@@ -6,9 +6,9 @@
         {{ t("mentions.musicSources") }}
       </h5>
       <ul>
-        <li><a target="_blank" href="https://youtube.com/">Youtube</a></li>
+        <li><a target="_blank" href="">Youtube</a></li>
         <li>
-          <a target="_blank" href="https://lrcgenerator.com/"
+          <a target="_blank" href=""
             >[LRC:generator]</a
           >
         </li>
@@ -18,7 +18,7 @@
         <li><p class="text -bold color-primary--600">Debbie's notebook</p></li>
         <li><a target="_blank" href="https://lalaue.com/">LaLaue</a></li>
         <li>
-          <a target="_blank" href="http://www.capoeira-music.net/"
+          <a target="_blank" href=""
             >Capoeira Music</a
           >
         </li>

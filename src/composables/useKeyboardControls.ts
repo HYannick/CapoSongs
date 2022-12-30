@@ -14,7 +14,7 @@ export const useKeyboardControls = () => {
   const appSheet = {
     "Ctrl + S": "settings",
     "Ctrl + L": "favourite",
-    "Ctrl + D":"theme",
+    "Ctrl + D": "theme",
   };
   return {
     playerSheet,
