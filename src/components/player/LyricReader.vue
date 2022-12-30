@@ -1,4 +1,8 @@
 <template>
+  <div class="legend">
+    <div class="coro-color"></div>
+    <p class="text -bold -body">Coro</p>
+  </div>
   <div class="lyrics" ref="lyricsContainerEl">
     <p
       class="lyric-line text -bold"
@@ -7,6 +11,8 @@
       :class="{
         '-highlighted': lyric.index === currentLineIndex,
         '-passed': lyric.index < currentLineIndex,
+        '-coro': lyric.isCoro,
+        '-spaced': lyric.spaced
       }"
     >
       {{ lyric.text }}
@@ -42,9 +48,12 @@ const initLyricReader = (lyricsLink: string) => {
   liricleInstance = new Liricle();
   liricleInstance.offset = 1000;
   liricleInstance.on("load", (data: any) => {
-    lyrics.value = data.lines.map((line: any, index: number) => ({
+    lyrics.value = data.lines.map((line: LyricLine, index: number) => ({
       ...line,
       index,
+      text: line.text.replace(':margin:', '').replace(':coro:', ''),
+      isCoro: line.text.includes(':coro:'),
+      spaced: line.text.includes(':margin:')
     }));
   });
   liricleInstance.on("sync", (line: LyricLine) => {
@@ -97,6 +106,25 @@ defineExpose({ containerRef: lyricsContainerEl });
 </script>
 
 <style lang="scss">
+.legend {
+  position: fixed;
+  top: 2rem;
+  right: 2rem;
+  z-index: 99;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  @media screen and (max-width: 1024px) {
+    right: calc(200vw / 2 + 2rem);
+  }
+  .coro-color {
+    width: 2rem;
+    height: 1rem;
+    background: var(--color-secondary-600);
+    margin-right: 1rem;
+    border-radius: 2rem;
+  }
+}
 .lyrics {
   height: 75vh;
   overflow-y: scroll;
@@ -106,13 +134,19 @@ defineExpose({ containerRef: lyricsContainerEl });
 .lyric-line {
   text-align: center;
   font-size: 3.5rem;
-  color: var(--color-black-500);
-  margin-bottom: 1rem;
+  color: var(--color-black-400);
+  margin-bottom: 0.5rem;
   transform: scale(1);
   transition: color 0.3s cubic-bezier(0.83, 0, 0.17, 1),
     transform 0.3s cubic-bezier(0.83, 0, 0.17, 1);
   &.-passed {
     color: var(--color-black-950);
+  }
+  &.-coro {
+    color: var(--color-secondary-600);
+  }
+  &.-spaced {
+    margin-top: 5rem;
   }
   &.-highlighted {
     font-weight: bold;

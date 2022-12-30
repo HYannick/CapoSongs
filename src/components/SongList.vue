@@ -61,6 +61,7 @@ if (isLargeScreen.value) {
       end.value = end.value + 5;
       songList.value!.push(...props.songs!.slice(start, end.value));
       songItemRefs.value = Array.from(songItemRef.value) as SongItemRef[];
+      if (currentSong.value) animateOnSongSelected(currentSong.value);
     },
     { distance: 10 }
   );

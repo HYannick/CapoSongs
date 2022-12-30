@@ -18,6 +18,24 @@ export const useSongStore = defineStore("songs", () => {
     currentSong.value = null;
   };
 
+  const setNextSong = () => {
+    const index = songs.value.indexOf(currentSong.value!);
+    const nextSong = songs.value[index + 1];
+    if (nextSong) {
+      currentSong.value = nextSong;
+    } else {
+      currentSong.value = songs.value[0];
+    }
+  };
+
+  const setPreviousSong = () => {
+    const index = songs.value.indexOf(currentSong.value!);
+    const previousSong = songs.value[index - 1];
+    if (previousSong) {
+      currentSong.value = previousSong;
+    }
+  };
+
   const isFavourite = (songId: number) =>
     computed(() => !!favouriteSongs.value.find((song) => song.id === songId));
 
@@ -75,5 +93,7 @@ export const useSongStore = defineStore("songs", () => {
     removeFromFavourite,
     clearFavourites,
     isFavourite,
+    setNextSong,
+    setPreviousSong,
   };
 });

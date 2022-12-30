@@ -93,7 +93,7 @@ import { onKeyStroke, useMagicKeys, useMediaQuery } from "@vueuse/core";
 const { hidePlayer } = useAppStore();
 const { playerVisible } = storeToRefs(useAppStore());
 const { currentSong } = storeToRefs(useSongStore());
-const { resetSong } = useSongStore();
+const { resetSong, setNextSong } = useSongStore();
 const { t } = useI18n();
 
 const isPlaying = ref(false);
@@ -247,6 +247,7 @@ const initAudioFile = () => {
   track.mediaElement.addEventListener("canplaythrough", playSong);
   track.mediaElement.addEventListener("ended", () => {
     isPlaying.value = false;
+    setNextSong();
   });
 };
 
