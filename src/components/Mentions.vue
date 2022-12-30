@@ -6,32 +6,20 @@
         {{ t("mentions.musicSources") }}
       </h5>
       <ul>
-        <li><a target="_blank" href="">Youtube</a></li>
-        <li>
-          <a target="_blank" href=""
-            >[LRC:generator]</a
-          >
-        </li>
+        <li>Youtube</li>
+        <li>[LRC:generator]</li>
       </ul>
       <h5 class="text -bold">{{ t("mentions.lyricsTrad") }}</h5>
       <ul>
         <li><p class="text -bold color-primary--600">Debbie's notebook</p></li>
-        <li><a target="_blank" href="https://lalaue.com/">LaLaue</a></li>
-        <li>
-          <a target="_blank" href=""
-            >Capoeira Music</a
-          >
-        </li>
-        <li><a target="_blank" href="https://dendearts.com/">dendearts</a></li>
+        <li>LaLaue</li>
+        <li>Capoeira Music</li>
+        <li>Dendearts</li>
       </ul>
       <h5 class="text -bold">{{ t("mentions.stackLib") }}</h5>
       <ul>
-        <li><a target="_blank" href="https://vuejs.org/">Vue</a></li>
-        <li>
-          <a target="_blank" href="https://github.com/mcanam/liricle">
-            Liricles</a
-          >
-        </li>
+        <li>Vue</li>
+        <li>Liricles</li>
       </ul>
       <h5 class="text -bold">{{ t("mentions.appDev") }}</h5>
       <a target="_blank" href="https://github.com/HYannick">Ayho</a>
