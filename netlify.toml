@@ -17,8 +17,11 @@ for = "/manifest.webmanifest"
 Content-Type = "application/manifest+json"
 
 [[headers]]
-for = "/assets/*"
+for = "/*"
 [headers.values]
 cache-control = '''
-     max-age=0, no-cache, must-revalidate, proxy-revalidate
+    max-age=0,
+	no-cache,
+	no-store,
+	must-revalidate
     '''
