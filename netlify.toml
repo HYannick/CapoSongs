@@ -20,6 +20,5 @@ Content-Type = "application/manifest+json"
 for = "/assets/*"
 [headers.values]
 cache-control = '''
-    max-age=31536000,
     no-cache
     '''
