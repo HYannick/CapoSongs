@@ -10,12 +10,6 @@ const { locale } = useI18n();
 onMounted(async () => {
   setTheme();
   locale.value = localStorage.getItem("lang") || "fr";
-  try {
-    const keys = await window.caches.keys();
-    await Promise.all(keys.map(key => caches.delete(key)));
-  } catch (err) {
-    console.log('deleteCache err: ', err);
-  }
 });
 </script>
 
