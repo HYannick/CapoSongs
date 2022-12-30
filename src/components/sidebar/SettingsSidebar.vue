@@ -64,12 +64,13 @@
               :label="t('sidebars.settings.languages.en')"
               v-model="$i18n.locale"
             />
-            <InputRadio
-              name="language"
-              value="pt"
-              :label="t('sidebars.settings.languages.pt')"
-              v-model="$i18n.locale"
-            />
+<!--            TODO: Add Portuguese-->
+<!--            <InputRadio-->
+<!--              name="language"-->
+<!--              value="pt"-->
+<!--              :label="t('sidebars.settings.languages.pt')"-->
+<!--              v-model="$i18n.locale"-->
+<!--            />-->
           </div>
         </div>
         <hr />
@@ -86,29 +87,25 @@
             <Icon class="command" name="command" :size="20" />
             <p class="text -bold">Player controls</p>
           </div>
-          <div class="keyboard-control">
-            <span class="text -body -bold keyboard-key">Space</span>
-            <span class="text -body function">Play/Pause</span>
+          <div
+            class="keyboard-control"
+            v-for="(control, key) in playerSheet"
+            :key="key"
+          >
+            <span class="text -body -bold keyboard-key" v-html="key"></span>
+            <span class="text -body function">{{ t(`sidebars.settings.controls.${control}`) }}</span>
           </div>
-          <div class="keyboard-control">
-            <span class="text -body -bold keyboard-key">i</span>
-            <span class="text -body function">Play/Pause</span>
+          <div class="settings-label">
+            <Icon class="command" name="command" :size="20" />
+            <p class="text -bold">App controls</p>
           </div>
-          <div class="keyboard-control">
-            <span class="text -body -bold keyboard-key">h</span>
-            <span class="text -body function">Highlight Coro</span>
-          </div>
-          <div class="keyboard-control">
-            <span class="text -body -bold keyboard-key">&#8250;</span>
-            <span class="text -body function">Increment player progress</span>
-          </div>
-          <div class="keyboard-control">
-            <span class="text -body -bold keyboard-key">&#8249;</span>
-            <span class="text -body function">Decrement player progress</span>
-          </div>
-          <div class="keyboard-control">
-            <span class="text -body -bold keyboard-key">Esc</span>
-            <span class="text -body function">Quit player</span>
+          <div
+            class="keyboard-control"
+            v-for="(control, key) in appSheet"
+            :key="key"
+          >
+            <span class="text -body -bold keyboard-key">{{ key }}</span>
+            <span class="text -body function">{{  t(`sidebars.settings.controls.${control}`)  }}</span>
           </div>
         </div>
       </div>
@@ -139,6 +136,7 @@ import { useI18n } from "vue-i18n";
 import SwitchInput from "@/components/common/SwitchInput.vue";
 import Icon from "@/components/component-library/Icon.vue";
 import { usePWAInstallation } from "@/stores/pwa.store";
+import { useKeyboardControls } from "@/composables/useKeyboardControls";
 
 const props = defineProps({
   from: String as PropType<SidebarOrigin>,
@@ -154,6 +152,7 @@ const { appInstalled, appInstallationDismissed } = storeToRefs(
 const { isAppleDevice, initInstall, installApp, closeInstallPrompt } =
   usePWAInstallation();
 const { isDarkMode, switchTheme } = useTheme();
+const {playerSheet, appSheet} = useKeyboardControls()
 
 const sidebarClasses = computed(() => ({
   "-open": settingsVisible.value,
@@ -208,7 +207,7 @@ onMounted(initInstall);
     display: none;
   }
   .settings-label {
-    margin-bottom: 2rem;
+    margin: 2rem 0;
     .command path {
       stroke: var(--color-black-950);
     }

@@ -7,7 +7,12 @@
     <div ref="playerBodyEl" class="player-body">
       <div class="player-view" ref="playerViewEl">
         <div class="gradient-fade"></div>
-        <BackButton @click="closeSong" />
+        <IconButton
+          class="button-return"
+          icon-name="chevron-down"
+          :size="24"
+          @click="closeSong"
+        />
         <LyricReader
           ref="lyricsEl"
           :song="currentSong"
@@ -79,35 +84,32 @@ import Icon from "@/components/component-library/Icon.vue";
 import { useAppStore } from "@/stores/app.store";
 import { storeToRefs } from "pinia";
 import { useSongStore } from "@/stores/song.store";
-import { computed, onMounted, ref, watch, watchEffect } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import { usePlayerProgress } from "@/composables/usePlayerProgress";
 import { useI18n } from "vue-i18n";
 import gsap from "gsap";
 import LyricReader from "@/components/player/LyricReader.vue";
 import SongInformation from "@/components/player/SongInformation.vue";
 import SongDetails from "@/components/player/SongDetails.vue";
-import BackButton from "@/components/common/BackButton.vue";
 import { S3_SOURCE_LINK, S3Dir } from "@/domain/enums/aws-link";
-import { onKeyStroke, useMagicKeys, useMediaQuery } from "@vueuse/core";
-
-const { hidePlayer } = useAppStore();
-const { playerVisible } = storeToRefs(useAppStore());
-const { currentSong } = storeToRefs(useSongStore());
-const { resetSong, setNextSong } = useSongStore();
-const { t } = useI18n();
+import { onKeyStroke, useMediaQuery } from "@vueuse/core";
+import IconButton from "@/components/component-library/IconButton.vue";
+import { useKeyboardControls } from "@/composables/useKeyboardControls";
+import {
+  fadeInAnimation,
+  playerContainerEase,
+} from "@/components/player/constants";
+import { VIEWS } from "@/components/player/enums";
 
 const isPlaying = ref(false);
 const mousedown = ref(false);
 
 const audioContext = ref();
-enum VIEWS {
-  PLAYER = "PLAYER",
-  DETAILS = "DETAILS",
-}
-const audioElementEl = ref();
-const progressBarEl = ref();
+
 const currentView = ref(VIEWS.PLAYER);
 
+const audioElementEl = ref();
+const progressBarEl = ref();
 const playerContainerEl = ref();
 const songInformationEl = ref();
 const playerProgressEl = ref();
@@ -115,30 +117,22 @@ const playerTimerEl = ref();
 const playButtonEl = ref();
 const lyricsEl = ref();
 const playerBodyEl = ref();
-
 const informationViewEl = ref();
 const playerViewEl = ref();
 
-const isLargeScreen = useMediaQuery("(min-width: 1024px)");
+const { hidePlayer } = useAppStore();
+const { playerVisible } = storeToRefs(useAppStore());
+const { currentSong } = storeToRefs(useSongStore());
+const { resetSong, setNextSong } = useSongStore();
 
+const isLargeScreen = useMediaQuery("(min-width: 1024px)");
+const { player } = useKeyboardControls();
 const { percent, currentTime, songDuration, scrub, setTimers, getTime } =
   usePlayerProgress(audioElementEl, progressBarEl);
 
 const songSource = computed(() =>
   currentSong.value ? S3_SOURCE_LINK(S3Dir.SONGS, currentSong.value.source) : ""
 );
-
-const fadeInAnimation = {
-  duration: 0.7,
-  ease: "back",
-  opacity: 0,
-  y: "10px",
-};
-
-const playerContainerEase = {
-  ease: "circ.inOut",
-  duration: "0.6",
-};
 
 const songTranslation = computed(() => {
   if (!(currentSong.value && currentSong.value.translation)) return [];
@@ -251,22 +245,22 @@ const initAudioFile = () => {
   });
 };
 
-onKeyStroke(" ", (e) => {
+onKeyStroke(player.playPause, (e) => {
   e.preventDefault();
   playPause();
 });
 
-onKeyStroke("ArrowLeft", (e) => {
+onKeyStroke(player.decProgress, (e) => {
   e.preventDefault();
   audioElementEl.value.currentTime -= 1;
 });
 
-onKeyStroke("ArrowRight", (e) => {
+onKeyStroke(player.incProgress, (e) => {
   e.preventDefault();
   audioElementEl.value.currentTime += 1;
 });
 
-onKeyStroke("Escape", (e) => {
+onKeyStroke(player.closePlayer, (e) => {
   e.preventDefault();
   if (currentView.value === VIEWS.PLAYER) {
     closeSong();
@@ -275,12 +269,13 @@ onKeyStroke("Escape", (e) => {
   }
 });
 
-onKeyStroke("i", (e) => {
-  e.preventDefault();
-  if (currentView.value === VIEWS.PLAYER) {
-    viewInformation();
-  } else {
-    viewPlayer();
+watch(player.songDetails, (v) => {
+  if (v) {
+    if (currentView.value === VIEWS.PLAYER) {
+      viewInformation();
+    } else {
+      viewPlayer();
+    }
   }
 });
 

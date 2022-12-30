@@ -35,6 +35,22 @@ export const useAppStore = defineStore("app", () => {
     favouriteSongsVisible.value = false;
   };
 
+  const toggleSettings = () => {
+    if (!settingsVisible.value) {
+      showSettings();
+    } else {
+      hideSettings();
+    }
+  };
+
+  const toggleFavouriteSongs = () => {
+    if (!favouriteSongsVisible.value) {
+      showFavouriteSongs();
+    } else {
+      hideFavouriteSongs();
+    }
+  };
+
   return {
     settingsVisible,
     favouriteSongsVisible,
@@ -48,5 +64,7 @@ export const useAppStore = defineStore("app", () => {
     mentionsVisible,
     showMentions,
     hideMentions,
+    toggleFavouriteSongs,
+    toggleSettings,
   };
 });

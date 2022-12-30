@@ -38,6 +38,9 @@ import gsap from "gsap";
 import { useAppStore } from "@/stores/app.store";
 import Mentions from "@/components/Mentions.vue";
 import HomePlaceholder from "@/components/HomePlaceholder.vue";
+import { useMagicKeys } from "@vueuse/core";
+import { useTheme } from "@/composables/useTheme";
+import { useKeyboardControls } from "@/composables/useKeyboardControls";
 
 const query = ref("");
 const songStore = useSongStore();
@@ -47,6 +50,22 @@ const headingEl = ref();
 const searchEl = ref();
 const songListEl = ref();
 const el = ref();
+
+const keys = useMagicKeys();
+const { switchTheme } = useTheme();
+
+const { app } = useKeyboardControls();
+watch(app.settings, (v) => {
+  if (v) appStore.toggleSettings();
+});
+
+watch(app.favourites, (v) => {
+  if (v) appStore.toggleFavouriteSongs();
+});
+
+watch(app.darkMode, (v) => {
+  if (v) switchTheme();
+});
 
 const filteredSongs = computed(() => {
   if (!query.value) {

@@ -1,11 +1,7 @@
 <template>
-  <button
-    class="coro-highlighter"
-    :class="{ '-activated': coroHighlighted }"
-    @click="highlightCoro"
-  >
-    <Icon name="wand" :size="24" />
-  </button>
+    <IconButton class="coro-highlighter"
+                :class="{ '-activated': coroHighlighted }"
+                @click="highlightCoro" icon-name="wand" :size="24" />
   <div
     class="lyrics"
     ref="lyricsContainerEl"
@@ -35,6 +31,8 @@ import Liricle from "liricle";
 import { S3_SOURCE_LINK, S3Dir } from "@/domain/enums/aws-link";
 import Icon from "@/components/component-library/Icon.vue";
 import { onKeyStroke } from "@vueuse/core";
+import IconButton from "@/components/component-library/IconButton.vue";
+import { useKeyboardControls } from "@/composables/useKeyboardControls";
 
 const props = defineProps({
   currentLineIndex: Number,
@@ -48,9 +46,9 @@ const currentLineIndex = ref(0);
 const coroHighlighted = ref(false);
 let liricleInstance: any;
 
-onKeyStroke("h", (e) => {
-  e.preventDefault();
-  highlightCoro();
+const {player} = useKeyboardControls();
+watch(player.highlightCoro, (v) => {
+  if (v) highlightCoro();
 });
 
 const resetLineIndex = () => {
@@ -135,9 +133,6 @@ defineExpose({ containerRef: lyricsContainerEl });
   border-radius: 4rem;
   cursor: pointer;
   border: transparent;
-  padding: 1rem;
-  background: var(--color-black-950);
-  box-shadow: 0 0 0 0.4rem rgba(var(--color-black-950-rgb), 0.2);
   @media screen and (max-width: 1024px) {
     right: calc(200vw / 2 + 2rem);
   }
@@ -145,13 +140,16 @@ defineExpose({ containerRef: lyricsContainerEl });
     color: var(--color-black-950);
   }
 
-  svg path {
-    stroke: var(--color-black-50);
+  &.icon-button .icon path {
+    stroke: var(--color-black-950);
   }
 
   &.-activated {
     background: var(--color-secondary-600);
     box-shadow: 0 0 0 0.4rem rgba(var(--color-secondary-600-rgb), 0.2);
+    &.icon-button .icon path {
+      stroke: var(--color-black-50);
+    }
   }
 }
 
