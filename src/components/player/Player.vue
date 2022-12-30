@@ -10,7 +10,7 @@
         <IconButton
           class="button-return"
           icon-name="chevron-down"
-          :size="24"
+          :size="20"
           @click="closeSong"
         />
         <LyricReader
@@ -341,7 +341,7 @@ onMounted(() => {
     rgba(var(--color-background-rgb), 0) 0%,
     rgba(var(--color-background-rgb), 1) 40%
   );
-  height: 12rem;
+  height: 5rem;
   z-index: 1;
   top: 0;
   left: 0;
@@ -352,7 +352,6 @@ onMounted(() => {
   position: absolute;
   bottom: 0;
   left: 0;
-  height: 30rem;
   width: 100%;
   display: flex;
   align-items: center;
@@ -363,13 +362,13 @@ onMounted(() => {
   background: linear-gradient(
     180deg,
     rgba(var(--color-background-rgb), 0) 0%,
-    rgba(var(--color-background-rgb), 1) 25%
+    rgba(var(--color-background-rgb), 1) 15%
   );
 }
 
 .player-controls {
   width: 100%;
-  margin-top: 2rem;
+  margin-top: 0.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -423,8 +422,8 @@ onMounted(() => {
 .player-button {
   background-color: var(--color-black-950);
   border-radius: 50%;
-  width: 8.5rem;
-  height: 8.5rem;
+  width: 7.5rem;
+  height: 7.5rem;
   border: none;
   box-shadow: 0 0 0 0.4rem rgba(var(--color-black-950-rgb), 0.1);
   cursor: pointer;

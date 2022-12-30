@@ -1,7 +1,11 @@
 <template>
-    <IconButton class="coro-highlighter"
-                :class="{ '-activated': coroHighlighted }"
-                @click="highlightCoro" icon-name="wand" :size="24" />
+  <IconButton
+    class="coro-highlighter"
+    :class="{ '-activated': coroHighlighted }"
+    @click="highlightCoro"
+    icon-name="wand"
+    :size="24"
+  />
   <div
     class="lyrics"
     ref="lyricsContainerEl"
@@ -46,7 +50,7 @@ const currentLineIndex = ref(0);
 const coroHighlighted = ref(false);
 let liricleInstance: any;
 
-const {player} = useKeyboardControls();
+const { player } = useKeyboardControls();
 watch(player.highlightCoro, (v) => {
   if (v) highlightCoro();
 });
@@ -124,8 +128,10 @@ defineExpose({ containerRef: lyricsContainerEl });
 <style lang="scss">
 .coro-highlighter {
   position: fixed;
-  top: 2rem;
-  right: 2rem;
+  top: 1rem;
+  right: 1rem;
+  width: 4rem;
+  height: 4rem;
   z-index: 99;
   display: flex;
   align-items: center;
@@ -134,7 +140,7 @@ defineExpose({ containerRef: lyricsContainerEl });
   cursor: pointer;
   border: transparent;
   @media screen and (max-width: 1024px) {
-    right: calc(200vw / 2 + 2rem);
+    right: calc(200vw / 2 + 1rem);
   }
   span {
     color: var(--color-black-950);
@@ -196,6 +202,7 @@ defineExpose({ containerRef: lyricsContainerEl });
     font-weight: bold;
     color: var(--color-primary-600);
     transform: scale(1.1);
+    scroll-margin-top: -10rem;
   }
 
   @media only screen and (max-device-width: 1024px) {
