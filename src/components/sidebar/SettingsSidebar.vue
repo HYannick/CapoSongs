@@ -80,6 +80,37 @@
           </div>
           <SwitchInput :checked="isDarkMode" @change="switchTheme" />
         </div>
+        <div class="keyboard-controls">
+          <hr />
+          <div class="settings-label">
+            <Icon class="command" name="command" :size="20" />
+            <p class="text -bold">Player controls</p>
+          </div>
+          <div class="keyboard-control">
+            <span class="text -body -bold keyboard-key">Space</span>
+            <span class="text -body function">Play/Pause</span>
+          </div>
+          <div class="keyboard-control">
+            <span class="text -body -bold keyboard-key">i</span>
+            <span class="text -body function">Play/Pause</span>
+          </div>
+          <div class="keyboard-control">
+            <span class="text -body -bold keyboard-key">h</span>
+            <span class="text -body function">Highlight Coro</span>
+          </div>
+          <div class="keyboard-control">
+            <span class="text -body -bold keyboard-key">&#8250;</span>
+            <span class="text -body function">Increment player progress</span>
+          </div>
+          <div class="keyboard-control">
+            <span class="text -body -bold keyboard-key">&#8249;</span>
+            <span class="text -body function">Decrement player progress</span>
+          </div>
+          <div class="keyboard-control">
+            <span class="text -body -bold keyboard-key">Esc</span>
+            <span class="text -body function">Quit player</span>
+          </div>
+        </div>
       </div>
       <div class="settings-footer">
         <button
@@ -170,6 +201,32 @@ onMounted(initInstall);
     &:first-child {
       margin-top: 0;
     }
+  }
+}
+.keyboard-controls {
+  @media screen and (max-width: 1024px) {
+    display: none;
+  }
+  .settings-label {
+    margin-bottom: 2rem;
+    .command path {
+      stroke: var(--color-black-950);
+    }
+  }
+}
+.keyboard-control {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  .keyboard-key {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 0 0.2rem rgba(var(--color-primary-950-rgb), 0.3);
+    padding: 0.5rem 1.5rem;
+    min-width: 4rem;
+    border-radius: 0.5rem;
   }
 }
 
