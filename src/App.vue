@@ -12,11 +12,8 @@ onMounted(async () => {
   locale.value = localStorage.getItem("lang") || "fr";
   try {
     const keys = await window.caches.keys();
-    alert(keys);
     await Promise.all(keys.map(key => caches.delete(key)));
-    alert('deleted')
   } catch (err) {
-    alert('error on delete')
     console.log('deleteCache err: ', err);
   }
 });
