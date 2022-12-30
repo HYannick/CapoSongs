@@ -1,9 +1,16 @@
 <template>
-  <div class="legend">
-    <div class="coro-color"></div>
-    <p class="text -bold -body">Coro</p>
-  </div>
-  <div class="lyrics" ref="lyricsContainerEl">
+  <button
+    class="coro-highlighter"
+    :class="{ '-activated': coroHighlighted }"
+    @click="highlightCoro"
+  >
+    <Icon name="wand" :size="24" />
+  </button>
+  <div
+    class="lyrics"
+    ref="lyricsContainerEl"
+    :class="{ '-coro-highlighted': coroHighlighted }"
+  >
     <p
       class="lyric-line text -bold"
       :key="`${song.id}-${lyric.index}`"
@@ -12,7 +19,7 @@
         '-highlighted': lyric.index === currentLineIndex,
         '-passed': lyric.index < currentLineIndex,
         '-coro': lyric.isCoro,
-        '-spaced': lyric.spaced
+        '-spaced': lyric.spaced,
       }"
     >
       {{ lyric.text }}
@@ -26,6 +33,7 @@ import { nextTick, Ref, ref, watch } from "vue";
 import type { Song } from "@/domain/Song";
 import Liricle from "liricle";
 import { S3_SOURCE_LINK, S3Dir } from "@/domain/enums/aws-link";
+import Icon from "@/components/component-library/Icon.vue";
 
 const props = defineProps({
   currentLineIndex: Number,
@@ -36,11 +44,15 @@ const props = defineProps({
 const lyrics: Ref<LyricLine[]> = ref([]);
 const lyricsContainerEl = ref();
 const currentLineIndex = ref(0);
-
+const coroHighlighted = ref(false);
 let liricleInstance: any;
 
 const resetLineIndex = () => {
   currentLineIndex.value = 0;
+};
+
+const highlightCoro = () => {
+  coroHighlighted.value = !coroHighlighted.value;
 };
 
 const initLyricReader = (lyricsLink: string) => {
@@ -51,9 +63,9 @@ const initLyricReader = (lyricsLink: string) => {
     lyrics.value = data.lines.map((line: LyricLine, index: number) => ({
       ...line,
       index,
-      text: line.text.replace(':margin:', '').replace(':coro:', ''),
-      isCoro: line.text.includes(':coro:'),
-      spaced: line.text.includes(':margin:')
+      text: line.text.replace(":margin:", "").replace(":coro:", ""),
+      isCoro: line.text.includes(":coro:"),
+      spaced: line.text.includes(":margin:"),
     }));
   });
   liricleInstance.on("sync", (line: LyricLine) => {
@@ -106,7 +118,7 @@ defineExpose({ containerRef: lyricsContainerEl });
 </script>
 
 <style lang="scss">
-.legend {
+.coro-highlighter {
   position: fixed;
   top: 2rem;
   right: 2rem;
@@ -114,23 +126,46 @@ defineExpose({ containerRef: lyricsContainerEl });
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: 4rem;
+  cursor: pointer;
+  border: transparent;
+  padding: 1rem;
+  background: var(--color-black-950);
+  box-shadow: 0 0 0 0.4rem rgba(var(--color-black-950-rgb), 0.2);
   @media screen and (max-width: 1024px) {
     right: calc(200vw / 2 + 2rem);
   }
-  .coro-color {
-    width: 2rem;
-    height: 1rem;
+  span {
+    color: var(--color-black-950);
+  }
+
+  svg path {
+    stroke: var(--color-black-50);
+  }
+
+  &.-activated {
     background: var(--color-secondary-600);
-    margin-right: 1rem;
-    border-radius: 2rem;
+    box-shadow: 0 0 0 0.4rem rgba(var(--color-secondary-600-rgb), 0.2);
   }
 }
+
 .lyrics {
   height: 75vh;
   overflow-y: scroll;
   overflow-x: hidden;
   padding: 10rem 2rem;
+
+  &.-coro-highlighted {
+    .lyric-line {
+      opacity: 0.2;
+
+      &.-coro {
+        opacity: 1;
+      }
+    }
+  }
 }
+
 .lyric-line {
   text-align: center;
   font-size: 3.5rem;
@@ -138,21 +173,27 @@ defineExpose({ containerRef: lyricsContainerEl });
   margin-bottom: 0.5rem;
   transform: scale(1);
   transition: color 0.3s cubic-bezier(0.83, 0, 0.17, 1),
-    transform 0.3s cubic-bezier(0.83, 0, 0.17, 1);
+    transform 0.3s cubic-bezier(0.83, 0, 0.17, 1),
+    opacity 0.5s cubic-bezier(0.83, 0, 0.17, 1);
+
   &.-passed {
     color: var(--color-black-950);
   }
+
   &.-coro {
     color: var(--color-secondary-600);
   }
+
   &.-spaced {
     margin-top: 5rem;
   }
+
   &.-highlighted {
     font-weight: bold;
     color: var(--color-primary-600);
     transform: scale(1.1);
   }
+
   @media only screen and (max-device-width: 1024px) {
     font-size: 4rem;
   }

@@ -346,7 +346,7 @@ onMounted(() => {
     rgba(var(--color-background-rgb), 0) 0%,
     rgba(var(--color-background-rgb), 1) 40%
   );
-  height: 6rem;
+  height: 12rem;
   z-index: 1;
   top: 0;
   left: 0;

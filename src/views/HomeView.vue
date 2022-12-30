@@ -1,6 +1,6 @@
 <template>
   <main ref="el">
-    <div class="main-container" >
+    <div class="main-container">
       <Heading ref="headingEl" />
       <div ref="searchEl" class="search-container">
         <InputField
@@ -11,7 +11,7 @@
           icon="search"
         />
       </div>
-      <SongList ref="songListEl" :songs="songList" />
+      <SongList ref="songListEl" :songs="filteredSongs" />
     </div>
     <div class="player">
       <Player v-if="songStore.currentSong" />
@@ -37,19 +37,17 @@ import { useI18n } from "vue-i18n";
 import gsap from "gsap";
 import { useAppStore } from "@/stores/app.store";
 import Mentions from "@/components/Mentions.vue";
-import Icon from "@/components/component-library/Icon.vue";
 import HomePlaceholder from "@/components/HomePlaceholder.vue";
-import { useInfiniteScroll, useMediaQuery } from "@vueuse/core";
 
 const query = ref("");
 const songStore = useSongStore();
 const appStore = useAppStore();
 const { t } = useI18n();
-const isLargeScreen = useMediaQuery("(min-width: 1024px)");
 const headingEl = ref();
 const searchEl = ref();
 const songListEl = ref();
 const el = ref();
+
 const filteredSongs = computed(() => {
   if (!query.value) {
     return songStore.songs;
@@ -60,23 +58,22 @@ const filteredSongs = computed(() => {
       song.translation?.toLowerCase().includes(query.value.toLowerCase())
   );
 });
-const songList = ref(filteredSongs.value);
-if (!isLargeScreen.value) {
-  const end = ref(10);
-  songList.value = filteredSongs.value.slice(0, end.value);
-
-  useInfiniteScroll(
-    el,
-    () => {
-      const start = (end.value += 1);
-      end.value = end.value + 5;
-      songList.value!.push(...filteredSongs.value.slice(start, end.value));
-    },
-    { distance: 5 }
-  );
-}
-
-
+// const isLargeScreen = useMediaQuery("(min-width: 1024px)");
+// const songList = ref(songStore.songs);
+// if (!isLargeScreen.value) {
+//   const end = ref(10);
+//   songList.value = songStore.songs.slice(0, end.value);
+//
+//   useInfiniteScroll(
+//     el,
+//     () => {
+//       const start = (end.value += 1);
+//       end.value = end.value + 5;
+//       songList.value!.push(...filteredSongs.value.slice(start, end.value));
+//     },
+//     { distance: 5 }
+//   );
+// }
 
 watch(
   () => appStore.playerVisible,

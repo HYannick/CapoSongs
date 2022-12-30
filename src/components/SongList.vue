@@ -14,7 +14,7 @@
     <div ref="el" class="song-list" v-else>
       <SongItem
         ref="songItemRef"
-        v-for="song in songList"
+        v-for="song in songs"
         :song="song"
         :key="song.id"
         @selected="setSong"
@@ -35,7 +35,7 @@ import SongItem from "@/components/SongItem.vue";
 import NotFound from "@/components/common/NotFound.vue";
 import { storeToRefs } from "pinia";
 import type { SongItemRef } from "@/domain/SongItem";
-import { useInfiniteScroll, useMediaQuery } from "@vueuse/core";
+import { useMediaQuery } from "@vueuse/core";
 
 const props = defineProps({
   songs: Array as PropType<Song[]>,
@@ -49,23 +49,26 @@ const { currentSong } = storeToRefs(useSongStore());
 const { loadSong } = useSongStore();
 const isLargeScreen = useMediaQuery("(min-width: 1024px)");
 const { t } = useI18n();
-const songList = ref(props.songs);
-if (isLargeScreen.value) {
-  const end = ref(10);
-  songList.value = props.songs!.slice(0, end.value);
 
-  useInfiniteScroll(
-    el,
-    () => {
-      const start = (end.value += 1);
-      end.value = end.value + 5;
-      songList.value!.push(...props.songs!.slice(start, end.value));
-      songItemRefs.value = Array.from(songItemRef.value) as SongItemRef[];
-      if (currentSong.value) animateOnSongSelected(currentSong.value);
-    },
-    { distance: 10 }
-  );
-}
+
+//TODO: Implement infinite scroll
+// const songList = ref(props.songs);
+// const end = ref(10);
+// if (isLargeScreen.value) {
+//   songList.value = props.songs!.slice(0, end.value);
+//
+//   useInfiniteScroll(
+//     el,
+//     () => {
+//       const start = (end.value += 1);
+//       end.value = end.value + 5;
+//       songList.value!.push(...props.songs!.slice(start, end.value));
+//       songItemRefs.value = Array.from(songItemRef.value) as SongItemRef[];
+//       if (currentSong.value) animateOnSongSelected(currentSong.value);
+//     },
+//     { distance: 10 }
+//   );
+// }
 
 const opacity = (opacity: number) => ({
   duration: 0.3,
