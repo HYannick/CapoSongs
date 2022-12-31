@@ -48,6 +48,7 @@ defineExpose({ containerRef });
 .heading-container {
   display: flex;
   justify-content: space-between;
+  align-items: start;
 }
 
 .heading-logo {
@@ -95,7 +96,6 @@ defineExpose({ containerRef });
 
 .heading-greetings {
   flex: 1;
-  margin-left: 0.5rem;
   position: relative;
   justify-content: center;
   align-items: center;
@@ -127,8 +127,6 @@ defineExpose({ containerRef });
   }
   .heading-container {
     align-items: center;
-    margin-left: -1rem;
-    margin-right: -1rem;
     .heading-greetings {
       flex-direction: revert;
       justify-content: flex-start;
@@ -138,6 +136,7 @@ defineExpose({ containerRef });
     }
     button:first-child {
       order: 1;
+      margin-right: 1.5rem;
     }
     button:last-child {
       order: 2;

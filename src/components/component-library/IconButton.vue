@@ -41,11 +41,10 @@ const outlinedClass = computed(() => props.outlined && `-outlined`);
 
 <style lang="scss">
 .icon-button {
-  width: 5rem;
-  height: 5rem;
   border: transparent;
   background: transparent;
   cursor: pointer;
+  padding: 0;
   transition: transform 0.1s cubic-bezier(0, 0.55, 0.45, 1);
   .icon {
     display: flex;

@@ -142,9 +142,10 @@ watch(
   justify-content: center;
   width: 4rem;
   height: 4rem;
-  box-shadow: 0 0.5rem 0.4rem rgba(#929292, 0.3);
+  border: 0.2rem solid var(--color-black-200);
   border-radius: 1rem;
   background: transparent;
+  margin-right: 1rem;
 }
 .favourite-song-item-icon {
   display: flex;
@@ -165,8 +166,6 @@ watch(
   display: flex;
   align-items: center;
   justify-content: center;
-}
-.favourite-song-item-thumbnail {
-  margin-right: 1.5rem;
+  margin-bottom: 1rem;
 }
 </style>

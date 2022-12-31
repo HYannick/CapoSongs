@@ -105,7 +105,7 @@ defineExpose({ container, id: props.song!.id });
 
   &-title {
     flex: 1;
-    margin-left: 2rem;
+    margin-left: 1rem;
     font-size: 1.6rem;
   }
 }

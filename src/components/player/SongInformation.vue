@@ -92,6 +92,10 @@ defineExpose({ containerRef });
   display: flex;
   align-items: center;
 
+  > div {
+    margin-left: 1.5rem;
+  }
+
   .icon-wrapper {
     path {
       stroke: var(--color-black-950);

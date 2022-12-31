@@ -357,7 +357,7 @@ onMounted(() => {
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  padding: 2.5rem;
+  padding: 2.5rem 1.5rem;
   background: rgb(245, 245, 245);
   background: linear-gradient(
     180deg,
