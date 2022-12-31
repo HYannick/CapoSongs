@@ -1,4 +1,4 @@
-<h1 align="center" width="100%">CapoSongs</p>
+<h1 align="center" width="100%">CapoSongs</h1>
 
 <p align="center" width="100%">
     <img src="https://user-images.githubusercontent.com/2854982/210122831-b807575f-fff1-4795-97ad-96f150d6c51a.png" />
