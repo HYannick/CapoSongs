@@ -2,10 +2,9 @@
 import { useRegisterSW } from "virtual:pwa-register/vue";
 import { useI18n } from "vue-i18n";
 
-const { offlineReady, needRefresh, updateServiceWorker } = useRegisterSW();
+const { needRefresh, updateServiceWorker } = useRegisterSW();
 
 const close = async () => {
-  offlineReady.value = false;
   needRefresh.value = false;
 };
 
@@ -26,18 +25,19 @@ const { t } = useI18n();
       </button>
     </div>
   </div>
-  <div class="pwa-toast" :class="{ '-visible': offlineReady }" role="alert">
-    <div class="message">
-      <span class="text -body">
-        {{ t("pwaUpdate.offlineReady") }}
-      </span>
-    </div>
-    <div class="pwa-toast-footer">
-      <button class="dismiss-offline" @click="close">
-        {{ t("pwaUpdate.dismiss") }}
-      </button>
-    </div>
-  </div>
+<!--  TODO: to implement when offline enabled-->
+<!--  <div class="pwa-toast" :class="{ '-visible': offlineReady }" role="alert">-->
+<!--    <div class="message">-->
+<!--      <span class="text -body">-->
+<!--        {{ t("pwaUpdate.offlineReady") }}-->
+<!--      </span>-->
+<!--    </div>-->
+<!--    <div class="pwa-toast-footer">-->
+<!--      <button class="dismiss-offline" @click="close">-->
+<!--        {{ t("pwaUpdate.dismiss") }}-->
+<!--      </button>-->
+<!--    </div>-->
+<!--  </div>-->
 </template>
 
 <style lang="scss">
