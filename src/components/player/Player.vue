@@ -469,7 +469,7 @@ onMounted(() => {
   border: none;
   box-shadow: 0 0 0 0.4rem rgba(var(--color-black-950-rgb), 0.1);
   cursor: pointer;
-  margin: 0 2em;
+  margin: 0 2rem;
   > .icon-wrapper {
     path {
       stroke: var(--color-black-50);
@@ -481,8 +481,13 @@ onMounted(() => {
     border-radius: 50%;
     width: 3rem;
     height: 3rem;
-    border: none;
+    border: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
+    margin: 0;
+    padding: 0;
     > .icon-wrapper {
       path {
         stroke: var(--color-black-950);
@@ -506,7 +511,7 @@ onMounted(() => {
   .player-button {
     width: 5rem;
     height: 5rem;
-    margin: 0 4em;
+    margin: 0 4rem;
     > .icon-wrapper {
       width: 2rem;
       height: 2rem;
