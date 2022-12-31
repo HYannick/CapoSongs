@@ -8,6 +8,14 @@
   opacity: 0.8;
   visibility: hidden;
   transition: visibility 0.5s, opacity 0.5s cubic-bezier(0.83, 0, 0.17, 1);
+  &-close {
+    .icon{
+      svg {
+        width: 2rem;
+        height: 2rem;
+      }
+    }
+  }
   &-content {
     position: fixed;
     z-index: 10;

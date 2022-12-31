@@ -6,7 +6,7 @@
         {{ t("offlineScreen.title") }}
       </p>
       <p class="text" v-html="t('offlineScreen.description')"></p>
-      <button class="offline-retry-button" @click="reloadPage">
+      <button  aria-label="retry to connect" class="offline-retry-button" @click="reloadPage">
         <span class="text -bold -body">{{ t("offlineScreen.button") }}</span>
       </button>
     </div>

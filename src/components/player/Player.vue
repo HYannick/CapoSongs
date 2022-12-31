@@ -57,15 +57,33 @@
               </div>
             </div>
           </div>
-          <button
-            :aria-label="isPlaying ? 'pause song' : 'play song'"
-            ref="playButtonEl"
-            class="player-button"
-            @click="playPause"
-          >
-            <Icon v-if="isPlaying" name="pause" :size="30" />
-            <Icon v-else name="play" :size="30" />
-          </button>
+          <div class="player-buttons">
+            <button
+              ref="prevButtonEl"
+              aria-label="go previous song"
+              class="player-button-prev"
+              @click="goPrev"
+            >
+              <Icon name="prev" size="20" />
+            </button>
+            <button
+              :aria-label="isPlaying ? 'pause song' : 'play song'"
+              ref="playButtonEl"
+              class="player-button"
+              @click="playPause"
+            >
+              <Icon v-if="isPlaying" name="pause" :size="30" />
+              <Icon v-else name="play" :size="30" />
+            </button>
+            <button
+              ref="nextButtonEl"
+              aria-label="go next song"
+              class="player-button-next"
+              @click="goNext"
+            >
+              <Icon name="next" size="20" />
+            </button>
+          </div>
         </div>
       </div>
       <div class="information-view" ref="informationViewEl">
@@ -86,18 +104,23 @@ import { storeToRefs } from "pinia";
 import { useSongStore } from "@/stores/song.store";
 import { computed, onMounted, ref, watch } from "vue";
 import { usePlayerProgress } from "@/composables/usePlayerProgress";
-import { useI18n } from "vue-i18n";
 import gsap from "gsap";
 import LyricReader from "@/components/player/LyricReader.vue";
 import SongInformation from "@/components/player/SongInformation.vue";
 import SongDetails from "@/components/player/SongDetails.vue";
 import { S3_SOURCE_LINK, S3Dir } from "@/domain/enums/aws-link";
-import { onKeyStroke, useMediaQuery } from "@vueuse/core";
+import {
+  onKeyStroke,
+  useMagicKeys,
+  useMediaQuery,
+  whenever,
+} from "@vueuse/core";
 import IconButton from "@/components/component-library/IconButton.vue";
 import { useKeyboardControls } from "@/composables/useKeyboardControls";
 import {
   fadeInAnimation,
   playerContainerEase,
+  playerControlsScale,
 } from "@/components/player/constants";
 import { VIEWS } from "@/components/player/enums";
 
@@ -115,6 +138,8 @@ const songInformationEl = ref();
 const playerProgressEl = ref();
 const playerTimerEl = ref();
 const playButtonEl = ref();
+const nextButtonEl = ref();
+const prevButtonEl = ref();
 const lyricsEl = ref();
 const playerBodyEl = ref();
 const informationViewEl = ref();
@@ -123,7 +148,7 @@ const playerViewEl = ref();
 const { hidePlayer } = useAppStore();
 const { playerVisible } = storeToRefs(useAppStore());
 const { currentSong } = storeToRefs(useSongStore());
-const { resetSong, setNextSong } = useSongStore();
+const { resetSong, setNextSong, setPreviousSong } = useSongStore();
 
 const isLargeScreen = useMediaQuery("(min-width: 1024px)");
 const { player } = useKeyboardControls();
@@ -178,10 +203,17 @@ const playPause = () => {
     pauseSong();
   }
 
-  gsap.from(playButtonEl.value, {
-    duration: 0.2,
-    scale: 0.9,
-  });
+  gsap.from(playButtonEl.value, playerControlsScale);
+};
+
+const goNext = () => {
+  setNextSong();
+  gsap.from(nextButtonEl.value, playerControlsScale);
+};
+
+const goPrev = () => {
+  setPreviousSong();
+  gsap.from(prevButtonEl.value, playerControlsScale);
 };
 
 const viewInformation = () => {
@@ -279,6 +311,14 @@ watch(player.songDetails, (v) => {
   }
 });
 
+watch(player.prevSong, (v) => {
+  if (v) goPrev();
+});
+
+watch(player.nextSong, (v) => {
+  if (v) goNext();
+});
+
 onMounted(() => {
   const t1 = gsap.timeline();
   t1.from(playerContainerEl.value, {
@@ -291,7 +331,9 @@ onMounted(() => {
     .from(lyricsEl.value.containerRef, fadeInAnimation, "-=0.55")
     .from(playerProgressEl.value, fadeInAnimation, "-=0.5")
     .from(playerTimerEl.value, fadeInAnimation, "-=0.6")
-    .from(playButtonEl.value, fadeInAnimation, "-=0.7");
+    .from(playButtonEl.value, fadeInAnimation, "-=0.7")
+    .from(prevButtonEl.value, fadeInAnimation, "-=0.65")
+    .from(nextButtonEl.value, fadeInAnimation, "-=0.65");
   initAudioFile();
 });
 </script>
@@ -427,15 +469,49 @@ onMounted(() => {
   border: none;
   box-shadow: 0 0 0 0.4rem rgba(var(--color-black-950-rgb), 0.1);
   cursor: pointer;
-
+  margin: 0 2em;
   > .icon-wrapper {
     path {
       stroke: var(--color-black-50);
     }
   }
+  &-prev,
+  &-next {
+    background: transparent;
+    border-radius: 50%;
+    width: 3rem;
+    height: 3rem;
+    border: none;
+    cursor: pointer;
+    > .icon-wrapper {
+      path {
+        stroke: var(--color-black-950);
+      }
+    }
+  }
+}
+
+.player-buttons {
+  display: flex;
+  align-items: center;
 }
 
 @media screen and (min-width: 1024px) {
+  .player-buttons {
+    position: absolute;
+    top: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .player-button {
+    width: 5rem;
+    height: 5rem;
+    margin: 0 4em;
+    > .icon-wrapper {
+      width: 2rem;
+      height: 2rem;
+    }
+  }
   .player-main-information {
     flex: 1;
     margin-right: 3rem;
@@ -456,7 +532,7 @@ onMounted(() => {
     .player-wrapper {
       flex-direction: row;
       height: 16rem;
-      background: var(--color-black-50);
+      background: rgba(var(--color-black-50-rgb), 0.5);
       background: linear-gradient(
         180deg,
         rgba(var(--color-black-50-rgb), 0) 0%,

@@ -127,6 +127,12 @@ defineExpose({ containerRef });
   }
   .heading-container {
     align-items: center;
+    .icon-button {
+      svg {
+        width: 2.5rem;
+        height: 2.5rem;
+      }
+    }
     .heading-greetings {
       flex-direction: revert;
       justify-content: flex-start;
@@ -136,7 +142,7 @@ defineExpose({ containerRef });
     }
     button:first-child {
       order: 1;
-      margin-right: 1.5rem;
+      margin-right: 2rem;
     }
     button:last-child {
       order: 2;

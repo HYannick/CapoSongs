@@ -69,6 +69,8 @@ export default {
         settings: "Ouvrir Options",
         favourite: "Ouvrir Favoris",
         theme: "Changer Thème",
+        prevSong: 'Précédent',
+        nextSong: 'Suivant'
       },
     },
   },

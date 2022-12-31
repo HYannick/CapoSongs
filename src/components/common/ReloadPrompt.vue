@@ -17,10 +17,10 @@ const { t } = useI18n();
       <span class="text -body" v-html="t('pwaUpdate.updateReady')"> </span>
     </div>
     <div class="pwa-toast-footer">
-      <button class="dismiss-reload" @click="close">
+      <button aria-label="dismiss reload" class="dismiss-reload" @click="close">
         {{ t("pwaUpdate.dismiss") }}
       </button>
-      <button class="reload-pwa" @click="updateServiceWorker()">
+      <button aria-label="reload pwa" class="reload-pwa" @click="updateServiceWorker()">
         {{ t("pwaUpdate.reload") }}
       </button>
     </div>

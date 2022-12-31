@@ -2,14 +2,22 @@
   <div class="sidebar" :class="sidebarClasses">
     <div ref="contentRef" class="sidebar-content">
       <div class="favourite-song-heading">
-        <IconButton aria-label="clear favourites" icon-name="trash"
-                    @click="clearFavourites" :size="24" />
+        <IconButton
+          aria-label="clear favourites"
+          icon-name="trash"
+          @click="clearFavourites"
+          :size="24"
+        />
         <h4 class="text -extra-bold -title-3">
           {{ t("sidebars.favourite.title") }}
         </h4>
-        <IconButton aria-label="close favourite sidebar" icon-name="close"
-                    @click="hideFavouriteSongs"
-                    :size="24" />
+        <IconButton
+          aria-label="close favourite sidebar"
+          icon-name="close"
+          class="sidebar-close"
+          @click="hideFavouriteSongs"
+          :size="24"
+        />
       </div>
       <div class="favourite-song-list">
         <NotFound

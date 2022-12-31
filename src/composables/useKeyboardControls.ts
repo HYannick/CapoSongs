@@ -8,6 +8,8 @@ export const useKeyboardControls = () => {
     "Ctrl + H": "highlightCoro",
     "&#8250;": "incProgress",
     "&#8249;": "decProgress",
+    "Ctrl + &#8250;": "prevSong",
+    "Ctrl + &#8249;": "nextSong",
     Esc: "close",
   };
 
@@ -31,6 +33,8 @@ export const useKeyboardControls = () => {
       incProgress: "ArrowRight",
       decProgress: "ArrowLeft",
       closePlayer: "Escape",
+      nextSong: keys["alt+arrowright"],
+      prevSong: keys["alt+arrowleft"],
     }
   };
 };

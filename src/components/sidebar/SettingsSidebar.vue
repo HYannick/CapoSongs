@@ -12,6 +12,7 @@
           aria-label="close settings"
           icon-name="close"
           @click="hideSettings"
+          class="sidebar-close"
           :size="24"
         />
       </div>

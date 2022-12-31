@@ -71,6 +71,8 @@ export default {
         settings: "Open Settings",
         favourite: "Open Favourite Songs",
         theme: "Switch Theme",
+        prevSong: 'Previous',
+        nextSong: 'Next'
       },
     },
   },
