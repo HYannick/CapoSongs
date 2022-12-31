@@ -1,7 +1,6 @@
 export default {
   greetings:
-    '<span class="text -title-1 -black' +
-    ' color-secondary--600">H</span>ey !',
+    '<span class="text -title-1 -black' + ' color-secondary--600">H</span>ey !',
   pwaUpdate: {
     offlineReady: "App disponible hors ligne",
     updateReady: "Nouvelle version disponible !",
@@ -24,6 +23,13 @@ export default {
     backPlayer: "Lecteur",
     comingSoon: "A venir",
     unknownArtist: "Inconnu",
+  },
+  offlineScreen: {
+    title: "Aucune connexion",
+    description:
+      " Il semble y avoir un problème avec ta connexion<br />" +
+      "        Vérifie ton réseau",
+    button: "Réessayer",
   },
   search: {
     placeholder: "Quelle chanson veux-tu chanter ?",

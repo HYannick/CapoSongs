@@ -12,6 +12,13 @@ export default {
     title: "Ready to sing ?",
     subtitle: " Select a song on the left and start!",
   },
+  offlineScreen: {
+    title: "No internet connection found",
+    description:
+      " It seems there is a problem with your connection.<br />" +
+      "        Please check your network",
+    button: "Try again",
+  },
   pwaInstall: {
     text: "For a better user experience<br />Add the app to your homescreen :)",
     dismiss: "Not now",
