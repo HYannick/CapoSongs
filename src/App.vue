@@ -8,34 +8,20 @@ const { setTheme } = useTheme();
 const { locale } = useI18n();
 
 import { useOnline } from "@vueuse/core";
-import Icon from "@/components/component-library/Icon.vue";
+import OfflineScreen from "@/components/common/OfflineScreen.vue";
 
 const online = useOnline();
-const reloadPage = () => {
-  window.location.reload();
-};
 onMounted(async () => {
   setTheme();
   locale.value = localStorage.getItem("lang") || "fr";
+  console.log(online.value)
 });
 </script>
 
 <template>
   <ReloadPrompt />
   <HomeView v-if="online" />
-  <div class="offline-screen" v-else>
-    <Icon name="offline" size="250" />
-    <div class="offline-text">
-      <p class="text -bold -large-body">No internet connection found</p>
-      <p class="text">
-        It seems there is a problem with your connection.<br />
-        Please check your network
-      </p>
-      <button class="offline-retry-button" @click="reloadPage">
-        <span class="text -bold -body">Try again</span>
-      </button>
-    </div>
-  </div>
+  <OfflineScreen v-else />
 </template>
 
 <style lang="scss">
