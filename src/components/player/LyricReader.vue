@@ -33,14 +33,10 @@ import { nextTick, Ref, ref, watch } from "vue";
 import type { Song } from "@/domain/Song";
 import Liricle from "liricle";
 import { S3_SOURCE_LINK, S3Dir } from "@/domain/enums/aws-link";
-import Icon from "@/components/component-library/Icon.vue";
-import { onKeyStroke } from "@vueuse/core";
 import IconButton from "@/components/component-library/IconButton.vue";
 import { useKeyboardControls } from "@/composables/useKeyboardControls";
 
 const props = defineProps({
-  currentLineIndex: Number,
-  lyrics: Array as PropType<LyricLine[]>,
   song: Object as PropType<Song>,
   audioElementEl: Object as PropType<any>,
 });
@@ -68,13 +64,13 @@ const initLyricReader = (lyricsLink: string) => {
   liricleInstance = new Liricle();
   liricleInstance.offset = 1000;
   liricleInstance.on("load", (data: any) => {
-    lyrics.value = data.lines.map((line: LyricLine, index: number) => ({
+    lyrics.value = data.lines.map((line: LyricLine, index: number): LyricLine => ({
       ...line,
       index,
       text: line.text.replace(":margin:", "").replace(":coro:", ""),
       isCoro: line.text.includes(":coro:"),
       spaced: line.text.includes(":margin:"),
-    }));
+    })) as LyricLine[];
   });
   liricleInstance.on("sync", (line: LyricLine) => {
     currentLineIndex.value = line.index;

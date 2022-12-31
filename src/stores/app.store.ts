@@ -53,18 +53,18 @@ export const useAppStore = defineStore("app", () => {
 
   return {
     settingsVisible,
-    favouriteSongsVisible,
     showSettings,
-    showFavouriteSongs,
     hideSettings,
+    toggleSettings,
+    favouriteSongsVisible,
+    showFavouriteSongs,
     hideFavouriteSongs,
-    playerVisible,
-    showPlayer,
-    hidePlayer,
+    toggleFavouriteSongs,
     mentionsVisible,
     showMentions,
     hideMentions,
-    toggleFavouriteSongs,
-    toggleSettings,
+    playerVisible,
+    showPlayer,
+    hidePlayer,
   };
 });

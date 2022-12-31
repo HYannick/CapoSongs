@@ -10,8 +10,19 @@ export const useSongStore = defineStore("songs", () => {
   const songs: Ref<Song[]> = ref(songData.songs);
   const currentSong: Ref<Song | null> = ref(null);
   const favouriteSongs: Ref<Song[]> = ref([]);
+
+  const replay = ref(false);
+  const automaticPlay = ref(false);
   const loadSong = (songToLoad: Song) => {
     currentSong.value = songToLoad;
+  };
+
+  const enableReplay = () => {
+    replay.value = !replay.value;
+  };
+
+  const enableAutomaticPlay = () => {
+    automaticPlay.value = !automaticPlay.value;
   };
 
   const resetSong = () => {
@@ -19,7 +30,9 @@ export const useSongStore = defineStore("songs", () => {
   };
 
   const setNextSong = () => {
-    const index = songs.value.indexOf(currentSong.value!);
+    const index = songs.value
+      .map((song) => song.id)
+      .indexOf(currentSong.value!.id);
     const nextSong = songs.value[index + 1];
     if (nextSong) {
       currentSong.value = nextSong;
@@ -95,5 +108,9 @@ export const useSongStore = defineStore("songs", () => {
     isFavourite,
     setNextSong,
     setPreviousSong,
+    enableReplay,
+    replay,
+    enableAutomaticPlay,
+    automaticPlay,
   };
 });

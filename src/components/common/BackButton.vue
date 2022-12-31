@@ -18,7 +18,7 @@ const { t } = useI18n();
 <style lang="scss">
 .button-return {
   position: absolute;
-  top: 1rem;
+  top: 0.5rem;
   left: 1rem;
   display: flex;
   z-index: 9;
