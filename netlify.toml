@@ -20,5 +20,8 @@ Content-Type = "application/manifest+json"
 for = "/*"
 [headers.values]
 cache-control = '''
-    no-store
+    max-age=0,
+	no-cache,
+	no-store,
+	must-revalidate
     '''
