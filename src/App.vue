@@ -14,7 +14,6 @@ const online = useOnline();
 onMounted(async () => {
   setTheme();
   locale.value = localStorage.getItem("lang") || "fr";
-  console.log(online.value)
 });
 </script>
 
