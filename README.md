@@ -1,7 +1,11 @@
 # CapoSongs
 
-CapoSongs is a progressive webapp to learn capoeira songs.
-Link of the live app -> https://caposongs.netlify.app/
+<p align="center" width="100%">
+    <img src="https://user-images.githubusercontent.com/2854982/210122831-b807575f-fff1-4795-97ad-96f150d6c51a.png" />
+</p>
+
+<p align="center" width="100%">CapoSongs is a progressive webapp to learn capoeira songs.<br>
+live app :: https://caposongs.netlify.app/</p>
 
 ## Recommended IDE Setup
 
