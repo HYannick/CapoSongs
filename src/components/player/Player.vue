@@ -504,7 +504,7 @@ onMounted(() => {
 @media screen and (min-width: 1024px) {
   .player-buttons {
     position: absolute;
-    top: 2.5rem;
+    top: 4rem;
     left: 50%;
     transform: translateX(-50%);
   }
@@ -537,6 +537,7 @@ onMounted(() => {
     .player-wrapper {
       flex-direction: row;
       height: 16rem;
+      padding: 2.5rem 1.5rem 0;
       background: rgba(var(--color-black-50-rgb), 0.5);
       background: linear-gradient(
         180deg,
