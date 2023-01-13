@@ -8,7 +8,7 @@ export const songResource = () => {
   const getSongs = async (pagination: { page: number }): Promise<Song[]> => {
     try {
       const res = await fetch(
-        `${import.meta.env.VITE_STRAPI_API_URL}/songs?=populate=*`,
+        `${import.meta.env.VITE_STRAPI_API_URL}/songs?populate=*`,
         {
           ...AuthorizationHeader(import.meta.env.VITE_STRAPI_TOKEN),
         }
