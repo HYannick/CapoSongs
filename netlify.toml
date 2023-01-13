@@ -6,6 +6,10 @@ NODE_VERSION = "14"
 publish = "dist"
 command = "vite build"
 
+[functions]
+directory = "functions"
+node_bundler = "esbuild"
+
 [[redirects]]
 from = "/*"
 to = "/index.html"
