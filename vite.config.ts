@@ -10,7 +10,7 @@ import { VitePWA } from "vite-plugin-pwa";
 export default defineConfig({
   build: {
     rollupOptions: {
-      external: ['axios', 'qs'],
+      external: ['qs'],
     },
   },
   plugins: [
