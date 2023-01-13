@@ -4,4 +4,4 @@ export enum S3Dir {
   LYRICS = 'lyrics',
 }
 export const S3_SOURCE_LINK = (dir: S3Dir, source: string) =>
-  `https://capoeira-songs.s3.eu-west-3.amazonaws.com/${dir}/${source}`;
+  `${import.meta.env.VITE_MEDIA_URL}/${source}`;

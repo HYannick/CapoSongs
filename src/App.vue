@@ -5,15 +5,18 @@ import { onMounted } from "vue";
 import { useI18n } from "vue-i18n";
 import ReloadPrompt from "@/components/common/ReloadPrompt.vue";
 const { setTheme } = useTheme();
+const { getSongs } = useSongStore();
 const { locale } = useI18n();
 
 import { useOnline } from "@vueuse/core";
 import OfflineScreen from "@/components/common/OfflineScreen.vue";
+import { useSongStore } from "@/stores/song.store";
 
 const online = useOnline();
 onMounted(async () => {
   setTheme();
   locale.value = localStorage.getItem("lang") || "fr";
+  await getSongs();
 });
 </script>
 

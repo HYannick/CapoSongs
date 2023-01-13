@@ -11,7 +11,7 @@
           icon="search"
         />
       </div>
-      <SongList ref="songListEl" :songs="filteredSongs" />
+      <SongList v-if="filteredSongs.length" ref="songListEl" :songs="filteredSongs" />
     </div>
     <div class="player">
       <Player v-if="songStore.currentSong" />

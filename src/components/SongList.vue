@@ -129,6 +129,7 @@ watch(
 );
 
 onMounted(() => {
+  if(!songItemRef.value) return
   songItemRefs.value = Array.from(songItemRef.value) as SongItemRef[];
   staggerShowAllSongItems();
 });

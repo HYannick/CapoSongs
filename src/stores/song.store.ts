@@ -2,12 +2,12 @@ import { computed, ref } from "vue";
 import type { Ref } from "vue";
 import { defineStore } from "pinia";
 import type { Song } from "@/domain/Song";
-import songData from "@/domain/song-data.json";
+import { songResource } from "@/api/resources/SongResource";
 
 const FAVOURITE_SONGS_STORAGE_KEY = "favourite_songs";
 
 export const useSongStore = defineStore("songs", () => {
-  const songs: Ref<Song[]> = ref(songData.songs);
+  const songs: Ref<Song[]> = ref([]);
   const currentSong: Ref<Song | null> = ref(null);
   const favouriteSongs: Ref<Song[]> = ref([]);
 
@@ -15,6 +15,11 @@ export const useSongStore = defineStore("songs", () => {
   const automaticPlay = ref(false);
   const loadSong = (songToLoad: Song) => {
     currentSong.value = songToLoad;
+  };
+
+  const getSongs = async () => {
+    const { getSongs } = songResource();
+    songs.value = await getSongs({ page: 1 });
   };
 
   const enableReplay = () => {
@@ -112,5 +117,6 @@ export const useSongStore = defineStore("songs", () => {
     replay,
     enableAutomaticPlay,
     automaticPlay,
+    getSongs,
   };
 });

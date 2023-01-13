@@ -9,8 +9,10 @@ import { MotionPlugin } from "@vueuse/motion";
 
 const app = createApp(App);
 
-app.use(MotionPlugin)
+const pinia = createPinia();
+
+app.use(MotionPlugin);
 app.use(i18n);
-app.use(createPinia());
+app.use(pinia);
 
 app.mount("#app");
