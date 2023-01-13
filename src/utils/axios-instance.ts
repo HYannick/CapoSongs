@@ -1,4 +1,4 @@
-import axios from "axios";
+const axios = require("axios").default;
 import { paramsSerializer } from "@/utils/paramsSerializer";
 
 export const backendAxiosInstance = axios.create({
