@@ -11,7 +11,7 @@
           icon="search"
         />
       </div>
-      <SongList v-if="filteredSongs.length" ref="songListEl" :songs="filteredSongs" />
+      <SongList ref="songListEl" :songs="songStore.songs" />
     </div>
     <div class="player">
       <Player v-if="songStore.currentSong" />
@@ -29,7 +29,7 @@ import SettingsSidebar from "@/components/sidebar/SettingsSidebar.vue";
 import FavouritesSidebar from "@/components/sidebar/FavouritesSidebar.vue";
 import Player from "@/components/player/Player.vue";
 import { SidebarOrigin } from "@/domain/enums/SideBarOrigin";
-import { computed, onMounted, ref, watch } from "vue";
+import { onMounted, ref, watch } from "vue";
 import InputField from "@/components/component-library/InputField.vue";
 import SongList from "@/components/SongList.vue";
 import { useSongStore } from "@/stores/song.store";
@@ -38,7 +38,7 @@ import gsap from "gsap";
 import { useAppStore } from "@/stores/app.store";
 import Mentions from "@/components/Mentions.vue";
 import HomePlaceholder from "@/components/HomePlaceholder.vue";
-import { useMagicKeys } from "@vueuse/core";
+import { useDebounce, useMagicKeys } from "@vueuse/core";
 import { useTheme } from "@/composables/useTheme";
 import { useKeyboardControls } from "@/composables/useKeyboardControls";
 
@@ -53,6 +53,7 @@ const el = ref();
 
 const keys = useMagicKeys();
 const { switchTheme } = useTheme();
+const debounced = useDebounce(query, 500)
 
 const { app } = useKeyboardControls();
 watch(app.settings, (v) => {
@@ -65,17 +66,6 @@ watch(app.favourites, (v) => {
 
 watch(app.darkMode, (v) => {
   if (v) switchTheme();
-});
-
-const filteredSongs = computed(() => {
-  if (!query.value) {
-    return songStore.songs;
-  }
-  return songStore.songs.filter(
-    (song) =>
-      song.title.toLowerCase().includes(query.value.toLowerCase()) ||
-      song.translation?.toLowerCase().includes(query.value.toLowerCase())
-  );
 });
 // const isLargeScreen = useMediaQuery("(min-width: 1024px)");
 // const songList = ref(songStore.songs);
@@ -94,6 +84,12 @@ const filteredSongs = computed(() => {
 //   );
 // }
 
+watch(
+  () => debounced.value,
+  (searchQuery) => {
+    songStore.getSongs(searchQuery);
+  }
+);
 watch(
   () => appStore.playerVisible,
   (visible) => {

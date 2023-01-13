@@ -10,6 +10,7 @@ export const useSongStore = defineStore("songs", () => {
   const songs: Ref<Song[]> = ref([]);
   const currentSong: Ref<Song | null> = ref(null);
   const favouriteSongs: Ref<Song[]> = ref([]);
+  const fetchingSongs = ref(false);
 
   const replay = ref(false);
   const automaticPlay = ref(false);
@@ -17,9 +18,11 @@ export const useSongStore = defineStore("songs", () => {
     currentSong.value = songToLoad;
   };
 
-  const getSongs = async () => {
+  const getSongs = async (searchQuery?: string) => {
     const { getSongs } = songResource();
-    songs.value = await getSongs({ page: 1 });
+    fetchingSongs.value = true;
+    songs.value = await getSongs({ page: 1 }, searchQuery);
+    fetchingSongs.value = false;
   };
 
   const enableReplay = () => {
@@ -118,5 +121,6 @@ export const useSongStore = defineStore("songs", () => {
     enableAutomaticPlay,
     automaticPlay,
     getSongs,
+    fetchingSongs,
   };
 });

@@ -4,10 +4,9 @@ import { songResource } from "@/api/resources/SongResource";
 import { stubNotFound } from "../../test-utils/backend";
 import { SongsNotFoundException } from "@/common/domain/SongsNotFoundException";
 import { mockSongsData } from "../../fixtures/song.fixture";
-import { backendAxiosInstance } from "@/api/axios-instance";
-vi.mock("@/utils/axios-instance");
+vi.mock("fetch");
 
-const mockedAxios = backendAxiosInstance as Mocked<typeof backendAxiosInstance>;
+const mockedAxios = fetch as Mocked<typeof fetch>;
 
 describe("Song Resource", () => {
   beforeEach(() => {

@@ -6,8 +6,9 @@
         v-html="t('songList.title')"
       ></h2>
     </div>
+    <ListLoader v-if="fetchingSongs" :title="t('songList.loading')" />
     <NotFound
-      v-if="!songs.length"
+      v-else-if="songsNotFound"
       :title="t('songList.notFound')"
       :sub-title="t('songList.notFoundDetails')"
     />
@@ -29,13 +30,14 @@ import type { Song } from "@/domain/Song";
 import { useAppStore } from "@/stores/app.store";
 import { useSongStore } from "@/stores/song.store";
 import { useI18n } from "vue-i18n";
-import { onMounted, ref, watch } from "vue";
+import { computed, nextTick, ref, watch } from "vue";
 import gsap from "gsap";
 import SongItem from "@/components/SongItem.vue";
 import NotFound from "@/components/common/NotFound.vue";
 import { storeToRefs } from "pinia";
 import type { SongItemRef } from "@/domain/SongItem";
 import { useMediaQuery } from "@vueuse/core";
+import ListLoader from "@/components/common/ListLoader.vue";
 
 const props = defineProps({
   songs: Array as PropType<Song[]>,
@@ -45,11 +47,14 @@ const songItemRef = ref();
 const el = ref<HTMLElement>();
 const songItemRefs: Ref<SongItemRef[]> = ref([]);
 const { showPlayer } = useAppStore();
-const { currentSong } = storeToRefs(useSongStore());
+const { currentSong, fetchingSongs } = storeToRefs(useSongStore());
 const { loadSong } = useSongStore();
 const isLargeScreen = useMediaQuery("(min-width: 1024px)");
 const { t } = useI18n();
 
+const songsNotFound = computed(
+  () => !props.songs!.length && !fetchingSongs.value
+);
 
 //TODO: Implement infinite scroll
 // const songList = ref(props.songs);
@@ -128,11 +133,15 @@ watch(
   }
 );
 
-onMounted(() => {
-  if(!songItemRef.value) return
-  songItemRefs.value = Array.from(songItemRef.value) as SongItemRef[];
-  staggerShowAllSongItems();
-});
+watch(
+  () => fetchingSongs.value,
+  async () => {
+    await nextTick();
+    if (!songItemRef.value) return;
+    songItemRefs.value = Array.from(songItemRef.value) as SongItemRef[];
+    staggerShowAllSongItems();
+  }
+);
 
 defineExpose({ containerRef });
 </script>

@@ -37,9 +37,10 @@ export default {
   songList: {
     title: '<span class="color-secondary--600">M</span>usiques',
     notFound: "Aucune chanson trouvée :(",
+    loading: "Chargement",
     notFoundDetails:
       "Réinitialise ta recherche, ou envoie une nouvelle musique à<br>" +
-      "<a href='mailto:capocancoes@gmail.com?subject=Nouvelle chanson à ajouter'>capocancoes@gmail.com</a>",
+      "<a href='mailto:capocancoes{'@'}gmail.com?subject=Nouvelle chanson à ajouter'>capocancoes{'@'}gmail.com</a>",
   },
   songDetails: {
     translate: "Traduction",

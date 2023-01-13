@@ -39,9 +39,10 @@ export default {
   songList: {
     title: '<span class="color-secondary--600">S</span>ongs',
     notFound: "Song not found :(",
+    loading: "Loading",
     notFoundDetails:
       "Reset your search or send a new song at<br>" +
-      "<a href='mailto:capocancoes@gmail.com?subject=Nouvelle chanson à ajouter'>capocancoes@gmail.com</a>",
+      "<a href='mailto:capocancoes{'@'}gmail.com?subject=Nouvelle chanson à ajouter'>capocancoes{'@'}gmail.com</a>",
   },
   songDetails: {
     translate: "Translation",

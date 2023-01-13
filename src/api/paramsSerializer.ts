@@ -1,3 +1,3 @@
-import qs from 'qs';
+import {stringify} from 'qs';
 
-export const paramsSerializer = (params: any) => qs.stringify(params, { arrayFormat: 'repeat' });
+export const paramsSerializer = (params: any) => stringify(params, { arrayFormat: 'repeat' });

@@ -1,6 +1,4 @@
-import type { JwtToken } from "@/common/domain/JwtToken";
-
-export const AuthorizationHeader = (token: JwtToken) => ({
+export const AuthorizationHeader = (token: string) => ({
   headers: {
     Authorization: `Bearer ${token}`,
   },
