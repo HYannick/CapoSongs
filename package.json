@@ -34,7 +34,6 @@
     "@types/imagesloaded": "^4.1.2",
     "@types/jsdom": "^20.0.1",
     "@types/node": "^18.11.12",
-    "@types/qs": "^6.9.7",
     "@types/uuid": "^9.0.0",
     "@vitejs/plugin-vue": "^4.0.0",
     "@vitest/ui": "^0.25.8",
