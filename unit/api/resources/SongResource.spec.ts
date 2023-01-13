@@ -4,7 +4,7 @@ import { songResource } from "@/api/resources/SongResource";
 import { stubNotFound } from "../../test-utils/backend";
 import { SongsNotFoundException } from "@/common/domain/SongsNotFoundException";
 import { mockSongsData } from "../../fixtures/song.fixture";
-import { backendAxiosInstance } from "@/utils/axios-instance";
+import { backendAxiosInstance } from "@/api/axios-instance";
 vi.mock("@/utils/axios-instance");
 
 const mockedAxios = backendAxiosInstance as Mocked<typeof backendAxiosInstance>;

@@ -1,9 +1,9 @@
 import type { Song } from "@/domain/Song";
 import type { RestSongData } from "@/api/rest/RestSong";
 import { toSong } from "@/api/rest/RestSong";
-import { AuthorizationHeader } from "@/utils/auth-headers";
+import { AuthorizationHeader } from "@/api/auth-headers";
 import { SongsNotFoundException } from "@/common/domain/SongsNotFoundException";
-import { backendAxiosInstance } from "@/utils/axios-instance";
+import { backendAxiosInstance } from "@/api/axios-instance";
 
 export const songResource = () => {
   const getSongs = async (pagination: { page: number }): Promise<Song[]> => {

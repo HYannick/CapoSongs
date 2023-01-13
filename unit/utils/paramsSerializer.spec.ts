@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { paramsSerializer } from "@/utils/paramsSerializer";
+import { paramsSerializer } from "@/api/paramsSerializer";
 
 describe("Params Serializer", () => {
   it("should serialize request params correctly", () => {
