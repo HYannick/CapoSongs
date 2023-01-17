@@ -1,0 +1,7 @@
+export const songTheme = {
+  MESTRES: "MESTRES",
+  SLAVERY: "SLAVERY",
+  ABOUT_CAPOEIRA: "ABOUT_CAPOEIRA",
+  END_OF_RODA: "END_OF_RODA",
+  OTHER: "OTHER",
+};

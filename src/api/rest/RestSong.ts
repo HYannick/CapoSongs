@@ -51,7 +51,9 @@ export interface RestPagination {
 
 export interface RestSongData {
   data: RestSong[];
-  meta: RestPagination;
+  meta: {
+    pagination: RestPagination;
+  };
 }
 
 export const toSong = (restSong: RestSong): Song => {

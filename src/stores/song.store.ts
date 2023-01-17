@@ -3,6 +3,7 @@ import type { Ref } from "vue";
 import { defineStore } from "pinia";
 import type { Song } from "@/domain/Song";
 import { songResource } from "@/api/resources/SongResource";
+import type { SongFilters } from "@/domain/enums/SongFilters";
 
 const FAVOURITE_SONGS_STORAGE_KEY = "favourite_songs";
 
@@ -11,6 +12,8 @@ export const useSongStore = defineStore("songs", () => {
   const currentSong: Ref<Song | null> = ref(null);
   const favouriteSongs: Ref<Song[]> = ref([]);
   const fetchingSongs = ref(false);
+  const isloadingMoreSongs = ref(false);
+  const pageCount = ref(0);
 
   const replay = ref(false);
   const automaticPlay = ref(false);
@@ -18,11 +21,29 @@ export const useSongStore = defineStore("songs", () => {
     currentSong.value = songToLoad;
   };
 
-  const getSongs = async (searchQuery?: string) => {
-    const { getSongs } = songResource();
+  const getSongs = async (
+    page: number = 1,
+    searchQuery?: string,
+    filters?: SongFilters
+  ) => {
     fetchingSongs.value = true;
-    songs.value = await getSongs({ page: 1 }, searchQuery);
+    const { getSongs } = songResource();
+    const { results, pagination } = await getSongs({ page }, searchQuery, filters);
+    songs.value = [...songs.value, ...results];
     fetchingSongs.value = false;
+    pageCount.value = pagination.pageCount;
+  };
+
+  const loadMoreSongs = async (
+    page: number = 1,
+    searchQuery?: string,
+    filters?: SongFilters
+  ) => {
+    isloadingMoreSongs.value = true;
+    const { getSongs } = songResource();
+    const { results } = await getSongs({ page }, searchQuery, filters);
+    songs.value = [...songs.value, ...results];
+    isloadingMoreSongs.value = false;
   };
 
   const enableReplay = () => {
@@ -35,6 +56,10 @@ export const useSongStore = defineStore("songs", () => {
 
   const resetSong = () => {
     currentSong.value = null;
+  };
+
+  const resetSongs = () => {
+    songs.value = [];
   };
 
   const setNextSong = () => {
@@ -122,5 +147,9 @@ export const useSongStore = defineStore("songs", () => {
     automaticPlay,
     getSongs,
     fetchingSongs,
+    resetSongs,
+    loadMoreSongs,
+    isloadingMoreSongs,
+    pageCount,
   };
 });

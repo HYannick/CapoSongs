@@ -6,9 +6,13 @@ export const useAppStore = defineStore("app", () => {
   const mentionsVisible = ref(false);
   const favouriteSongsVisible = ref(false);
   const playerVisible = ref(false);
+  const filtersVisible = ref(false);
 
   const showPlayer = () => {
     playerVisible.value = true;
+  };
+  const showFilters = () => {
+    filtersVisible.value = true;
   };
   const showMentions = () => {
     mentionsVisible.value = true;
@@ -23,6 +27,10 @@ export const useAppStore = defineStore("app", () => {
 
   const hideMentions = () => {
     mentionsVisible.value = false;
+  };
+
+  const hideFilters = () => {
+    filtersVisible.value = false;
   };
 
   const hidePlayer = () => {
@@ -66,5 +74,8 @@ export const useAppStore = defineStore("app", () => {
     playerVisible,
     showPlayer,
     hidePlayer,
+    filtersVisible,
+    showFilters,
+    hideFilters,
   };
 });

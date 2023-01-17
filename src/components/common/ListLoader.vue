@@ -1,5 +1,5 @@
 <template>
-  <div class="loader">
+  <div class="loader" :class="{'-small': small}">
     <div class="load">
       <div class="one"></div>
       <div class="two"></div>
@@ -15,10 +15,12 @@ const { t } = useI18n();
 interface Props {
   title?: string;
   iconSize?: number;
+  small?: boolean;
 }
 withDefaults(defineProps<Props>(), {
   title: "",
-  iconSize: 150
+  iconSize: 150,
+  small: false,
 });
 </script>
 
@@ -33,6 +35,9 @@ withDefaults(defineProps<Props>(), {
   rect,
   line {
     stroke: var(--color-black-200);
+  }
+  &.-small {
+    height: 8rem;
   }
   color: var(--color-black-400);
   h4 {

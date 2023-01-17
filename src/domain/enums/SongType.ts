@@ -1,0 +1,9 @@
+export const songType = {
+  LADAINHA : "LADAINHA",
+  CORRIDO : "CORRIDO",
+  MACULELE : "MACULELE",
+  SAMBA_DE_RODA : "SAMBA_DE_RODA",
+  TOQUES : "TOQUES",
+  QUADRA : "QUADRA",
+  OTHERS : "OTHERS",
+};

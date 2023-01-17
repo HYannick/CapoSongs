@@ -10,6 +10,14 @@
           v-model="query"
           icon="search"
         />
+        <div class="search-filters-container" v-if="mergedFilters.length">
+          <div class="search-filters-item" v-for="filter in mergedFilters">
+            <span class="text -caption-1 -bold">{{
+              t(`search.filters.${filter}`)
+            }}</span>
+          </div>
+          <div class="search-filters-item" @click="resetAll">reset all</div>
+        </div>
       </div>
       <SongList ref="songListEl" :songs="songStore.songs" />
     </div>
@@ -19,6 +27,7 @@
     </div>
     <SettingsSidebar :from="SidebarOrigin.RIGHT" />
     <FavouritesSidebar :from="SidebarOrigin.LEFT" />
+    <FiltersSidebar />
     <Mentions v-if="appStore.mentionsVisible" />
   </main>
 </template>
@@ -29,7 +38,7 @@ import SettingsSidebar from "@/components/sidebar/SettingsSidebar.vue";
 import FavouritesSidebar from "@/components/sidebar/FavouritesSidebar.vue";
 import Player from "@/components/player/Player.vue";
 import { SidebarOrigin } from "@/domain/enums/SideBarOrigin";
-import { onMounted, ref, watch } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import InputField from "@/components/component-library/InputField.vue";
 import SongList from "@/components/SongList.vue";
 import { useSongStore } from "@/stores/song.store";
@@ -38,13 +47,22 @@ import gsap from "gsap";
 import { useAppStore } from "@/stores/app.store";
 import Mentions from "@/components/Mentions.vue";
 import HomePlaceholder from "@/components/HomePlaceholder.vue";
-import { useDebounce, useMagicKeys } from "@vueuse/core";
+import {
+  useDebounce,
+  useInfiniteScroll,
+  useMagicKeys,
+  useMediaQuery,
+} from "@vueuse/core";
 import { useTheme } from "@/composables/useTheme";
 import { useKeyboardControls } from "@/composables/useKeyboardControls";
+import FiltersSidebar from "@/components/sidebar/FiltersSidebar.vue";
+import { useSearchStore } from "@/stores/search.store";
+import { storeToRefs } from "pinia";
 
-const query = ref("");
 const songStore = useSongStore();
 const appStore = useAppStore();
+const { updatePage, resetCurrentPage, resetAllFilters } = useSearchStore();
+const { query, filters, currentPage } = storeToRefs(useSearchStore());
 const { t } = useI18n();
 const headingEl = ref();
 const searchEl = ref();
@@ -53,9 +71,45 @@ const el = ref();
 
 const keys = useMagicKeys();
 const { switchTheme } = useTheme();
-const debounced = useDebounce(query, 500)
+const debounced = useDebounce(query, 500);
 
 const { app } = useKeyboardControls();
+
+const mergedFilters = computed(() => {
+  return [...filters.value.genres, ...filters.value.themes];
+});
+
+const fetchMoreSongs = () => {
+  if (currentPage.value <= songStore.pageCount) {
+    updatePage();
+    songStore.loadMoreSongs(currentPage.value, query.value, filters.value);
+  }
+  // songItemRefs.value = Array.from(songItemRef.value) as SongItemRef[];
+  // if (currentSong.value) animateOnSongSelected(currentSong.value);
+};
+const isLargeScreen = useMediaQuery("(min-width: 1024px)");
+if (!isLargeScreen.value) {
+  useInfiniteScroll(el, fetchMoreSongs, {
+    distance: 10,
+  });
+}
+
+
+
+const applyFilters = async () => {
+  songStore.resetSongs();
+  resetCurrentPage();
+  await songStore.getSongs(currentPage.value, undefined, {
+    genres: filters.value.genres,
+    themes: filters.value.themes,
+  });
+};
+
+const resetAll = () => {
+  resetAllFilters();
+  applyFilters();
+}
+
 watch(app.settings, (v) => {
   if (v) appStore.toggleSettings();
 });
@@ -67,27 +121,13 @@ watch(app.favourites, (v) => {
 watch(app.darkMode, (v) => {
   if (v) switchTheme();
 });
-// const isLargeScreen = useMediaQuery("(min-width: 1024px)");
-// const songList = ref(songStore.songs);
-// if (!isLargeScreen.value) {
-//   const end = ref(10);
-//   songList.value = songStore.songs.slice(0, end.value);
-//
-//   useInfiniteScroll(
-//     el,
-//     () => {
-//       const start = (end.value += 1);
-//       end.value = end.value + 5;
-//       songList.value!.push(...filteredSongs.value.slice(start, end.value));
-//     },
-//     { distance: 5 }
-//   );
-// }
 
 watch(
   () => debounced.value,
   (searchQuery) => {
-    songStore.getSongs(searchQuery);
+    resetCurrentPage();
+    songStore.resetSongs();
+    songStore.getSongs(currentPage.value, searchQuery);
   }
 );
 watch(
@@ -135,6 +175,23 @@ onMounted(async () => {
 .search-container {
   margin-top: 3rem;
   margin-bottom: 4rem;
+}
+
+.search-filters {
+  &-container {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  &-item {
+    padding: 0 1rem;
+    border-radius: 1rem;
+    box-shadow: 0 0 0 0.2rem var(--color-black-200);
+    color: var(--color-black-900);
+  }
 }
 
 .main-container {

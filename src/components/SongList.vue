@@ -5,6 +5,7 @@
         class="text-dot -left text -extra-bold"
         v-html="t('songList.title')"
       ></h2>
+      <IconButton icon-name="filters" size="24" @click="showFilters"></IconButton>
     </div>
     <ListLoader v-if="fetchingSongs" :title="t('songList.loading')" />
     <NotFound
@@ -12,7 +13,7 @@
       :title="t('songList.notFound')"
       :sub-title="t('songList.notFoundDetails')"
     />
-    <div ref="el" class="song-list" v-else>
+    <div ref="el" class="song-list">
       <SongItem
         ref="songItemRef"
         v-for="song in songs"
@@ -21,6 +22,7 @@
         @selected="setSong"
       />
     </div>
+    <ListLoader small v-if="isloadingMoreSongs" />
   </div>
 </template>
 
@@ -36,44 +38,44 @@ import SongItem from "@/components/SongItem.vue";
 import NotFound from "@/components/common/NotFound.vue";
 import { storeToRefs } from "pinia";
 import type { SongItemRef } from "@/domain/SongItem";
-import { useMediaQuery } from "@vueuse/core";
+import { useInfiniteScroll, useMediaQuery } from "@vueuse/core";
 import ListLoader from "@/components/common/ListLoader.vue";
+import IconButton from "@/components/component-library/IconButton.vue";
+import { useSearchStore } from "@/stores/search.store";
 
-const props = defineProps({
-  songs: Array as PropType<Song[]>,
-});
 const containerRef = ref();
 const songItemRef = ref();
 const el = ref<HTMLElement>();
 const songItemRefs: Ref<SongItemRef[]> = ref([]);
 const { showPlayer } = useAppStore();
-const { currentSong, fetchingSongs } = storeToRefs(useSongStore());
-const { loadSong } = useSongStore();
-const isLargeScreen = useMediaQuery("(min-width: 1024px)");
+const { currentSong, fetchingSongs, isloadingMoreSongs, songs, pageCount } =
+  storeToRefs(useSongStore());
+const { loadSong, loadMoreSongs } = useSongStore();
+const { currentPage, query, filters} = storeToRefs(useSearchStore());
+const { updatePage, } = useSearchStore();
+const { showFilters } = useAppStore();
 const { t } = useI18n();
 
 const songsNotFound = computed(
-  () => !props.songs!.length && !fetchingSongs.value
+  () => !songs.value.length && !fetchingSongs.value
 );
 
-//TODO: Implement infinite scroll
-// const songList = ref(props.songs);
-// const end = ref(10);
-// if (isLargeScreen.value) {
-//   songList.value = props.songs!.slice(0, end.value);
-//
-//   useInfiniteScroll(
-//     el,
-//     () => {
-//       const start = (end.value += 1);
-//       end.value = end.value + 5;
-//       songList.value!.push(...props.songs!.slice(start, end.value));
-//       songItemRefs.value = Array.from(songItemRef.value) as SongItemRef[];
-//       if (currentSong.value) animateOnSongSelected(currentSong.value);
-//     },
-//     { distance: 10 }
-//   );
-// }
+
+const fetchMoreSongs = () => {
+  if (currentPage.value <= pageCount.value) {
+    updatePage();
+    loadMoreSongs(currentPage.value, query.value, filters.value);
+  }
+  songItemRefs.value = Array.from(songItemRef.value) as SongItemRef[];
+  if (currentSong.value) animateOnSongSelected(currentSong.value);
+};
+const isLargeScreen = useMediaQuery("(min-width: 1024px)");
+if (isLargeScreen.value) {
+  useInfiniteScroll(el, fetchMoreSongs, {
+    distance: 10,
+  });
+}
+
 
 const opacity = (opacity: number) => ({
   duration: 0.3,
@@ -143,11 +145,15 @@ watch(
   }
 );
 
+
 defineExpose({ containerRef });
 </script>
 
 <style lang="scss">
 .song-list-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   margin-bottom: 2rem;
 
   h2 {
