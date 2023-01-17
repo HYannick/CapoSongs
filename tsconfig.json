@@ -1,7 +1,8 @@
 {
   "files": [],
   "compilerOptions": {
-    "types": ["vitest/globals",  "vite-plugin-pwa/client"]
+    "types": ["vitest/globals",  "vite-plugin-pwa/client"],
+    "module": "esnext"
   },
   "references": [
     {
