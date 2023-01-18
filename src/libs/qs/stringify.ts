@@ -1,6 +1,6 @@
 import getSideChannel from "side-channel";
-import utils from "./utils";
-import formats from "./formats";
+import utils from "@/libs/qs/utils";
+import formats from "@/libs/qs/formats";
 const has = Object.prototype.hasOwnProperty;
 
 const arrayPrefixGenerators = {

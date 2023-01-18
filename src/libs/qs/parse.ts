@@ -1,4 +1,4 @@
-import utils from "./utils";
+import utils from "@/libs/qs/utils";
 
 const has = Object.prototype.hasOwnProperty;
 const isArray = Array.isArray;

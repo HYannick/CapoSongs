@@ -86,7 +86,7 @@ import type { SongFilters } from "@/domain/enums/SongFilters";
 const { t } = useI18n();
 const { filtersVisible } = storeToRefs(useAppStore());
 const { hideFilters } = useAppStore();
-const { getSongs, resetSongs } = useSongStore();
+const songStore = useSongStore();
 const { fetchingSongs } = storeToRefs(useSongStore());
 const { filters, currentPage } = storeToRefs(useSearchStore());
 const { setFilters, resetCurrentPage, resetAllFilters } = useSearchStore();
@@ -103,10 +103,10 @@ const applyFilters = async () => {
   setFilters({
     genres: filtersToSet.value.genres,
     themes: filtersToSet.value.themes,
-  });
-  resetSongs();
+  })
+  songStore.resetSongs();
   resetCurrentPage();
-  await getSongs(currentPage.value, undefined, {
+  await songStore.getSongs(currentPage.value, undefined, {
     genres: filters.value.genres,
     themes: filters.value.themes,
   });
@@ -114,6 +114,10 @@ const applyFilters = async () => {
 };
 
 const resetAll = () => {
+  filtersToSet.value = {
+    genres: [],
+    themes: [],
+  }
   resetAllFilters();
   applyFilters();
 };
@@ -122,7 +126,8 @@ watch(
   () => filters.value,
   (filters: SongFilters) => {
     filtersToSet.value = filters;
-  }
+  },
+  {deep: true}
 );
 </script>
 

@@ -22,10 +22,12 @@ export const useSearchStore = defineStore("search", () => {
   };
 
   const resetAllFilters = () => {
+    console.log('?????')
     filters.value = {
       genres: [],
       themes: [],
     }
+    console.log(filters.value)
   }
   return {
     query,

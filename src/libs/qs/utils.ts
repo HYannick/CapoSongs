@@ -1,4 +1,4 @@
-import formats from "./formats";
+import formats from "@/libs/qs/formats";
 
 const has = Object.prototype.hasOwnProperty;
 const isArray = Array.isArray;

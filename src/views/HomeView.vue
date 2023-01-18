@@ -11,12 +11,17 @@
           icon="search"
         />
         <div class="search-filters-container" v-if="mergedFilters.length">
-          <div class="search-filters-item" v-for="filter in mergedFilters">
+          <div class="search-filters-item" v-for="filter in mergedFilters" :key="filter">
             <span class="text -caption-1 -bold">{{
               t(`search.filters.${filter}`)
             }}</span>
           </div>
-          <div class="search-filters-item" @click="resetAll">reset all</div>
+          <IconButton
+            class="reset-button"
+            icon-name="refresh"
+            @click="resetAll"
+            size="15"
+          />
         </div>
       </div>
       <SongList ref="songListEl" :songs="songStore.songs" />
@@ -58,6 +63,7 @@ import { useKeyboardControls } from "@/composables/useKeyboardControls";
 import FiltersSidebar from "@/components/sidebar/FiltersSidebar.vue";
 import { useSearchStore } from "@/stores/search.store";
 import { storeToRefs } from "pinia";
+import IconButton from "@/components/component-library/IconButton.vue";
 
 const songStore = useSongStore();
 const appStore = useAppStore();
@@ -94,8 +100,6 @@ if (!isLargeScreen.value) {
   });
 }
 
-
-
 const applyFilters = async () => {
   songStore.resetSongs();
   resetCurrentPage();
@@ -108,7 +112,7 @@ const applyFilters = async () => {
 const resetAll = () => {
   resetAllFilters();
   applyFilters();
-}
+};
 
 watch(app.settings, (v) => {
   if (v) appStore.toggleSettings();
@@ -184,8 +188,16 @@ onMounted(async () => {
     flex-wrap: wrap;
     gap: 1rem;
     margin-top: 1rem;
+    .icon-button.reset-button {
+      padding: 0.5rem;
+      box-shadow: 0 0 0 0.2rem var(--color-primary-600);
+      background-color: var(--color-primary-600);
+      path {
+        stroke: var(--color-black-900);
+      }
+      border-radius: 1rem;
+    }
   }
-
   &-item {
     padding: 0 1rem;
     border-radius: 1rem;
