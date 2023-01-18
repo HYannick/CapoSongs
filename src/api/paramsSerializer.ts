@@ -1,4 +1,4 @@
-import * as qs from "qs";
+import * as qs from "./qs";
 
 export const paramsSerializer = (params: any) =>
   qs.stringify(params, { arrayFormat: "repeat" });
