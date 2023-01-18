@@ -5,7 +5,11 @@
         class="text-dot -left text -extra-bold"
         v-html="t('songList.title')"
       ></h2>
-      <IconButton icon-name="filters" size="24" @click="showFilters"></IconButton>
+      <IconButton
+        icon-name="filters"
+        size="24"
+        @click="showFilters"
+      ></IconButton>
     </div>
     <ListLoader v-if="fetchingSongs" :title="t('songList.loading')" />
     <NotFound
@@ -42,6 +46,8 @@ import { useInfiniteScroll, useMediaQuery } from "@vueuse/core";
 import ListLoader from "@/components/common/ListLoader.vue";
 import IconButton from "@/components/component-library/IconButton.vue";
 import { useSearchStore } from "@/stores/search.store";
+import { setNewState } from "@/views/historyState";
+import { useNavigation } from "@/stores/navigation.store";
 
 const containerRef = ref();
 const songItemRef = ref();
@@ -51,15 +57,16 @@ const { showPlayer } = useAppStore();
 const { currentSong, fetchingSongs, isloadingMoreSongs, songs, pageCount } =
   storeToRefs(useSongStore());
 const { loadSong, loadMoreSongs } = useSongStore();
-const { currentPage, query, filters} = storeToRefs(useSearchStore());
-const { updatePage, } = useSearchStore();
+const { currentPage, query, filters } = storeToRefs(useSearchStore());
+const { updatePage } = useSearchStore();
 const { showFilters } = useAppStore();
+const { pushState } = useNavigation();
+const { state } = storeToRefs(useNavigation());
 const { t } = useI18n();
 
 const songsNotFound = computed(
   () => !songs.value.length && !fetchingSongs.value
 );
-
 
 const fetchMoreSongs = () => {
   if (currentPage.value <= pageCount.value) {
@@ -76,7 +83,6 @@ if (isLargeScreen.value) {
   });
 }
 
-
 const opacity = (opacity: number) => ({
   duration: 0.3,
   opacity,
@@ -85,6 +91,7 @@ const opacity = (opacity: number) => ({
 const setSong = (song: Song) => {
   loadSong(song);
   showPlayer();
+  pushState({ player: true });
 };
 
 const animateOnSongSelected = (song: Song) => {
@@ -144,7 +151,6 @@ watch(
     staggerShowAllSongItems();
   }
 );
-
 
 defineExpose({ containerRef });
 </script>

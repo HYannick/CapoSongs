@@ -11,7 +11,11 @@
           icon="search"
         />
         <div class="search-filters-container" v-if="mergedFilters.length">
-          <div class="search-filters-item" v-for="filter in mergedFilters" :key="filter">
+          <div
+            class="search-filters-item"
+            v-for="filter in mergedFilters"
+            :key="filter"
+          >
             <span class="text -caption-1 -bold">{{
               t(`search.filters.${filter}`)
             }}</span>
@@ -64,9 +68,11 @@ import FiltersSidebar from "@/components/sidebar/FiltersSidebar.vue";
 import { useSearchStore } from "@/stores/search.store";
 import { storeToRefs } from "pinia";
 import IconButton from "@/components/component-library/IconButton.vue";
+import { useNavigation } from "@/stores/navigation.store";
 
 const songStore = useSongStore();
 const appStore = useAppStore();
+const { initHistoryState } = useNavigation();
 const { updatePage, resetCurrentPage, resetAllFilters } = useSearchStore();
 const { query, filters, currentPage } = storeToRefs(useSearchStore());
 const { t } = useI18n();
@@ -74,7 +80,6 @@ const headingEl = ref();
 const searchEl = ref();
 const songListEl = ref();
 const el = ref();
-
 const keys = useMagicKeys();
 const { switchTheme } = useTheme();
 const debounced = useDebounce(query, 500);
@@ -146,6 +151,7 @@ watch(
 );
 
 onMounted(async () => {
+  initHistoryState();
   await songStore.setFavouriteSongs();
   const t1 = gsap.timeline();
   t1.from(headingEl.value.containerRef, {

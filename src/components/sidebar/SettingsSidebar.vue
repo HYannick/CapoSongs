@@ -138,11 +138,13 @@ import SwitchInput from "@/components/common/SwitchInput.vue";
 import Icon from "@/components/component-library/Icon.vue";
 import { usePWAInstallation } from "@/stores/pwa.store";
 import { useKeyboardControls } from "@/composables/useKeyboardControls";
+import { useBackHistory } from "@/composables/useBackHistory";
+import { useNavigation } from "@/stores/navigation.store";
 
 const props = defineProps({
   from: String as PropType<SidebarOrigin>,
 });
-
+const { state } = useBackHistory(window);
 const { t, locale } = useI18n();
 const { settingsVisible } = storeToRefs(useAppStore());
 const { hideSettings, showMentions } = useAppStore();
@@ -167,8 +169,17 @@ watch(
     localStorage.setItem("lang", locale);
   }
 );
+const { state: historyState } = storeToRefs(useNavigation());
+watch(
+  () => historyState.value.settings,
+  (value) => {
+    if (!value) hideSettings();
+  }
+);
 
-onMounted(initInstall);
+onMounted(() => {
+  initInstall();
+});
 </script>
 
 <style lang="scss">

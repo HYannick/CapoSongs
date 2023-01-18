@@ -2,29 +2,14 @@ import { historyState } from "@/views/historyState";
 import { ref } from "vue";
 import type { Ref } from "vue";
 import type { HistoryState } from "@/views/historyState";
+import { defineStore } from "pinia";
 
-export const useBackHistory = (window: Window) => {
-  // let backPresses = 0;
-  // const isAndroid = navigator.userAgent.toLowerCase().indexOf("android") > -1;
-  // const maxBackPresses = 2;
-  // function handleBackButton(init: any, cb?: () => void) {
-  //   if (init !== true) backPresses++;
-  //   cb && cb();
-  //   window.history.pushState('', "");
-  // }
-  // function setupWindowHistoryTricks(cb: () => void) {
-  //   handleBackButton(true);
-  //   window.addEventListener("popstate", (init: any) =>
-  //     handleBackButton(init, cb)
-  //   );
-  // }
-
+export const useNavigation = defineStore("navigation", () => {
   const state: Ref<HistoryState> = ref(historyState);
 
   const initHistoryState = () => {
     window.history.pushState(historyState, "");
     window.onpopstate = (e: any) => {
-      alert(history.state.player)
       state.value = {
         ...historyState,
         ...history.state,
@@ -38,7 +23,6 @@ export const useBackHistory = (window: Window) => {
       ...historyState,
       ...history.state,
     };
-    alert('player' + state.value.player);
   };
 
   return {
@@ -46,4 +30,4 @@ export const useBackHistory = (window: Window) => {
     initHistoryState,
     pushState,
   };
-};
+});

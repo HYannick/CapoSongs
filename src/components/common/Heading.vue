@@ -30,15 +30,19 @@ import { useAppStore } from "@/stores/app.store";
 import { ref } from "vue";
 import { useI18n } from "vue-i18n";
 import Icon from "@/components/component-library/Icon.vue";
+import { useNavigation } from "@/stores/navigation.store";
+import { storeToRefs } from "pinia";
 const containerRef = ref();
 const appStore = useAppStore();
+const { pushState } = useNavigation();
 const showFavouriteSongs = () => {
+  pushState({ favourite: true });
   appStore.showFavouriteSongs();
 };
-
 const { t } = useI18n();
 
 const showSettings = () => {
+  pushState({ settings: true });
   appStore.showSettings();
 };
 

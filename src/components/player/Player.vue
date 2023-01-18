@@ -102,7 +102,7 @@ import Icon from "@/components/component-library/Icon.vue";
 import { useAppStore } from "@/stores/app.store";
 import { storeToRefs } from "pinia";
 import { useSongStore } from "@/stores/song.store";
-import { computed, onMounted, ref, watch } from "vue";
+import { computed, nextTick, onMounted, ref, watch } from "vue";
 import { usePlayerProgress } from "@/composables/usePlayerProgress";
 import gsap from "gsap";
 import LyricReader from "@/components/player/LyricReader.vue";
@@ -123,6 +123,8 @@ import {
   playerControlsScale,
 } from "@/components/player/constants";
 import { VIEWS } from "@/components/player/enums";
+import { useNavigation } from "@/stores/navigation.store";
+import { setNewState } from "@/views/historyState";
 
 const isPlaying = ref(false);
 const mousedown = ref(false);
@@ -148,6 +150,8 @@ const playerViewEl = ref();
 const { hidePlayer } = useAppStore();
 const { playerVisible } = storeToRefs(useAppStore());
 const { currentSong } = storeToRefs(useSongStore());
+const { pushState } = useNavigation();
+const { state: historyState } = storeToRefs(useNavigation());
 const { resetSong, setNextSong, setPreviousSong } = useSongStore();
 
 const isLargeScreen = useMediaQuery("(min-width: 1024px)");
@@ -174,6 +178,7 @@ const closeSong = () => {
     onComplete: () => {
       resetSong();
       hidePlayer();
+      pushState({ player: false });
     },
   });
 };
@@ -217,6 +222,7 @@ const goPrev = () => {
 };
 
 const viewInformation = () => {
+  pushState({ details: true });
   currentView.value = VIEWS.DETAILS;
   if (isLargeScreen.value) {
     gsap.to(playerViewEl.value, {
@@ -238,6 +244,7 @@ const viewInformation = () => {
 
 const viewPlayer = () => {
   currentView.value = VIEWS.PLAYER;
+  pushState({ details: false });
   if (isLargeScreen.value) {
     gsap.to(playerViewEl.value, {
       opacity: "1",
@@ -318,6 +325,13 @@ watch(player.prevSong, (v) => {
 watch(player.nextSong, (v) => {
   if (v) goNext();
 });
+
+watch(
+  () => historyState.value.player,
+  (value) => {
+    if (!value) closeSong();
+  }
+);
 
 onMounted(() => {
   const t1 = gsap.timeline();

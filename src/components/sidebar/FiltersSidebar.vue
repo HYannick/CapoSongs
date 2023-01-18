@@ -73,7 +73,7 @@
 import { songType } from "@/domain/enums/SongType";
 import { useAppStore } from "@/stores/app.store";
 import { storeToRefs } from "pinia";
-import { computed, Ref, ref, watch } from "vue";
+import { computed, onMounted, Ref, ref, watch } from "vue";
 import IconButton from "@/components/component-library/IconButton.vue";
 import { useI18n } from "vue-i18n";
 import Icon from "@/components/component-library/Icon.vue";
@@ -82,6 +82,8 @@ import { songTheme } from "@/domain/enums/SongTheme";
 import { useSongStore } from "@/stores/song.store";
 import { useSearchStore } from "@/stores/search.store";
 import type { SongFilters } from "@/domain/enums/SongFilters";
+import { useBackHistory } from "@/composables/useBackHistory";
+import { useNavigation } from "@/stores/navigation.store";
 
 const { t } = useI18n();
 const { filtersVisible } = storeToRefs(useAppStore());
@@ -103,7 +105,7 @@ const applyFilters = async () => {
   setFilters({
     genres: filtersToSet.value.genres,
     themes: filtersToSet.value.themes,
-  })
+  });
   songStore.resetSongs();
   resetCurrentPage();
   await songStore.getSongs(currentPage.value, undefined, {
@@ -117,17 +119,24 @@ const resetAll = () => {
   filtersToSet.value = {
     genres: [],
     themes: [],
-  }
+  };
   resetAllFilters();
   applyFilters();
+  history.pushState('ptate', '')
 };
-
+const { state: historyState } = storeToRefs(useNavigation());
+watch(
+  () => historyState.value.filters,
+  (value) => {
+    if (!value) hideFilters();
+  }
+);
 watch(
   () => filters.value,
   (filters: SongFilters) => {
     filtersToSet.value = filters;
   },
-  {deep: true}
+  { deep: true }
 );
 </script>
 

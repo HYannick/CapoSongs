@@ -61,7 +61,7 @@
 <script setup lang="ts">
 import { useAppStore } from "@/stores/app.store";
 import { storeToRefs } from "pinia";
-import { computed, PropType, ref, watch } from "vue";
+import { computed, onMounted, PropType, ref, watch } from "vue";
 import { SidebarOrigin } from "@/domain/enums/SideBarOrigin";
 import IconButton from "@/components/component-library/IconButton.vue";
 import { useSongStore } from "@/stores/song.store";
@@ -70,10 +70,13 @@ import Icon from "@/components/component-library/Icon.vue";
 import { useI18n } from "vue-i18n";
 import gsap from "gsap";
 import NotFound from "@/components/common/NotFound.vue";
+import { useBackHistory } from "@/composables/useBackHistory";
+import { useNavigation } from "@/stores/navigation.store";
 
 const props = defineProps({
   from: String as PropType<SidebarOrigin>,
 });
+const { state, pushState } = useBackHistory(window);
 const favouriteSongItemRef = ref();
 const { favouriteSongsVisible } = storeToRefs(useAppStore());
 const { hideFavouriteSongs, showPlayer } = useAppStore();
@@ -91,6 +94,14 @@ const setSong = (song: Song) => {
   hideFavouriteSongs();
   showPlayer();
 };
+
+const { state: historyState } = storeToRefs(useNavigation());
+watch(
+  () => historyState.value.favourite,
+  (value) => {
+    if (!value) hideFavouriteSongs();
+  }
+);
 
 watch(
   () => favouriteSongsVisible.value,
@@ -130,6 +141,7 @@ watch(
     }
   }
 );
+
 </script>
 
 <style lang="scss">
