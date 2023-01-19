@@ -69,6 +69,7 @@ const sendMail = () => {
   mailingLink.setAttribute('href', mailTo.value);
   mailingLink.click();
   mailingLink.remove();
+  hideSupport();
 };
 </script>
 
@@ -117,7 +118,7 @@ const sendMail = () => {
     margin-top: 1rem;
   }
 
-  a {
+  button {
     background-color: var(--color-black-900);
     color: var(--color-black-50);
     border: none;
