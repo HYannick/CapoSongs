@@ -38,6 +38,7 @@
     <FavouritesSidebar :from="SidebarOrigin.LEFT" />
     <FiltersSidebar />
     <Mentions v-if="appStore.mentionsVisible" />
+    <Support v-if="appStore.supportVisible" />
   </main>
 </template>
 
@@ -69,6 +70,7 @@ import { useSearchStore } from "@/stores/search.store";
 import { storeToRefs } from "pinia";
 import IconButton from "@/components/component-library/IconButton.vue";
 import { useNavigation } from "@/stores/navigation.store";
+import Support from "@/components/Support.vue";
 
 const songStore = useSongStore();
 const appStore = useAppStore();

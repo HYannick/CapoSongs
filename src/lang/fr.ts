@@ -119,6 +119,27 @@ export default {
       },
     },
   },
+  support: {
+    button: "Support",
+    title: "Support",
+    heading: "Un problème ? Un nouvel ajout de musique ? c'est par ici !",
+    textarea: {
+      placeholder: "Dis nous :)",
+    },
+    options: {
+      default: ":: Sélectionner l'objet ::",
+      technical: "Problème technique",
+      request: "Ajout d'une musique",
+      typo: "Problème de paroles / Trad. / Fautes",
+      contribute: "Demande de contribution",
+      feature: "Demande de fonctionnalité",
+      feedback: "Ou juste un avis",
+    },
+    buttons: {
+      clear: "Réinitialiser",
+      submit: "Envoyer",
+    },
+  },
   mentions: {
     button: "Mentions spéciales",
     title: "Ressources et mentions",

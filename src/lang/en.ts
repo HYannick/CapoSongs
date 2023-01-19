@@ -121,6 +121,27 @@ export default {
       },
     },
   },
+  support: {
+    button: "Support",
+    title: "Support",
+    heading: "Having an issue? Want us to add some music? Write your request below",
+    textarea: {
+      placeholder: "Tell us :)",
+    },
+    options: {
+      default: ":: Select the subject ::",
+      technical: "Technical issue",
+      request: "Song request",
+      typo: "Wrong lyrics / Translation / Story / Typo",
+      contribute: "Contribute",
+      feature: "Feature request",
+      feedback: "Or just some feedback",
+    },
+    buttons: {
+      clear: "Reset",
+      submit: "Send",
+    },
+  },
   mentions: {
     button: "Special mentions",
     title: "Resources and mentions",

@@ -1,17 +1,25 @@
-import { historyState } from "@/views/historyState";
 import { ref } from "vue";
 import type { Ref } from "vue";
-import type { HistoryState } from "@/views/historyState";
 import { defineStore } from "pinia";
+import type { HistoryState } from "@/common/types/HistoryState";
+
+const defaultHistoryState: HistoryState = {
+  player: false,
+  home: true,
+  settings: false,
+  favourite: false,
+  filters: false,
+  details: false,
+}
 
 export const useNavigation = defineStore("navigation", () => {
-  const state: Ref<HistoryState> = ref(historyState);
+  const state: Ref<HistoryState> = ref(defaultHistoryState);
 
   const initHistoryState = () => {
-    window.history.pushState(historyState, "");
-    window.onpopstate = (e: any) => {
+    window.history.pushState(defaultHistoryState, "");
+    window.onpopstate = () => {
       state.value = {
-        ...historyState,
+        ...defaultHistoryState,
         ...history.state,
       };
     };
@@ -20,7 +28,7 @@ export const useNavigation = defineStore("navigation", () => {
   const pushState = (newState: Partial<HistoryState>) => {
     window.history.pushState({ ...state.value, ...newState }, "");
     state.value = {
-      ...historyState,
+      ...defaultHistoryState,
       ...history.state,
     };
   };

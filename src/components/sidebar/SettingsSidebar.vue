@@ -65,13 +65,13 @@
               :label="t('sidebars.settings.languages.en')"
               v-model="$i18n.locale"
             />
-<!--            TODO: Add Portuguese-->
-<!--            <InputRadio-->
-<!--              name="language"-->
-<!--              value="pt"-->
-<!--              :label="t('sidebars.settings.languages.pt')"-->
-<!--              v-model="$i18n.locale"-->
-<!--            />-->
+            <!--            TODO: Add Portuguese-->
+            <!--            <InputRadio-->
+            <!--              name="language"-->
+            <!--              value="pt"-->
+            <!--              :label="t('sidebars.settings.languages.pt')"-->
+            <!--              v-model="$i18n.locale"-->
+            <!--            />-->
           </div>
         </div>
         <hr />
@@ -94,7 +94,9 @@
             :key="key"
           >
             <span class="text -body -bold keyboard-key" v-html="key"></span>
-            <span class="text -body function">{{ t(`sidebars.settings.controls.${control}`) }}</span>
+            <span class="text -body function">{{
+              t(`sidebars.settings.controls.${control}`)
+            }}</span>
           </div>
           <div class="settings-label">
             <Icon class="command" name="command" :size="20" />
@@ -106,14 +108,23 @@
             :key="key"
           >
             <span class="text -body -bold keyboard-key">{{ key }}</span>
-            <span class="text -body function">{{  t(`sidebars.settings.controls.${control}`)  }}</span>
+            <span class="text -body function">{{
+              t(`sidebars.settings.controls.${control}`)
+            }}</span>
           </div>
         </div>
       </div>
       <div class="settings-footer">
         <button
+          aria-label="contact support"
+          class="settings-button background-color-primary--600 color-black--50"
+          @click="showSupport"
+        >
+          {{ t("support.button") }}
+        </button>
+        <button
           aria-label="view special mentions"
-          class="mentions-button"
+          class="settings-button background-color-black--900"
           @click="showMentions"
         >
           {{ t("mentions.button") }}
@@ -138,16 +149,14 @@ import SwitchInput from "@/components/common/SwitchInput.vue";
 import Icon from "@/components/component-library/Icon.vue";
 import { usePWAInstallation } from "@/stores/pwa.store";
 import { useKeyboardControls } from "@/composables/useKeyboardControls";
-import { useBackHistory } from "@/composables/useBackHistory";
 import { useNavigation } from "@/stores/navigation.store";
 
 const props = defineProps({
   from: String as PropType<SidebarOrigin>,
 });
-const { state } = useBackHistory(window);
 const { t, locale } = useI18n();
 const { settingsVisible } = storeToRefs(useAppStore());
-const { hideSettings, showMentions } = useAppStore();
+const { hideSettings, showMentions, showSupport } = useAppStore();
 const { appInstalled, appInstallationDismissed } = storeToRefs(
   usePWAInstallation()
 );
@@ -155,7 +164,7 @@ const { appInstalled, appInstallationDismissed } = storeToRefs(
 const { isAppleDevice, initInstall, installApp, closeInstallPrompt } =
   usePWAInstallation();
 const { isDarkMode, switchTheme } = useTheme();
-const {playerSheet, appSheet} = useKeyboardControls()
+const { playerSheet, appSheet } = useKeyboardControls();
 
 const sidebarClasses = computed(() => ({
   "-open": settingsVisible.value,
@@ -241,9 +250,8 @@ onMounted(() => {
   }
 }
 
-.mentions-button {
+.settings-button {
   width: 100%;
-  background: var(--color-black-950);
   color: var(--color-black-50);
   border: none;
   font-weight: bold;
@@ -263,6 +271,12 @@ onMounted(() => {
   p {
     margin-left: 1rem;
   }
+}
+
+.settings-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 .settings-option {

@@ -124,7 +124,6 @@ import {
 } from "@/components/player/constants";
 import { VIEWS } from "@/components/player/enums";
 import { useNavigation } from "@/stores/navigation.store";
-import { setNewState } from "@/views/historyState";
 
 const isPlaying = ref(false);
 const mousedown = ref(false);
@@ -150,7 +149,6 @@ const playerViewEl = ref();
 const { hidePlayer } = useAppStore();
 const { playerVisible } = storeToRefs(useAppStore());
 const { currentSong } = storeToRefs(useSongStore());
-const { pushState } = useNavigation();
 const { state: historyState } = storeToRefs(useNavigation());
 const { resetSong, setNextSong, setPreviousSong } = useSongStore();
 
@@ -178,7 +176,6 @@ const closeSong = () => {
     onComplete: () => {
       resetSong();
       hidePlayer();
-      pushState({ player: false });
     },
   });
 };
@@ -222,7 +219,6 @@ const goPrev = () => {
 };
 
 const viewInformation = () => {
-  pushState({ details: true });
   currentView.value = VIEWS.DETAILS;
   if (isLargeScreen.value) {
     gsap.to(playerViewEl.value, {
@@ -244,7 +240,6 @@ const viewInformation = () => {
 
 const viewPlayer = () => {
   currentView.value = VIEWS.PLAYER;
-  pushState({ details: false });
   if (isLargeScreen.value) {
     gsap.to(playerViewEl.value, {
       opacity: "1",

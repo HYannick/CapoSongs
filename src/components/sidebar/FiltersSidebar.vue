@@ -82,7 +82,6 @@ import { songTheme } from "@/domain/enums/SongTheme";
 import { useSongStore } from "@/stores/song.store";
 import { useSearchStore } from "@/stores/search.store";
 import type { SongFilters } from "@/domain/enums/SongFilters";
-import { useBackHistory } from "@/composables/useBackHistory";
 import { useNavigation } from "@/stores/navigation.store";
 
 const { t } = useI18n();
@@ -122,7 +121,6 @@ const resetAll = () => {
   };
   resetAllFilters();
   applyFilters();
-  history.pushState('ptate', '')
 };
 const { state: historyState } = storeToRefs(useNavigation());
 watch(

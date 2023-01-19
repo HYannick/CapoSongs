@@ -46,7 +46,6 @@ import { useInfiniteScroll, useMediaQuery } from "@vueuse/core";
 import ListLoader from "@/components/common/ListLoader.vue";
 import IconButton from "@/components/component-library/IconButton.vue";
 import { useSearchStore } from "@/stores/search.store";
-import { setNewState } from "@/views/historyState";
 import { useNavigation } from "@/stores/navigation.store";
 
 const containerRef = ref();
@@ -60,7 +59,6 @@ const { loadSong, loadMoreSongs } = useSongStore();
 const { currentPage, query, filters } = storeToRefs(useSearchStore());
 const { updatePage } = useSearchStore();
 const { showFilters } = useAppStore();
-const { pushState } = useNavigation();
 const { state } = storeToRefs(useNavigation());
 const { t } = useI18n();
 
@@ -91,7 +89,6 @@ const opacity = (opacity: number) => ({
 const setSong = (song: Song) => {
   loadSong(song);
   showPlayer();
-  pushState({ player: true });
 };
 
 const animateOnSongSelected = (song: Song) => {

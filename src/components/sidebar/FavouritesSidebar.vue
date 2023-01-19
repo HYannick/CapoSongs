@@ -70,13 +70,11 @@ import Icon from "@/components/component-library/Icon.vue";
 import { useI18n } from "vue-i18n";
 import gsap from "gsap";
 import NotFound from "@/components/common/NotFound.vue";
-import { useBackHistory } from "@/composables/useBackHistory";
 import { useNavigation } from "@/stores/navigation.store";
 
 const props = defineProps({
   from: String as PropType<SidebarOrigin>,
 });
-const { state, pushState } = useBackHistory(window);
 const favouriteSongItemRef = ref();
 const { favouriteSongsVisible } = storeToRefs(useAppStore());
 const { hideFavouriteSongs, showPlayer } = useAppStore();
