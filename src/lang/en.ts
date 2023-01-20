@@ -137,7 +137,7 @@ export default {
       feedback: "Or just some feedback",
     },
     buttons: {
-      clear: "Reset",
+      cancel: "Cancel",
       submit: "Send",
     },
   },

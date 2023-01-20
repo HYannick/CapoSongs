@@ -56,7 +56,7 @@ onMounted(() => {
   justify-content: center;
   padding: 1.5rem;
   .modal-body {
-    background: var(--color-black-50);
+    background: var(--color-background);
     box-shadow: 0 0 0.2rem var(--color-black-400);
     padding: 1.5rem;
     border-radius: 1rem;

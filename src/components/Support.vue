@@ -34,8 +34,10 @@
           v-model="form.details"
         ></textarea>
         <div class="support-form-footer">
-          <input type="reset" :value="t('support.buttons.clear')" />
-          <button @click.prevent="sendMail">
+          <button class="support-button-cancel"
+                  @click.prevent="hideSupport">{{t('support.buttons.cancel')
+            }}</button>
+          <button class="support-button-submit" @click.prevent="sendMail">
             {{ t("support.buttons.submit") }}
           </button>
         </div>
@@ -118,7 +120,7 @@ const sendMail = () => {
     margin-top: 1rem;
   }
 
-  button {
+  .support-button-submit {
     background-color: var(--color-black-900);
     color: var(--color-black-50);
     border: none;
@@ -130,8 +132,8 @@ const sendMail = () => {
     flex: 1;
   }
 
-  input[type="reset"] {
-    background-color: var(--color-black-50);
+  .support-button-cancel {
+    background-color: var(--color-background);
     box-shadow: inset 0 0 0 0.2rem var(--color-black-900);
     color: var(--color-black-950);
     border: none;

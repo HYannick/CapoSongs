@@ -22,13 +22,16 @@ export const useSearchStore = defineStore("search", () => {
   };
 
   const resetAllFilters = () => {
-    console.log('?????')
     filters.value = {
       genres: [],
       themes: [],
-    }
-    console.log(filters.value)
-  }
+    };
+    console.log(filters.value);
+  };
+
+  const resetSearch = () => {
+    query.value = "";
+  };
   return {
     query,
     filters,
@@ -36,6 +39,7 @@ export const useSearchStore = defineStore("search", () => {
     currentPage,
     updatePage,
     resetCurrentPage,
-    resetAllFilters
+    resetAllFilters,
+    resetSearch
   };
 });

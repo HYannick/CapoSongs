@@ -13,6 +13,13 @@
       :class="inputClasses"
       @input="$emit('update:modelValue', $event.target.value)"
     />
+    <div
+      class="input-action-icon-wrapper"
+      :class="{ '-visible': actionIcon && modelValue }"
+      @click="$emit('actionClick')"
+    >
+      <Icon :name="actionIcon" :size="18" />
+    </div>
   </div>
 </template>
 
@@ -27,13 +34,17 @@ export interface Props {
   disabled?: boolean;
   modelValue: string;
   icon?: string;
+  actionIcon?: string;
 }
+
+defineEmits(["actionClick"]);
 
 const props = withDefaults(defineProps<Props>(), {
   placeholder: "Some text",
   type: "text",
   disabled: false,
   icon: "",
+  actionIcon: "",
 });
 
 const inputClasses = computed(() => ({
@@ -46,7 +57,7 @@ const inputClasses = computed(() => ({
   width: 100%;
   &.-with-icon {
     input {
-      padding-left: 5rem;
+      padding: 0 5rem;
     }
   }
 }
@@ -76,6 +87,27 @@ const inputClasses = computed(() => ({
     path {
       stroke: var(--color-black-50);
     }
+  }
+}
+.input-action-icon-wrapper {
+  position: absolute;
+  right: 1rem;
+  top: 58%;
+  z-index: 1;
+  transform: translateY(-50%) scale(1.2);
+  opacity: 0;
+  visibility: hidden;
+  transition: visibility 0.3s, opacity 0.3s cubic-bezier(0, 0.55, 0.45, 1),
+    transform 0.5s cubic-bezier(0, 0.55, 0.45, 1);
+  svg {
+    path {
+      stroke: var(--color-black-50);
+    }
+  }
+  &.-visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(-50%) scale(1);
   }
 }
 </style>

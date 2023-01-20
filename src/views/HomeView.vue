@@ -9,6 +9,8 @@
           :placeholder="t('search.placeholder')"
           v-model="query"
           icon="search"
+          actionIcon="close"
+          @actionClick="resetSearch"
         />
         <div class="search-filters-container" v-if="mergedFilters.length">
           <div
@@ -75,7 +77,7 @@ import Support from "@/components/Support.vue";
 const songStore = useSongStore();
 const appStore = useAppStore();
 const { initHistoryState } = useNavigation();
-const { updatePage, resetCurrentPage, resetAllFilters } = useSearchStore();
+const { updatePage, resetCurrentPage, resetAllFilters, resetSearch } = useSearchStore();
 const { query, filters, currentPage } = storeToRefs(useSearchStore());
 const { t } = useI18n();
 const headingEl = ref();

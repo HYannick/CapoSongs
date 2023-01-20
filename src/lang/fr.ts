@@ -136,7 +136,7 @@ export default {
       feedback: "Ou juste un avis",
     },
     buttons: {
-      clear: "Réinitialiser",
+      cancel: "Annuler",
       submit: "Envoyer",
     },
   },
