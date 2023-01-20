@@ -59,9 +59,7 @@ export default {
     title: '<span class="color-secondary--600">S</span>ongs',
     notFound: "Song not found :(",
     loading: "Loading",
-    notFoundDetails:
-      "Reset your search or send a new song at<br>" +
-      "<a href='mailto:capocancoes{'@'}gmail.com?subject=Nouvelle chanson à ajouter'>capocancoes{'@'}gmail.com</a>",
+    notFoundDetails: "Reset your search or <span class='color-primary--600'>send us a new song</span>!",
   },
   songDetails: {
     translate: "Translation",
@@ -124,7 +122,8 @@ export default {
   support: {
     button: "Support",
     title: "Support",
-    heading: "Having an issue? Want us to add some music? Write your request below",
+    heading:
+      "Having an issue? Want us to add some music? Write your request below",
     textarea: {
       placeholder: "Tell us :)",
     },

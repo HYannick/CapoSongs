@@ -58,8 +58,8 @@ export default {
     notFound: "Aucune chanson trouvée :(",
     loading: "Chargement",
     notFoundDetails:
-      "Réinitialise ta recherche, ou envoie une nouvelle musique à<br>" +
-      "<a href='mailto:capocancoes{'@'}gmail.com?subject=Nouvelle chanson à ajouter'>capocancoes{'@'}gmail.com</a>",
+      "Réinitialise ta recherche, ou <span" +
+      " class='color-primary--600'>écris-nous</span> !",
   },
   songDetails: {
     translate: "Traduction",
