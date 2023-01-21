@@ -10,6 +10,9 @@ import { VitePWA } from "vite-plugin-pwa";
 export default defineConfig({
   build: {
     target: "esnext",
+    rollupOptions: {
+      external: ["vue-gtag"]
+    }
   },
   plugins: [
     vue(),
