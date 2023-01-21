@@ -64,13 +64,15 @@ const initLyricReader = (lyricsLink: string) => {
   liricleInstance = new Liricle();
   liricleInstance.offset = 1000;
   liricleInstance.on("load", (data: any) => {
-    lyrics.value = data.lines.map((line: LyricLine, index: number): LyricLine => ({
-      ...line,
-      index,
-      text: line.text.replace(":margin:", "").replace(":coro:", ""),
-      isCoro: line.text.includes(":coro:"),
-      spaced: line.text.includes(":margin:"),
-    })) as LyricLine[];
+    lyrics.value = data.lines.map(
+      (line: LyricLine, index: number): LyricLine => ({
+        ...line,
+        index,
+        text: line.text.replace(":margin:", "").replace(":coro:", ""),
+        isCoro: line.text.includes(":coro:"),
+        spaced: line.text.includes(":margin:"),
+      })
+    ) as LyricLine[];
   });
   liricleInstance.on("sync", (line: LyricLine) => {
     currentLineIndex.value = line.index;
