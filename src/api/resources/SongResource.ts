@@ -17,17 +17,6 @@ export const songResource = () => {
     },
   ): Promise<Page<Song>> => {
     try {
-      // const searchQueryString = searchQuery ? `filters[title][$containsi]=${searchQuery}&` : ""
-      // const typeFiltersQueryString = filters && filters.genre.length ? `filters[type][$in]=${filters.genre}&` : ""
-      // const themeFiltersQueryString = filters && filters.theme.length ? `filters[theme][$in]=${filters.theme}&` : ""
-      // const res = await fetch(
-      //   `${import.meta.env.VITE_STRAPI_API_URL}/songs?${searchQueryString}${typeFiltersQueryString}${themeFiltersQueryString}populate=*`,
-      //   {
-      //     ...AuthorizationHeader(import.meta.env.VITE_STRAPI_TOKEN),
-      //   }
-      // );
-
-      //TODO replace above by this
       const query = paramsSerializer({
         pagination: {
           page: pagination.page,
