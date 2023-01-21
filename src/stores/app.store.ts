@@ -10,7 +10,16 @@ export const useAppStore = defineStore("app", () => {
   const playerVisible = ref(false);
   const filtersVisible = ref(false);
 
+  const cookiesBannerVisible = ref(false);
+
   const { pushState } = useNavigation();
+
+  const closeCookies = () => {
+    cookiesBannerVisible.value = false;
+  };
+  const openCookies = () => {
+    cookiesBannerVisible.value = true;
+  };
 
   const showPlayer = () => {
     playerVisible.value = true;
@@ -100,5 +109,8 @@ export const useAppStore = defineStore("app", () => {
     filtersVisible,
     showFilters,
     hideFilters,
+    cookiesBannerVisible,
+    openCookies,
+    closeCookies
   };
 });

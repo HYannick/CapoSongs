@@ -13,8 +13,8 @@ export const songResource = () => {
     searchQuery?: string,
     filters: SongFilters = {
       genres: [],
-      themes: []
-    },
+      themes: [],
+    }
   ): Promise<Page<Song>> => {
     try {
       const query = paramsSerializer({
@@ -44,7 +44,7 @@ export const songResource = () => {
       return {
         results: response.data.map((restSong) => toSong(restSong)),
         pagination: response.meta.pagination,
-      }
+      };
     } catch (e) {
       throw new SongsNotFoundException();
     }

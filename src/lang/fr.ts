@@ -1,6 +1,16 @@
 export default {
   greetings:
     '<span class="text -title-1 -black' + ' color-secondary--600">H</span>ey !',
+  cookies: {
+    text: "Cette application utilise des cookies pour surveiller son traffic. Ceci" +
+      " est" +
+      " totalement optionnel et n'empêchera pas le bon fonctionnement de l'application. En" +
+      " cliquant sur" +
+      " 'accepter' vous consentez à l'utilisation de ces cookies.",
+    dismiss: 'Refuser',
+    confirm: 'Accepter',
+    readMore: 'En savoir plus'
+  },
   pwaUpdate: {
     offlineReady: "App disponible hors ligne",
     updateReady: "Nouvelle version disponible !",

@@ -6,16 +6,20 @@ import { useI18n } from "vue-i18n";
 import ReloadPrompt from "@/components/common/ReloadPrompt.vue";
 const { setTheme } = useTheme();
 const { getSongs } = useSongStore();
+const { openCookies } = useAppStore();
 const { locale } = useI18n();
 
 import { useOnline } from "@vueuse/core";
 import OfflineScreen from "@/components/common/OfflineScreen.vue";
 import { useSongStore } from "@/stores/song.store";
+import { useAppStore } from "@/stores/app.store";
+import { storeToRefs } from "pinia";
 
 const online = useOnline();
 onMounted(async () => {
   setTheme();
   locale.value = localStorage.getItem("lang") || "fr";
+  if (!localStorage.getItem("cookies-enabled")) openCookies();
   await getSongs();
 });
 </script>

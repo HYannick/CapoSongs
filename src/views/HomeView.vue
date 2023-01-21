@@ -41,6 +41,7 @@
     <FiltersSidebar />
     <Mentions v-if="appStore.mentionsVisible" />
     <Support v-if="appStore.supportVisible" />
+    <CookieBanner v-if="displayCookies" />
   </main>
 </template>
 
@@ -73,6 +74,7 @@ import { storeToRefs } from "pinia";
 import IconButton from "@/components/component-library/IconButton.vue";
 import { useNavigation } from "@/stores/navigation.store";
 import Support from "@/components/Support.vue";
+import CookieBanner from "@/components/CookieBanner.vue";
 
 const songStore = useSongStore();
 const appStore = useAppStore();
@@ -93,7 +95,8 @@ const { app } = useKeyboardControls();
 const mergedFilters = computed(() => {
   return [...filters.value.genres, ...filters.value.themes];
 });
-
+const displayCookies = computed(() => appStore.cookiesBannerVisible &&
+  !localStorage.getItem('cookies-enabled'))
 const fetchMoreSongs = () => {
   if (currentPage.value <= songStore.pageCount) {
     updatePage();

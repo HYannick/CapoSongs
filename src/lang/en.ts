@@ -2,6 +2,13 @@ export default {
   greetings:
     '<span class="text -title-1 -black' +
     ' color-secondary--600">H</span>ello!',
+  cookies: {
+    text: "This application use cookies to monitor its traffic. This is completely optional as" +
+      " it won't alterate the application use. By clicking Accept you consent to let us use them.",
+    dismiss: 'Refuse',
+    confirm: 'Accept',
+    readMore: 'Read more'
+  },
   pwaUpdate: {
     offlineReady: "App ready to work offline",
     updateReady: "New version available!",
