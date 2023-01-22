@@ -82,39 +82,47 @@
           </div>
           <SwitchInput :checked="isDarkMode" @change="switchTheme" />
         </div>
-        <div class="keyboard-controls">
-          <hr />
-          <div class="settings-label">
-            <Icon class="command" name="command" :size="20" />
-            <p class="text -bold">Player controls</p>
-          </div>
-          <div
-            class="keyboard-control"
-            v-for="(control, key) in playerSheet"
-            :key="key"
-          >
-            <span class="text -body -bold keyboard-key" v-html="key"></span>
-            <span class="text -body function">{{
-              t(`sidebars.settings.controls.${control}`)
-            }}</span>
-          </div>
-          <div class="settings-label">
-            <Icon class="command" name="command" :size="20" />
-            <p class="text -bold">App controls</p>
-          </div>
-          <div
-            class="keyboard-control"
-            v-for="(control, key) in appSheet"
-            :key="key"
-          >
-            <span class="text -body -bold keyboard-key">{{ key }}</span>
-            <span class="text -body function">{{
-              t(`sidebars.settings.controls.${control}`)
-            }}</span>
-          </div>
-        </div>
+<!--        //TODO put in in a modal-->
+<!--        <div class="keyboard-controls">-->
+<!--          <hr />-->
+<!--          <div class="settings-label">-->
+<!--            <Icon class="command" name="command" :size="20" />-->
+<!--            <p class="text -bold">Player controls</p>-->
+<!--          </div>-->
+<!--          <div-->
+<!--            class="keyboard-control"-->
+<!--            v-for="(control, key) in playerSheet"-->
+<!--            :key="key"-->
+<!--          >-->
+<!--            <span class="text -body -bold keyboard-key" v-html="key"></span>-->
+<!--            <span class="text -body function">{{-->
+<!--              t(`sidebars.settings.controls.${control}`)-->
+<!--            }}</span>-->
+<!--          </div>-->
+<!--          <div class="settings-label">-->
+<!--            <Icon class="command" name="command" :size="20" />-->
+<!--            <p class="text -bold">App controls</p>-->
+<!--          </div>-->
+<!--          <div-->
+<!--            class="keyboard-control"-->
+<!--            v-for="(control, key) in appSheet"-->
+<!--            :key="key"-->
+<!--          >-->
+<!--            <span class="text -body -bold keyboard-key">{{ key }}</span>-->
+<!--            <span class="text -body function">{{-->
+<!--              t(`sidebars.settings.controls.${control}`)-->
+<!--            }}</span>-->
+<!--          </div>-->
+<!--        </div>-->
       </div>
       <div class="settings-footer">
+        <button
+          aria-label="share the app"
+          class="settings-button outline-color-black--900 color-black--950"
+          @click="showShareApp"
+        >
+          {{ t("share.button") }}
+        </button>
         <button
           aria-label="contact support"
           class="settings-button background-color-primary--600 color-black--50"
@@ -156,7 +164,7 @@ const props = defineProps({
 });
 const { t, locale } = useI18n();
 const { settingsVisible } = storeToRefs(useAppStore());
-const { hideSettings, showMentions, showSupport } = useAppStore();
+const { hideSettings, showMentions, showSupport, showShareApp } = useAppStore();
 const { appInstalled, appInstallationDismissed } = storeToRefs(
   usePWAInstallation()
 );

@@ -41,6 +41,7 @@
     <FiltersSidebar />
     <Mentions v-if="appStore.mentionsVisible" />
     <Support v-if="appStore.supportVisible" />
+    <ShareApp v-if="appStore.shareAppVisible" />
     <CookieBanner v-if="displayCookies" />
   </main>
 </template>
@@ -75,6 +76,7 @@ import IconButton from "@/components/component-library/IconButton.vue";
 import { useNavigation } from "@/stores/navigation.store";
 import Support from "@/components/Support.vue";
 import CookieBanner from "@/components/CookieBanner.vue";
+import ShareApp from "@/components/ShareApp.vue";
 
 const songStore = useSongStore();
 const appStore = useAppStore();

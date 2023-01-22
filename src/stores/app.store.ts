@@ -9,6 +9,7 @@ export const useAppStore = defineStore("app", () => {
   const favouriteSongsVisible = ref(false);
   const playerVisible = ref(false);
   const filtersVisible = ref(false);
+  const shareAppVisible = ref(false);
 
   const cookiesBannerVisible = ref(false);
 
@@ -19,6 +20,13 @@ export const useAppStore = defineStore("app", () => {
   };
   const openCookies = () => {
     cookiesBannerVisible.value = true;
+  };
+
+  const showShareApp = () => {
+    shareAppVisible.value = true;
+  };
+  const hideShareApp = () => {
+    shareAppVisible.value = false;
   };
 
   const showPlayer = () => {
@@ -111,6 +119,9 @@ export const useAppStore = defineStore("app", () => {
     hideFilters,
     cookiesBannerVisible,
     openCookies,
-    closeCookies
+    closeCookies,
+    shareAppVisible,
+    showShareApp,
+    hideShareApp,
   };
 });

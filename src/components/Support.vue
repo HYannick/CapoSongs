@@ -120,9 +120,7 @@ const sendMail = () => {
     margin-top: 1rem;
   }
 
-  .support-button-submit {
-    background-color: var(--color-black-900);
-    color: var(--color-black-50);
+  button {
     border: none;
     display: block;
     font-weight: bold;
@@ -130,18 +128,18 @@ const sendMail = () => {
     padding: 1.5rem;
     font-size: 1.6rem;
     flex: 1;
+    cursor: pointer;
+  }
+
+  .support-button-submit {
+    background-color: var(--color-black-900);
+    color: var(--color-black-50);
   }
 
   .support-button-cancel {
     background-color: var(--color-background);
     box-shadow: inset 0 0 0 0.2rem var(--color-black-900);
     color: var(--color-black-950);
-    border: none;
-    font-weight: bold;
-    border-radius: 1rem;
-    padding: 1.5rem;
-    font-size: 1.6rem;
-    flex: 1;
   }
 }
 </style>

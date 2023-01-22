@@ -2,14 +2,15 @@ export default {
   greetings:
     '<span class="text -title-1 -black' + ' color-secondary--600">H</span>ey !',
   cookies: {
-    text: "Cette application utilise des cookies pour surveiller son traffic. Ceci" +
+    text:
+      "Cette application utilise des cookies pour surveiller son traffic. Ceci" +
       " est" +
       " totalement optionnel et n'empêchera pas le bon fonctionnement de l'application. En" +
       " cliquant sur" +
       " 'accepter' vous consentez à l'utilisation de ces cookies.",
-    dismiss: 'Refuser',
-    confirm: 'Accepter',
-    readMore: 'En savoir plus'
+    dismiss: "Refuser",
+    confirm: "Accepter",
+    readMore: "En savoir plus",
   },
   pwaUpdate: {
     offlineReady: "App disponible hors ligne",
@@ -128,6 +129,17 @@ export default {
         nextSong: "Suivant",
       },
     },
+  },
+  share: {
+    title: "Partager l'app",
+    button: "Partager",
+    action: {
+      text: "Envie d'apprendre un peu de musique de Capoeira ? Go sur Focamu !",
+    },
+    heading:
+      "Partage l'application à d'autres pour étendre notre empire. Mwahahah.",
+    copy: "Copier le lien :: https://focamu.com",
+    copied: "Lien copié !",
   },
   support: {
     button: "Support",

@@ -132,6 +132,10 @@ $types: 'primary', 'secondary', 'black';
       background-color: var(--color-#{$type}-#{$variant}),
     }
 
+    .outline-color-#{$type}--#{$variant} {
+      box-shadow: inset 0 0 0 0.2rem var(--color-#{$type}-#{$variant}),
+    }
+
     .icon-fill-color-#{$type}--#{$variant} {
       path {
         fill: var(--color-#{$type}-#{$variant}),
