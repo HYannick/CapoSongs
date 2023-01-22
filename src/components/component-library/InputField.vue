@@ -57,7 +57,8 @@ const inputClasses = computed(() => ({
   width: 100%;
   &.-with-icon {
     input {
-      padding: 0 5rem;
+      padding-left: 5rem;
+      padding-right: 2.5rem;
     }
   }
 }
