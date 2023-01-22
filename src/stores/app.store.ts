@@ -23,10 +23,10 @@ export const useAppStore = defineStore("app", () => {
 
   const showShareApp = () => {
     shareAppVisible.value = true;
+    hideSettings();
   };
   const hideShareApp = () => {
     shareAppVisible.value = false;
-    hideSettings();
   };
 
   const showPlayer = () => {

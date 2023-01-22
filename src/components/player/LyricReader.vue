@@ -81,12 +81,7 @@ const initLyricReader = (lyricsLink: string) => {
     url: S3_SOURCE_LINK(S3Dir.LYRICS, lyricsLink),
   });
   props.audioElementEl.addEventListener("timeupdate", () => {
-    try {
-      liricleInstance.sync(props.audioElementEl.currentTime);
-    } catch (e) {
-      // Lib issue on lyrics reloading
-      return;
-    }
+    liricleInstance.sync(props.audioElementEl.currentTime);
   });
   return liricleInstance;
 };

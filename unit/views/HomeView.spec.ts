@@ -2,8 +2,8 @@ import { describe, it, expect, vi } from "vitest";
 
 import { shallowMount } from "@vue/test-utils";
 import { mockI18n } from "../test-utils/i18n";
-import HomeView from "src/views/HomeView.vue";
 import { mockedSongs, mockSong } from "unit/fixtures/song.fixture";
+import HomeView from "../../src/views/HomeView.vue";
 // @vitest-environment jsdom
 describe("HomeView", () => {
   it("should get no result with invalid song", async () => {

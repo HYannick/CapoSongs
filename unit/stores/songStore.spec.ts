@@ -1,13 +1,15 @@
 import { createPinia, setActivePinia } from "pinia";
 import { vi, beforeEach, describe, it, expect } from "vitest";
 import { useSongStore } from "@/stores/song.store";
-import { mockSong } from "../fixtures/song.fixture";
-
+import { mockSong, mockSongsData } from "../fixtures/song.fixture";
+import * as songResource from "@/api/resources/SongResource";
+import { flushPromises } from "@vue/test-utils";
 let songStore: any;
 
 // @vitest-environment jsdom
 describe("Song Store", () => {
   beforeEach(() => {
+    vi.resetAllMocks();
     setActivePinia(createPinia());
     songStore = useSongStore();
   });
@@ -132,6 +134,46 @@ describe("Song Store", () => {
       songStore.addToFavourite(mockSong({ id: 1 }));
       expect(songStore.isFavourite(1).value).toBeTruthy();
       expect(songStore.isFavourite(2).value).toBeFalsy();
+    });
+
+    it("should get songs", async () => {
+      const getSongs = vi.fn().mockResolvedValue({
+        results: mockSongsData().data,
+        pagination: mockSongsData().meta,
+      });
+      vi.spyOn(songResource, "songResource").mockReturnValue({
+        getSongs,
+      });
+      await songStore.getSongs(3, "avisa", {
+        genres: ["CORRIDO", "SAMBA"],
+        themes: ["SLAVERY"],
+      });
+      expect(getSongs).toHaveBeenCalledWith({ page: 3 }, "avisa", {
+        genres: ["CORRIDO", "SAMBA"],
+        themes: ["SLAVERY"],
+      });
+      expect(songStore.songs).toEqual(mockSongsData().data);
+    });
+
+    it("should load more songs", async () => {
+      const existingSong = mockSong({id: 5})
+      songStore.songs = [existingSong]
+      const getSongs = vi.fn().mockResolvedValue({
+        results: mockSongsData().data,
+        pagination: mockSongsData().meta,
+      });
+      vi.spyOn(songResource, "songResource").mockReturnValue({
+        getSongs,
+      });
+      await songStore.loadMoreSongs(3, "avisa", {
+        genres: ["CORRIDO", "SAMBA"],
+        themes: ["SLAVERY"],
+      });
+      expect(getSongs).toHaveBeenCalledWith({ page: 3 }, "avisa", {
+        genres: ["CORRIDO", "SAMBA"],
+        themes: ["SLAVERY"],
+      });
+      expect(songStore.songs).toEqual([existingSong, ...mockSongsData().data]);
     });
   });
 });

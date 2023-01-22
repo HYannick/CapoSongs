@@ -7,7 +7,7 @@
     "dev:expose": "vite --host",
     "build": "run-p type-check build-only",
     "preview": "vite preview",
-    "test:unit": "vitest --environment jsdom --root src/",
+    "test:unit": "vitest --environment jsdom --root unit",
     "build-only": "vite build",
     "type-check": "vue-tsc --noEmit -p tsconfig.vitest.json --composite false",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
@@ -19,7 +19,7 @@
     "@vueuse/motion": "^2.0.0-beta.12",
     "gsap": "^3.11.3",
     "imagesloaded": "^5.0.0",
-    "liricle": "^4.0.1",
+    "liricle": "^4.0.3",
     "nodejs-web-scraper": "^6.1.3",
     "pinia": "^2.0.28",
     "qs": "^6.11.0",

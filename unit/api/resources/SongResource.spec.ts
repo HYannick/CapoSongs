@@ -8,7 +8,7 @@ import { mockSongsData } from "../../fixtures/song.fixture";
 let fetch: Mock;
 describe("Song Resource", () => {
   beforeEach(() => {
-    fetch = mockFetch()
+    fetch = mockFetch();
   });
   it("should fail do get songs", () => {
     const promise = Promise.reject(stubNotFound());

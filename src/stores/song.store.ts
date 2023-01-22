@@ -29,7 +29,7 @@ export const useSongStore = defineStore("songs", () => {
     fetchingSongs.value = true;
     const { getSongs } = songResource();
     const { results, pagination } = await getSongs({ page }, searchQuery, filters);
-    songs.value = [...songs.value, ...results];
+    songs.value = results;
     fetchingSongs.value = false;
     pageCount.value = pagination.pageCount;
   };
