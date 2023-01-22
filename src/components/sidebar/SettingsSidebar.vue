@@ -118,7 +118,7 @@
       <div class="settings-footer">
         <button
           aria-label="share the app"
-          class="settings-button outline-color-black--900 color-black--950"
+          class="settings-button outline-color-black--900 background-color-black--50 color-black--950"
           @click="showShareApp"
         >
           {{ t("share.button") }}

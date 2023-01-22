@@ -15,6 +15,10 @@ a {
   transition: 0.4s;
 }
 
+button {
+  cursor: pointer;
+}
+
 @media (hover: hover) {
   a:hover {
     color: var(--color-black-950)
