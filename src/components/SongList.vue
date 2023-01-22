@@ -7,7 +7,7 @@
       ></h2>
       <IconButton
         icon-name="filters"
-        size="24"
+        :size="24"
         @click="showFilters"
       ></IconButton>
     </div>

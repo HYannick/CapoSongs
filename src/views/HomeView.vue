@@ -26,7 +26,7 @@
             class="reset-button"
             icon-name="refresh"
             @click="resetAll"
-            size="15"
+            :size="15"
           />
         </div>
       </div>
@@ -81,7 +81,8 @@ import ShareApp from "@/components/ShareApp.vue";
 const songStore = useSongStore();
 const appStore = useAppStore();
 const { initHistoryState } = useNavigation();
-const { updatePage, resetCurrentPage, resetAllFilters, resetSearch } = useSearchStore();
+const { updatePage, resetCurrentPage, resetAllFilters, resetSearch } =
+  useSearchStore();
 const { query, filters, currentPage } = storeToRefs(useSearchStore());
 const { t } = useI18n();
 const headingEl = ref();
@@ -93,12 +94,15 @@ const { switchTheme } = useTheme();
 const debounced = useDebounce(query, 500);
 
 const { app } = useKeyboardControls();
+const currentYear = ref(new Date().getFullYear());
 
 const mergedFilters = computed(() => {
   return [...filters.value.genres, ...filters.value.themes];
 });
-const displayCookies = computed(() => appStore.cookiesBannerVisible &&
-  !localStorage.getItem('cookies-enabled'))
+const displayCookies = computed(
+  () =>
+    appStore.cookiesBannerVisible && !localStorage.getItem("cookies-enabled")
+);
 const fetchMoreSongs = () => {
   if (currentPage.value <= songStore.pageCount) {
     updatePage();

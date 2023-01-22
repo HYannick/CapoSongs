@@ -81,6 +81,7 @@ export default {
       title: "Filtres",
       apply: "Appliquer les filtres",
       genres: {
+        title: 'Genres',
         LADAINHA: "Ladainha",
         CORRIDO: "Corrido",
         MACULELE: "Maculele",
@@ -93,6 +94,7 @@ export default {
         OTHERS: "Autres",
       },
       themes: {
+        title: 'Thèmes',
         MESTRES: "Mestres",
         SLAVERY: "Esclavage",
         ABOUT_CAPOEIRA: "Capoeira",
@@ -113,6 +115,7 @@ export default {
         title: "Langues",
         fr: "Français",
         en: "Anglais",
+        pt: "Portugais",
       },
       theme: "Thème",
       controls: {

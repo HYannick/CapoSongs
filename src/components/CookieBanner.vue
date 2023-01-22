@@ -3,7 +3,7 @@
     <div class="cookie-banner">
       <div class="cookie-banner-container">
         <div class="cookie-banner-heading">
-          <Icon name="cookie" size="50" />
+          <Icon name="cookie" :size="50" />
         </div>
         <div class="cookie-banner-body">
           <p class="text -body">{{ t("cookies.text") }}</p>

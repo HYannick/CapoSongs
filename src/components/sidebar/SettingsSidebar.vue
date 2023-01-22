@@ -65,13 +65,12 @@
               :label="t('sidebars.settings.languages.en')"
               v-model="$i18n.locale"
             />
-            <!--            TODO: Add Portuguese-->
-            <!--            <InputRadio-->
-            <!--              name="language"-->
-            <!--              value="pt"-->
-            <!--              :label="t('sidebars.settings.languages.pt')"-->
-            <!--              v-model="$i18n.locale"-->
-            <!--            />-->
+            <InputRadio
+              name="language"
+              value="pt"
+              :label="t('sidebars.settings.languages.pt')"
+              v-model="$i18n.locale"
+            />
           </div>
         </div>
         <hr />
@@ -137,6 +136,11 @@
         >
           {{ t("mentions.button") }}
         </button>
+      </div>
+      <div class="copyright">
+      <span class="text -light"
+      >&copy; Copyright {{currentYear}}, Ayho, all rights reserved</span
+      >
       </div>
     </div>
     <div class="sidebar-overlay" @click="hideSettings"></div>
@@ -361,5 +365,15 @@ onMounted(() => {
     border-radius: 4rem;
     font-weight: bold;
   }
+}
+
+.copyright {
+  position: absolute;
+  text-align: center;
+  font-size: 1rem;
+  bottom: 0;
+  right: 1.5rem;
+  left: 1.5rem;
+  text-align: center;
 }
 </style>

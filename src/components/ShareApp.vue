@@ -7,14 +7,14 @@
         {{ t("share.heading") }}
       </p>
       <div class="qr-code-container">
-        <Icon name="focamu-qrcode" size="300" />
+        <Icon name="focamu-qrcode" :size="300" />
       </div>
       <div class="share-container">
         <div v-if="isSupported">
           <button @click="copy(source)">
             <!-- by default, `copied` will be reset in 1.5s -->
-            <span v-if="!copied">{{t('share.copy')}}</span>
-            <span v-else>{{ t('share.copied') }}</span>
+            <span v-if="!copied">{{ t("share.copy") }}</span>
+            <span v-else>{{ t("share.copied") }}</span>
           </button>
         </div>
         <button class="share-app-button" @click="shareApp">Share App</button>
@@ -34,18 +34,15 @@ import { ref } from "vue";
 const { hideShareApp } = useAppStore();
 const { t } = useI18n();
 const source = ref("https://focamu.com");
-const { text, copy, copied, isSupported } = useClipboard({ source });
+const { copy, copied, isSupported } = useClipboard({ source });
 
 const shareApp = () => {
   if (navigator.share) {
-    navigator
-      .share({
-        title: "FoCaMu",
-        text: t("share.action.text"),
-        url: "https://focamu.com",
-      })
-      .then(() => console.log("Successful share"))
-      .catch((error) => console.log("Error sharing", error));
+    navigator.share({
+      title: "Focamu",
+      text: t("share.action.text"),
+      url: "https://focamu.com",
+    });
   }
 };
 </script>

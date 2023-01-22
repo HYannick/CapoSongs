@@ -8,7 +8,7 @@
       @click="showFavouriteSongs"
     />
     <div class="heading-greetings">
-      <Icon class="heading-logo" size="200" name="logo" />
+      <Icon class="heading-logo" :size="200" name="logo" />
       <div class="heading-greetings-desktop">
         <span>Capoeria</span>
         <span>Songs</span>

@@ -64,7 +64,7 @@
               class="player-button-prev"
               @click="goPrev"
             >
-              <Icon name="prev" size="20" />
+              <Icon name="prev" :size="20" />
             </button>
             <button
               :aria-label="isPlaying ? 'pause song' : 'play song'"
@@ -81,7 +81,7 @@
               class="player-button-next"
               @click="goNext"
             >
-              <Icon name="next" size="20" />
+              <Icon name="next" :size="20" />
             </button>
           </div>
         </div>

@@ -4,7 +4,7 @@
       ref="imageRef"
       class="song-placeholder-img song-placeholder-img-fighters"
     >
-      <Icon name="fighters" size="600" />
+      <Icon name="fighters" :size="600" />
     </div>
     <div ref="contentRef" class="song-placeholder-content">
       <h2

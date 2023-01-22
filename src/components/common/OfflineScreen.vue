@@ -1,6 +1,6 @@
 <template>
   <div class="offline-screen">
-    <Icon name="offline" size="250" />
+    <Icon name="offline" :size="250" />
     <div class="offline-text">
       <p class="text -bold -large-body">
         {{ t("offlineScreen.title") }}

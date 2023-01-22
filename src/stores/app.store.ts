@@ -10,7 +10,6 @@ export const useAppStore = defineStore("app", () => {
   const playerVisible = ref(false);
   const filtersVisible = ref(false);
   const shareAppVisible = ref(false);
-
   const cookiesBannerVisible = ref(false);
 
   const { pushState } = useNavigation();
@@ -34,51 +33,52 @@ export const useAppStore = defineStore("app", () => {
     playerVisible.value = true;
     pushState({ player: true });
   };
+  const hidePlayer = () => {
+    playerVisible.value = false;
+    pushState({ player: false });
+  };
+
   const showFilters = () => {
     filtersVisible.value = true;
     pushState({ filters: true });
   };
+  const hideFilters = () => {
+    filtersVisible.value = false;
+    pushState({ filters: false });
+  };
+
   const showMentions = () => {
     mentionsVisible.value = true;
     hideSettings();
+  };
+  const hideMentions = () => {
+    mentionsVisible.value = false;
+  };
+
+  const showSettings = () => {
+    settingsVisible.value = true;
+    pushState({ settings: true });
+  };
+  const hideSettings = () => {
+    settingsVisible.value = false;
+    pushState({ settings: false });
+  };
+
+  const showFavouriteSongs = () => {
+    favouriteSongsVisible.value = true;
+    pushState({ favourite: true });
+  };
+  const hideFavouriteSongs = () => {
+    favouriteSongsVisible.value = false;
+    pushState({ favourite: false });
   };
 
   const showSupport = () => {
     supportVisible.value = true;
     hideSettings();
   };
-  const showSettings = () => {
-    settingsVisible.value = true;
-    pushState({ settings: true });
-  };
-  const showFavouriteSongs = () => {
-    favouriteSongsVisible.value = true;
-    pushState({ favourite: true });
-  };
-
-  const hideMentions = () => {
-    mentionsVisible.value = false;
-  };
   const hideSupport = () => {
     supportVisible.value = false;
-  };
-
-  const hideFilters = () => {
-    filtersVisible.value = false;
-    pushState({ filters: false });
-  };
-
-  const hidePlayer = () => {
-    playerVisible.value = false;
-    pushState({ player: false });
-  };
-  const hideSettings = () => {
-    settingsVisible.value = false;
-    pushState({ settings: false });
-  };
-  const hideFavouriteSongs = () => {
-    favouriteSongsVisible.value = false;
-    pushState({ favourite: false });
   };
 
   const toggleSettings = () => {
@@ -88,7 +88,6 @@ export const useAppStore = defineStore("app", () => {
       hideSettings();
     }
   };
-
   const toggleFavouriteSongs = () => {
     if (!favouriteSongsVisible.value) {
       showFavouriteSongs();
@@ -99,29 +98,29 @@ export const useAppStore = defineStore("app", () => {
 
   return {
     settingsVisible,
+    favouriteSongsVisible,
+    mentionsVisible,
+    supportVisible,
+    playerVisible,
+    filtersVisible,
+    cookiesBannerVisible,
+    shareAppVisible,
     showSettings,
     hideSettings,
     toggleSettings,
-    favouriteSongsVisible,
     showFavouriteSongs,
     hideFavouriteSongs,
     toggleFavouriteSongs,
-    mentionsVisible,
     showMentions,
     hideMentions,
-    supportVisible,
     showSupport,
     hideSupport,
-    playerVisible,
     showPlayer,
     hidePlayer,
-    filtersVisible,
     showFilters,
     hideFilters,
-    cookiesBannerVisible,
     openCookies,
     closeCookies,
-    shareAppVisible,
     showShareApp,
     hideShareApp,
   };
