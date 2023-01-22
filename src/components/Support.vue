@@ -34,9 +34,9 @@
           v-model="form.details"
         ></textarea>
         <div class="support-form-footer">
-          <button class="support-button-cancel"
-                  @click.prevent="hideSupport">{{t('support.buttons.cancel')
-            }}</button>
+          <button class="support-button-cancel" @click.prevent="hideSupport">
+            {{ t("support.buttons.cancel") }}
+          </button>
           <button class="support-button-submit" @click.prevent="sendMail">
             {{ t("support.buttons.submit") }}
           </button>
@@ -62,13 +62,13 @@ const form = ref({
 
 const mailTo = computed(
   () =>
-    `mailto:capocancoes@gmail.com?subject=${form.value.type}&body=${form.value.details}`
+    `mailto:fococapoeiramusica@gmail.com?subject=${form.value.type}&body=${form.value.details}`
 );
 
 const sendMail = () => {
   const mailingLink = document.createElement("a");
-  mailingLink.classList.add('mailer');
-  mailingLink.setAttribute('href', mailTo.value);
+  mailingLink.classList.add("mailer");
+  mailingLink.setAttribute("href", mailTo.value);
   mailingLink.click();
   mailingLink.remove();
   hideSupport();
