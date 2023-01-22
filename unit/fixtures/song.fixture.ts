@@ -96,9 +96,11 @@ export const mockRestSong = (opts?: Partial<RestSong>): RestSong => ({
 export const mockSongsData = (): RestSongData => ({
   data: [mockRestSong({id: 1}), mockRestSong({id: 2})],
   meta: {
-    page: 1,
-    pageCount: 2,
-    pageSize: 2,
-    total: 10,
+    pagination: {
+      page: 1,
+      pageCount: 2,
+      pageSize: 2,
+      total: 10,
+    }
   },
 });
