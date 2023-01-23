@@ -393,7 +393,7 @@ onMounted(() => {
     margin-bottom: 10rem;
   }
   @media only screen and (max-device-width: 767px) {
-    margin-bottom: 5rem;
+    margin-bottom: 8.5rem;
   }
   @media all and (display-mode: standalone) {
     margin-bottom: 0;
