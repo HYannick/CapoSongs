@@ -17,8 +17,8 @@ vi.mock("vue-i18n", () => ({
 // @vitest-environment jsdom
 describe("Heading", () => {
   beforeEach(() => {
-    vi.resetAllMocks()
-  })
+    vi.resetAllMocks();
+  });
   it("should emit event to open favourite songs sidebar", () => {
     const wrapper = shallowMount(Heading);
     const component = wrapper.vm;

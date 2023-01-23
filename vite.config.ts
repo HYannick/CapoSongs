@@ -21,8 +21,8 @@ export default defineConfig({
         ],
       },
       manifest: {
-        name: "Focamu",
-        short_name: "Focamu",
+        name: "Focamú",
+        short_name: "Focamú",
         description: "Learn Capoeira Songs easily",
         theme_color: "#ffffff",
         background_color: "#ffffff",

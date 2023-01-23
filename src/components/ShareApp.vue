@@ -39,7 +39,7 @@ const { copy, copied, isSupported } = useClipboard({ source });
 const shareApp = () => {
   if (navigator.share) {
     navigator.share({
-      title: "Focamu",
+      title: "Focamú",
       text: t("share.action.text"),
       url: "https://focamu.com",
     });

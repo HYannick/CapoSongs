@@ -133,7 +133,7 @@ export default {
     title: "Share the app",
     button: "Share",
     action: {
-      text: "Want to learn some Capoeira Music? Check out Focamu!"
+      text: "Want to learn some Capoeira Music? Check out Focamú!"
     },
     heading:
       "Share the app and expand our empire. Mwahahah.",
