@@ -148,7 +148,7 @@ export default {
     title: "Compartilhar o aplicativo",
     button: "Compartilhar",
     action: {
-      text: "Quer aprender um pouco de Música de Capoeira? Dá uma olhada no Focamú!",
+      text: "Quer aprender um pouco de Música de Capoeira? Dá uma olhada no Focamu!",
     },
     heading: "Compartilhe o aplicativo e expanda nosso império. Mwahahah.",
     copy: "Copie o link :: https://focamu.com",

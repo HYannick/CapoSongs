@@ -149,7 +149,7 @@ export default {
     title: "Partager l'app",
     button: "Partager",
     action: {
-      text: "Envie d'apprendre un peu de musique de Capoeira ? Go sur Focamú !",
+      text: "Envie d'apprendre un peu de musique de Capoeira ? Go sur Focamu !",
     },
     heading:
       "Partage l'application à d'autres pour étendre notre empire. Mwahahah.",
