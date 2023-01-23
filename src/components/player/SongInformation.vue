@@ -8,10 +8,15 @@
       <span
         style="display: block"
         class="text -bold -caption-2 color-black--300"
-        >{{ song.description }}</span>
+        >{{ song.description }}</span
+      >
     </p>
     <div class="player-song-action">
-      <div ref="infoAction">
+      <div
+        ref="infoAction"
+        :data-title="t('onboarding.player.step2.title')"
+        :data-intro="t('onboarding.player.step2.text')"
+      >
         <IconButton
           ref="infoAction"
           aria-label="See song details"
@@ -37,8 +42,11 @@ import FavouriteIcon from "@/components/common/FavouriteIcon.vue";
 import IconButton from "@/components/component-library/IconButton.vue";
 import Thumbnail from "@/components/common/Thumbnail.vue";
 import { S3_SOURCE_LINK, S3Dir } from "@/domain/enums/aws-link";
+import { useI18n } from "vue-i18n";
 
 const containerRef = ref();
+
+const { t } = useI18n();
 
 const props = defineProps({
   song: Object as PropType<Song>,

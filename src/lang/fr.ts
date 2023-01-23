@@ -1,6 +1,18 @@
 export default {
   greetings:
     '<span class="text -title-1 -black' + ' color-secondary--600">H</span>ey !',
+  onboarding: {
+    player: {
+      step1: {
+        title: 'Le Chœur',
+        text: 'Mets en valeur le choeur dans les paroles pour te focaliser dessus !',
+      },
+      step2: {
+        title: 'Histoire/Traductions',
+        text: "Découvre l'histoire et les traductions de la musique",
+      }
+    }
+  },
   cookies: {
     text:
       "Cette application utilise des cookies pour surveiller son traffic. Ceci" +

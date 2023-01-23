@@ -1,5 +1,7 @@
 <template>
   <IconButton
+    :data-title="t('onboarding.player.step1.title')"
+    :data-intro="t('onboarding.player.step1.text')"
     class="coro-highlighter"
     :class="{ '-activated': coroHighlighted }"
     @click="highlightCoro"
@@ -35,6 +37,7 @@ import Liricle from "liricle";
 import { S3_SOURCE_LINK, S3Dir } from "@/domain/enums/aws-link";
 import IconButton from "@/components/component-library/IconButton.vue";
 import { useKeyboardControls } from "@/composables/useKeyboardControls";
+import { useI18n } from "vue-i18n";
 
 const props = defineProps({
   song: Object as PropType<Song>,
@@ -44,6 +47,7 @@ const lyrics: Ref<LyricLine[]> = ref([]);
 const lyricsContainerEl = ref();
 const currentLineIndex = ref(0);
 const coroHighlighted = ref(false);
+const { t } = useI18n();
 let liricleInstance: any;
 
 const { player } = useKeyboardControls();

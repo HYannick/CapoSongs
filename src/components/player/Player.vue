@@ -102,19 +102,14 @@ import Icon from "@/components/component-library/Icon.vue";
 import { useAppStore } from "@/stores/app.store";
 import { storeToRefs } from "pinia";
 import { useSongStore } from "@/stores/song.store";
-import { computed, nextTick, onMounted, ref, watch } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import { usePlayerProgress } from "@/composables/usePlayerProgress";
 import gsap from "gsap";
 import LyricReader from "@/components/player/LyricReader.vue";
 import SongInformation from "@/components/player/SongInformation.vue";
 import SongDetails from "@/components/player/SongDetails.vue";
 import { S3_SOURCE_LINK, S3Dir } from "@/domain/enums/aws-link";
-import {
-  onKeyStroke,
-  useMagicKeys,
-  useMediaQuery,
-  whenever,
-} from "@vueuse/core";
+import { onKeyStroke, useMediaQuery } from "@vueuse/core";
 import IconButton from "@/components/component-library/IconButton.vue";
 import { useKeyboardControls } from "@/composables/useKeyboardControls";
 import {
@@ -124,6 +119,9 @@ import {
 } from "@/components/player/constants";
 import { VIEWS } from "@/components/player/enums";
 import { useNavigation } from "@/stores/navigation.store";
+
+import introJS from "intro.js";
+import "intro.js/introjs.css";
 
 const isPlaying = ref(false);
 const mousedown = ref(false);
@@ -328,8 +326,25 @@ watch(
   }
 );
 
+const startOnboarding = () => {
+  if (!localStorage.getItem("notNewPlayer")) {
+    pauseSong();
+    introJS()
+      .setOptions({
+        showBullets: false,
+        disableInteraction: true,
+        tooltipClass: "custom-tooltip",
+      })
+      .onexit(() => {
+        localStorage.setItem("notNewPlayer", "true");
+        playSong();
+      })
+      .start();
+  }
+};
+
 onMounted(() => {
-  const t1 = gsap.timeline();
+  const t1 = gsap.timeline({ onComplete: startOnboarding });
   t1.from(playerContainerEl.value, {
     duration: 0.7,
     ease: "expo.out",
@@ -367,6 +382,7 @@ onMounted(() => {
   width: 100%;
   height: 100%;
   display: flex;
+
   & > div {
     flex: 1;
   }
@@ -438,6 +454,7 @@ onMounted(() => {
   height: 0.4rem;
   background: var(--color-black-200);
   border-radius: 1rem;
+
   &:active {
     .current-progress:after {
       transform: translateY(-50%) scale(2);
@@ -450,6 +467,7 @@ onMounted(() => {
   width: 0;
   border-radius: 1rem 0 0 1rem;
   background: var(--color-black-950);
+
   &:after {
     content: "";
     position: absolute;
@@ -479,11 +497,13 @@ onMounted(() => {
   box-shadow: 0 0 0 0.4rem rgba(var(--color-black-950-rgb), 0.1);
   cursor: pointer;
   margin: 0 2rem;
+
   > .icon-wrapper {
     path {
       stroke: var(--color-black-50);
     }
   }
+
   &-prev,
   &-next {
     background: transparent;
@@ -497,6 +517,7 @@ onMounted(() => {
     cursor: pointer;
     margin: 0;
     padding: 0;
+
     > .icon-wrapper {
       path {
         stroke: var(--color-black-950);
@@ -521,6 +542,7 @@ onMounted(() => {
     width: 5rem;
     height: 5rem;
     margin: 0 4rem;
+
     > .icon-wrapper {
       width: 2rem;
       height: 2rem;
@@ -535,6 +557,7 @@ onMounted(() => {
     overflow: hidden;
     position: relative;
     background: var(--color-black-50);
+
     .gradient-fade {
       background: var(--color-black-50);
       background: linear-gradient(
@@ -543,6 +566,7 @@ onMounted(() => {
         rgba(var(--color-black-50-rgb), 1) 40%
       );
     }
+
     .player-wrapper {
       flex-direction: row;
       height: 16rem;
@@ -576,6 +600,68 @@ onMounted(() => {
     width: 100%;
     background: var(--color-background);
     transform: translateX(60rem);
+  }
+}
+
+.introjs-helperLayer.introjs-fixedTooltip {
+  border-radius: 1.5rem;
+  box-shadow: rgba(var(--color-black-50-rgb), 1) 0px 0px 1px 2px,
+    rgba(var(--color-black-50-rgb), 0.8) 0px 0px 0px 500rem !important;
+}
+
+.custom-tooltip {
+  box-sizing: content-box;
+  position: absolute;
+  visibility: visible;
+  background-color: var(--color-black-50);
+  box-shadow: 0 0 0 0.2rem var(--color-black-100);
+
+  min-width: 25rem;
+  max-width: 30rem;
+  border-radius: 1rem;
+
+  * {
+    font-family: var(--text-font-regular);
+  }
+
+  .introjs-arrow {
+    opacity: 0;
+  }
+
+  .introjs-tooltip-header {
+    border-bottom: 1px solid var(--color-black-100);
+    padding-bottom: 1rem;
+  }
+
+  .introjs-tooltiptext {
+    padding: 0.5rem 2rem;
+  }
+
+  .introjs-tooltipbuttons {
+    border-top: 1px solid var(--color-black-100);
+
+    .introjs-button {
+      border-radius: 1rem;
+      border: transparent;
+    }
+
+    .introjs-prevbutton {
+      background: var(--color-black-50);
+      box-shadow: inset 0 0 0 0.1rem var(--color-black-950);
+      text-shadow: none;
+      color: var(--color-black-950);
+    }
+
+    .introjs-nextbutton {
+      background: var(--color-black-900);
+      text-shadow: none;
+      color: var(--color-black-50);
+
+      &.introjs-nextbutton {
+        background: var(--color-primary-600);
+        color: var(--color-black-50);
+      }
+    }
   }
 }
 </style>

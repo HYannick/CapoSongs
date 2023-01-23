@@ -2,12 +2,25 @@ export default {
   greetings:
     '<span class="text -title-1 -black' +
     ' color-secondary--600">H</span>ello!',
+  onboarding: {
+    player: {
+      step1: {
+        title: "Highlight choir",
+        text: "Highlight the choir in the lyrics of the song",
+      },
+      step2: {
+        title: "History/Translations",
+        text: "Discover the story and meanings of the song and the translations",
+      },
+    },
+  },
   cookies: {
-    text: "This application use cookies to monitor its traffic. This is completely optional as" +
+    text:
+      "This application use cookies to monitor its traffic. This is completely optional as" +
       " it won't alterate the application use. By clicking Accept you consent to let us use them.",
-    dismiss: 'Refuse',
-    confirm: 'Accept',
-    readMore: 'Read more'
+    dismiss: "Refuse",
+    confirm: "Accept",
+    readMore: "Read more",
   },
   pwaUpdate: {
     offlineReady: "App ready to work offline",
@@ -66,7 +79,8 @@ export default {
     title: '<span class="color-secondary--600">S</span>ongs',
     notFound: "Song not found :(",
     loading: "Loading",
-    notFoundDetails: "Reset your search or <span class='color-primary--600'>send us a new song</span>!",
+    notFoundDetails:
+      "Reset your search or <span class='color-primary--600'>send us a new song</span>!",
   },
   songDetails: {
     translate: "Translation",
@@ -77,7 +91,7 @@ export default {
       title: "Filters",
       apply: "Apply filters",
       genres: {
-        title: 'Genres',
+        title: "Genres",
         LADAINHA: "Ladainha",
         CORRIDO: "Corrido",
         MACULELE: "Maculele",
@@ -90,7 +104,7 @@ export default {
         OTHERS: "Others",
       },
       themes: {
-        title: 'Themes',
+        title: "Themes",
         MESTRES: "Mestres",
         SLAVERY: "Slavery",
         ABOUT_CAPOEIRA: "About Capoeira",
@@ -133,10 +147,9 @@ export default {
     title: "Share the app",
     button: "Share",
     action: {
-      text: "Want to learn some Capoeira Music? Check out Focamú!"
+      text: "Want to learn some Capoeira Music? Check out Focamú!",
     },
-    heading:
-      "Share the app and expand our empire. Mwahahah.",
+    heading: "Share the app and expand our empire. Mwahahah.",
     copy: "Copy the link :: https://focamu.com",
     copied: "Link copied!",
   },

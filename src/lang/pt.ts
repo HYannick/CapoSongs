@@ -2,6 +2,18 @@ export default {
   greetings:
     '<span class="text -title-1 -black' +
     ' color-secondary--600">H</span>ello!',
+  onboarding: {
+    player: {
+      step1: {
+        title: "Destaque coro",
+        text: "Destaque a tarefa na letra da música",
+      },
+      step2: {
+        title: "História/Traduções",
+        text: "Descubra a história e os significados da música e as traduções",
+      },
+    },
+  },
   cookies: {
     text:
       "Este aplicativo usa cookies para monitorar seu tráfego. Isso é totalmente opcional, pois" +
@@ -80,7 +92,7 @@ export default {
       title: "Filtros",
       apply: "Aplicar filtros",
       genres: {
-        title: 'Generos',
+        title: "Generos",
         LADAINHA: "Ladainha",
         CORREDO: "Corrido",
         MACULELE: "Maculele",
@@ -93,7 +105,7 @@ export default {
         OTHERS: "Outros",
       },
       themes: {
-        title: 'Temas',
+        title: "Temas",
         MESTRES: "Mestres",
         SLAVERY: "Escravidão",
         ABOUT_CAPOEIRA: "Sobre a Capoeira",
