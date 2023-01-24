@@ -334,6 +334,7 @@ const startOnboarding = () => {
         showBullets: false,
         disableInteraction: true,
         tooltipClass: "custom-tooltip",
+        exitOnOverlayClick: false,
       })
       .onexit(() => {
         localStorage.setItem("notNewPlayer", "true");
