@@ -5,7 +5,7 @@
 </p>
 
 <p align="center" width="100%">Focamu is a progressive webapp to learn capoeira songs.<br>
-live app :: https://focamu.app/</p>
+live app :: https://focamu.com/</p>
 
 ## Recommended IDE Setup
 
