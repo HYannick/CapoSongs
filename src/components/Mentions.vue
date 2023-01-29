@@ -4,7 +4,7 @@
       <h4 class="text -black -title-2">{{ t("mentions.title") }}</h4>
       <h5 class="text -bold">{{ t("mentions.lyricsTrad") }}</h5>
       <ul>
-        <li><p class="text -bold color-primary--600">Debbie's notebook</p></li>
+        <li><p class="text -bold color-primary--600">Festa's notebook</p></li>
         <li>LaLaue</li>
         <li>Capoeira Music</li>
         <li>Dendearts</li>
