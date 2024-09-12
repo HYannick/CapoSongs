@@ -1,0 +1,23 @@
+<svg viewBox="0 0 22 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="1" y="1" width="10" height="15" rx="2" stroke="#282828" stroke-width="1.5"/>
+<rect x="11" y="1" width="10" height="15" rx="2" stroke="#282828" stroke-width="1.5"/>
+<ellipse cx="11" cy="16.5" rx="2" ry="1.5" fill="#282828"/>
+<line x1="3.5" y1="3.5" x2="4.5" y2="3.5" stroke="#282828" stroke-linecap="round"/>
+<line x1="6.5" y1="3.5" x2="8.5" y2="3.5" stroke="#282828" stroke-linecap="round"/>
+<line x1="3.5" y1="5.5" x2="5.5" y2="5.5" stroke="#282828" stroke-linecap="round"/>
+<path d="M7.5 5.5H8.5M7.5 9.5H8.5" stroke="#282828" stroke-linecap="round"/>
+<line x1="3.5" y1="7.5" x2="8.5" y2="7.5" stroke="#282828" stroke-linecap="round"/>
+<path d="M3.5 9.5H5.5" stroke="#282828" stroke-linecap="round"/>
+<line x1="3.5" y1="11.5" x2="8.5" y2="11.5" stroke="#282828" stroke-linecap="round"/>
+<line x1="3.5" y1="13.5" x2="8.5" y2="13.5" stroke="#282828" stroke-linecap="round"/>
+<line x1="13.5" y1="3.5" x2="15.9286" y2="3.5" stroke="#282828" stroke-linecap="round"/>
+<line x1="13.5" y1="5.5" x2="15.9286" y2="5.5" stroke="#282828" stroke-linecap="round"/>
+<line x1="13.5" y1="7.5" x2="15.9286" y2="7.5" stroke="#282828" stroke-linecap="round"/>
+<line x1="13.5" y1="9.5" x2="15.9286" y2="9.5" stroke="#282828" stroke-linecap="round"/>
+<line x1="13.5" y1="11.5" x2="15.9286" y2="11.5" stroke="#282828" stroke-linecap="round"/>
+<line x1="0.5" y1="-0.5" x2="1.21429" y2="-0.5" transform="matrix(-1 0 0 1 19 4)" stroke="#282828" stroke-linecap="round"/>
+<line x1="0.5" y1="-0.5" x2="1.21429" y2="-0.5" transform="matrix(-1 0 0 1 19 6)" stroke="#282828" stroke-linecap="round"/>
+<line x1="0.5" y1="-0.5" x2="1.21429" y2="-0.5" transform="matrix(-1 0 0 1 19 8)" stroke="#282828" stroke-linecap="round"/>
+<line x1="0.5" y1="-0.5" x2="1.21429" y2="-0.5" transform="matrix(-1 0 0 1 19 10)" stroke="#282828" stroke-linecap="round"/>
+<line x1="0.5" y1="-0.5" x2="1.21429" y2="-0.5" transform="matrix(-1 0 0 1 19 12)" stroke="#282828" stroke-linecap="round"/>
+</svg>
