@@ -62,7 +62,7 @@ const form = ref({
 
 const mailTo = computed(
   () =>
-    `mailto:fococapoeiramusicas@gmail.com?subject=${form.value.type}&body=${form.value.details}`
+    `mailto:fococapoeiramusica@gmail.com?subject=${form.value.type}&body=${form.value.details}`
 );
 
 const sendMail = () => {
