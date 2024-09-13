@@ -11,10 +11,6 @@ export class NotFound extends CustomError implements MessageError {
     return this.errorMessage.message;
   }
 
-  getStatus(): string {
-    return this.errorMessage.status;
-  }
-
   getType(): string {
     return this.errorMessage.type || "";
   }

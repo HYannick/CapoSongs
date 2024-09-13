@@ -6,6 +6,7 @@ import { mockSong } from "unit/fixtures/song.fixture";
 import { createTestingPinia } from "@pinia/testing";
 import { useAppStore } from "src/stores/app.store";
 import { useSongStore } from "src/stores/song.store";
+import { mockI18n } from "@unit/test-utils/i18n";
 
 let appStore: any;
 let songStore: any;
@@ -20,6 +21,9 @@ const mockWrapper = () => {
   songStore.addToFavourite = vi.fn();
   const wrapper: VueWrapper<SongList> = shallowMount(SongList, {
     plugins: [pinia],
+    global: {
+      plugins: [mockI18n()],
+    },
     props: {
       songs: [mockSong({ id: 1 }), mockSong({ id: 2 })],
     },

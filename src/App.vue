@@ -13,7 +13,6 @@ import { useOnline } from "@vueuse/core";
 import OfflineScreen from "@/components/common/OfflineScreen.vue";
 import { useSongStore } from "@/stores/song.store";
 import { useAppStore } from "@/stores/app.store";
-import { storeToRefs } from "pinia";
 
 const online = useOnline();
 onMounted(async () => {

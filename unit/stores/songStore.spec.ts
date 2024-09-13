@@ -3,7 +3,6 @@ import { vi, beforeEach, describe, it, expect } from "vitest";
 import { useSongStore } from "@/stores/song.store";
 import { mockSong, mockSongsData } from "../fixtures/song.fixture";
 import * as songResource from "@/api/resources/SongResource";
-import { flushPromises } from "@vue/test-utils";
 let songStore: any;
 
 // @vitest-environment jsdom
@@ -156,8 +155,8 @@ describe("Song Store", () => {
     });
 
     it("should load more songs", async () => {
-      const existingSong = mockSong({id: 5})
-      songStore.songs = [existingSong]
+      const existingSong = mockSong({ id: 5 });
+      songStore.songs = [existingSong];
       const getSongs = vi.fn().mockResolvedValue({
         results: mockSongsData().data,
         pagination: mockSongsData().meta,

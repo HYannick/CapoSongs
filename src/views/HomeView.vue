@@ -39,9 +39,9 @@
     <SettingsSidebar :from="SidebarOrigin.RIGHT" />
     <FavouritesSidebar :from="SidebarOrigin.LEFT" />
     <FiltersSidebar />
-    <Mentions v-if="appStore.mentionsVisible" />
-    <Support v-if="appStore.supportVisible" />
-    <ShareApp v-if="appStore.shareAppVisible" />
+    <Mentions v-if="appStore.featuresVisibility.mentions" />
+    <Support v-if="appStore.featuresVisibility.support" />
+    <ShareApp v-if="appStore.featuresVisibility.shareApp" />
     <CookieBanner v-if="displayCookies" />
   </main>
 </template>
@@ -61,12 +61,7 @@ import gsap from "gsap";
 import { useAppStore } from "@/stores/app.store";
 import Mentions from "@/components/Mentions.vue";
 import HomePlaceholder from "@/components/HomePlaceholder.vue";
-import {
-  useDebounce,
-  useInfiniteScroll,
-  useMagicKeys,
-  useMediaQuery,
-} from "@vueuse/core";
+import { useDebounce, useInfiniteScroll, useMediaQuery } from "@vueuse/core";
 import { useTheme } from "@/composables/useTheme";
 import { useKeyboardControls } from "@/composables/useKeyboardControls";
 import FiltersSidebar from "@/components/sidebar/FiltersSidebar.vue";
@@ -89,19 +84,19 @@ const headingEl = ref();
 const searchEl = ref();
 const songListEl = ref();
 const el = ref();
-const keys = useMagicKeys();
 const { switchTheme } = useTheme();
 const debounced = useDebounce(query, 500);
 
 const { app } = useKeyboardControls();
-const currentYear = ref(new Date().getFullYear());
 
 const mergedFilters = computed(() => {
   return [...filters.value.genres, ...filters.value.themes];
 });
+
 const displayCookies = computed(
   () =>
-    appStore.cookiesBannerVisible && !localStorage.getItem("cookies-enabled")
+    appStore.featuresVisibility.cookiesBanner &&
+    !localStorage.getItem("cookies-enabled")
 );
 const fetchMoreSongs = () => {
   if (currentPage.value <= songStore.pageCount) {
@@ -153,7 +148,7 @@ watch(
   }
 );
 watch(
-  () => appStore.playerVisible,
+  () => appStore.featuresVisibility.player,
   (visible) => {
     if (visible) {
       document.body.style.overflow = "hidden";

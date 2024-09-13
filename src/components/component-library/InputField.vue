@@ -37,7 +37,7 @@ export interface Props {
   actionIcon?: string;
 }
 
-defineEmits(["actionClick"]);
+defineEmits(["update:modelValue", "actionClick"]);
 
 const props = withDefaults(defineProps<Props>(), {
   placeholder: "Some text",
@@ -67,11 +67,12 @@ const inputClasses = computed(() => ({
   height: 5rem;
   padding: 2rem;
   border: transparent;
+  appearance: none;
   -webkit-appearance: none;
   background-color: var(--color-black-900);
   outline: transparent;
   border-radius: 1rem;
-  font-family: var(--text-font-extra-bold);
+  font-family: var(--text-font-extra-bold), sans-serif;
   color: var(--color-black-50);
   font-size: 1.7rem;
   transition: box-shadow 0.5s;

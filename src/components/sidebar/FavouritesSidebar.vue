@@ -61,7 +61,7 @@
 <script setup lang="ts">
 import { useAppStore } from "@/stores/app.store";
 import { storeToRefs } from "pinia";
-import { computed, onMounted, PropType, ref, watch } from "vue";
+import { computed, type PropType, ref, watch } from "vue";
 import { SidebarOrigin } from "@/domain/enums/SideBarOrigin";
 import IconButton from "@/components/component-library/IconButton.vue";
 import { useSongStore } from "@/stores/song.store";
@@ -76,13 +76,13 @@ const props = defineProps({
   from: String as PropType<SidebarOrigin>,
 });
 const favouriteSongItemRef = ref();
-const { favouriteSongsVisible } = storeToRefs(useAppStore());
+const { featuresVisibility } = storeToRefs(useAppStore());
 const { hideFavouriteSongs, showPlayer } = useAppStore();
 const { favouriteSongs } = storeToRefs(useSongStore());
 const { clearFavourites, loadSong, removeFromFavourite } = useSongStore();
 const { t } = useI18n();
 const sidebarClasses = computed(() => ({
-  "-open": favouriteSongsVisible.value,
+  "-open": featuresVisibility.value.favouriteSongs,
   "sidebar-left": props.from === SidebarOrigin.LEFT,
   "sidebar-right": props.from === SidebarOrigin.RIGHT,
 }));
@@ -102,7 +102,7 @@ watch(
 );
 
 watch(
-  () => favouriteSongsVisible.value,
+  () => featuresVisibility.value.favouriteSongs,
   (value) => {
     if (value) {
       gsap.fromTo(
@@ -139,7 +139,6 @@ watch(
     }
   }
 );
-
 </script>
 
 <style lang="scss">

@@ -33,8 +33,6 @@ defineEmits(["change"]);
   }
 
   &:checked + .slider:before {
-    -webkit-transform: translateX(2.6rem);
-    -ms-transform: translateX(2.6rem);
     transform: translateX(2.6rem);
   }
 }

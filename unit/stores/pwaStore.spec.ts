@@ -1,7 +1,6 @@
 import { createPinia, setActivePinia } from "pinia";
 import { beforeEach, vi, describe, it, expect } from "vitest";
 import { usePWAInstallation } from "@/stores/pwa.store";
-import { ref } from "vue";
 
 const mockAppleDeviceDetection = (isAppleDevice: boolean = false) => {
   const vendor = vi.spyOn(navigator, "vendor", "get");
@@ -14,7 +13,7 @@ const mockDeferredPrompt = (outcome: string = "validate") => ({
   userChoice: vi.fn().mockResolvedValue({
     outcome,
   }),
-  prompt: vi.fn()
+  prompt: vi.fn(),
 });
 // @vitest-environment jsdom
 describe("PWA Store", () => {

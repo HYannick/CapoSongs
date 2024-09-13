@@ -12,12 +12,11 @@ export const usePlayerProgress = (audioElement: Ref, progress: Ref) => {
   };
 
   const scrub = (event: any) => {
-    if(event.type === 'touchmove') {
+    if (event.type === "touchmove") {
       const rect = event.target.getBoundingClientRect();
-      const offsetX = (event.touches[0].clientX - window.pageXOffset - rect.left);
+      const offsetX = event.touches[0].clientX - window.scrollX - rect.left;
       audioElement.value.currentTime =
-        (offsetX / progress.value.offsetWidth) *
-        audioElement.value.duration;
+        (offsetX / progress.value.offsetWidth) * audioElement.value.duration;
       return;
     }
     audioElement.value.currentTime =

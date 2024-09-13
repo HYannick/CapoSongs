@@ -1,95 +1,97 @@
-import { ref } from "vue";
+import { reactive, ref } from "vue";
 import { defineStore } from "pinia";
 import { useNavigation } from "@/stores/navigation.store";
 
 export const useAppStore = defineStore("app", () => {
-  const settingsVisible = ref(false);
-  const supportVisible = ref(false);
-  const mentionsVisible = ref(false);
-  const favouriteSongsVisible = ref(false);
-  const playerVisible = ref(false);
-  const filtersVisible = ref(false);
-  const shareAppVisible = ref(false);
-  const cookiesBannerVisible = ref(false);
+  const featuresVisibility = reactive({
+    settings: false,
+    support: false,
+    mentions: false,
+    favouriteSongs: false,
+    player: false,
+    filters: false,
+    shareApp: false,
+    cookiesBanner: false,
+  });
 
   const { pushState } = useNavigation();
 
   const closeCookies = () => {
-    cookiesBannerVisible.value = false;
+    featuresVisibility.cookiesBanner = false;
   };
   const openCookies = () => {
-    cookiesBannerVisible.value = true;
+    featuresVisibility.cookiesBanner = true;
   };
 
   const showShareApp = () => {
-    shareAppVisible.value = true;
+    featuresVisibility.shareApp = true;
     hideSettings();
   };
   const hideShareApp = () => {
-    shareAppVisible.value = false;
+    featuresVisibility.shareApp = false;
   };
 
   const showPlayer = () => {
-    playerVisible.value = true;
+    featuresVisibility.player = true;
     pushState({ player: true });
   };
   const hidePlayer = () => {
-    playerVisible.value = false;
+    featuresVisibility.player = false;
     pushState({ player: false });
   };
 
   const showFilters = () => {
-    filtersVisible.value = true;
+    featuresVisibility.filters = true;
     pushState({ filters: true });
   };
   const hideFilters = () => {
-    filtersVisible.value = false;
+    featuresVisibility.filters = false;
     pushState({ filters: false });
   };
 
   const showMentions = () => {
-    mentionsVisible.value = true;
+    featuresVisibility.mentions = true;
     hideSettings();
   };
   const hideMentions = () => {
-    mentionsVisible.value = false;
+    featuresVisibility.mentions = false;
   };
 
   const showSettings = () => {
-    settingsVisible.value = true;
+    featuresVisibility.settings = true;
     pushState({ settings: true });
   };
   const hideSettings = () => {
-    settingsVisible.value = false;
+    featuresVisibility.settings = false;
     pushState({ settings: false });
   };
 
   const showFavouriteSongs = () => {
-    favouriteSongsVisible.value = true;
+    featuresVisibility.favouriteSongs = true;
     pushState({ favourite: true });
   };
   const hideFavouriteSongs = () => {
-    favouriteSongsVisible.value = false;
+    featuresVisibility.favouriteSongs = false;
     pushState({ favourite: false });
   };
 
   const showSupport = () => {
-    supportVisible.value = true;
+    featuresVisibility.support = true;
     hideSettings();
   };
   const hideSupport = () => {
-    supportVisible.value = false;
+    featuresVisibility.support = false;
   };
 
   const toggleSettings = () => {
-    if (!settingsVisible.value) {
+    if (!featuresVisibility.settings) {
       showSettings();
     } else {
       hideSettings();
     }
   };
   const toggleFavouriteSongs = () => {
-    if (!favouriteSongsVisible.value) {
+    if (!featuresVisibility.favouriteSongs) {
       showFavouriteSongs();
     } else {
       hideFavouriteSongs();
@@ -97,14 +99,7 @@ export const useAppStore = defineStore("app", () => {
   };
 
   return {
-    settingsVisible,
-    favouriteSongsVisible,
-    mentionsVisible,
-    supportVisible,
-    playerVisible,
-    filtersVisible,
-    cookiesBannerVisible,
-    shareAppVisible,
+    featuresVisibility,
     showSettings,
     hideSettings,
     toggleSettings,

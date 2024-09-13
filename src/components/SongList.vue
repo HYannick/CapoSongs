@@ -31,7 +31,7 @@
 </template>
 
 <script setup lang="ts">
-import type { PropType, Ref } from "vue";
+import type { Ref } from "vue";
 import type { Song } from "@/domain/Song";
 import { useAppStore } from "@/stores/app.store";
 import { useSongStore } from "@/stores/song.store";
@@ -46,7 +46,6 @@ import { useInfiniteScroll, useMediaQuery } from "@vueuse/core";
 import ListLoader from "@/components/common/ListLoader.vue";
 import IconButton from "@/components/component-library/IconButton.vue";
 import { useSearchStore } from "@/stores/search.store";
-import { useNavigation } from "@/stores/navigation.store";
 
 const containerRef = ref();
 const songItemRef = ref();
@@ -59,7 +58,6 @@ const { loadSong, loadMoreSongs } = useSongStore();
 const { currentPage, query, filters } = storeToRefs(useSearchStore());
 const { updatePage } = useSearchStore();
 const { showFilters } = useAppStore();
-const { state } = storeToRefs(useNavigation());
 const { t } = useI18n();
 
 const songsNotFound = computed(
@@ -208,7 +206,7 @@ defineExpose({ containerRef });
       );
       height: 6rem;
       z-index: 1;
-      bottom: 0rem;
+      bottom: 0;
       left: 0;
       right: 0;
     }

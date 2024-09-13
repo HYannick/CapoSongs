@@ -28,11 +28,9 @@
 import IconButton from "@/components/component-library/IconButton.vue";
 import { useAppStore } from "@/stores/app.store";
 import { ref } from "vue";
-import { useI18n } from "vue-i18n";
 import Icon from "@/components/component-library/Icon.vue";
 const containerRef = ref();
 const appStore = useAppStore();
-const { t } = useI18n();
 
 const showFavouriteSongs = () => {
   appStore.showFavouriteSongs();
@@ -119,9 +117,9 @@ defineExpose({ containerRef });
       line-height: 1;
       font-size: 1.3rem;
       color: var(--color-black-900);
-      font-family: var(--text-font-black);
+      font-family: var(--text-font-black), sans-serif;
       &:last-child {
-        font-family: var(--text-font-light);
+        font-family: var(--text-font-light), sans-serif;
       }
     }
   }

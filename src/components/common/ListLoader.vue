@@ -1,5 +1,5 @@
 <template>
-  <div class="loader" :class="{'-small': small}">
+  <div class="loader" :class="{ '-small': small }">
     <div class="load">
       <div class="one"></div>
       <div class="two"></div>
@@ -9,9 +9,6 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { useI18n } from "vue-i18n";
-const { t } = useI18n();
-
 interface Props {
   title?: string;
   iconSize?: number;
@@ -51,7 +48,7 @@ withDefaults(defineProps<Props>(), {
     }
   }
 
-  .load{
+  .load {
     display: flex;
     justify-content: center;
   }
@@ -67,22 +64,19 @@ withDefaults(defineProps<Props>(), {
     animation-direction: alternate;
   }
 
-  .load .two{
+  .load .two {
     animation-delay: 0.1s;
   }
 
   .load .three {
     animation-delay: 0.2s;
   }
-
 }
 
 @keyframes up-and-down {
-
-  to{
+  to {
     opacity: 0.2;
     transform: translateY(-20px);
-
   }
 }
 </style>

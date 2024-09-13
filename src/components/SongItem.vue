@@ -13,7 +13,7 @@
         <span
           style="display: block"
           class="text -bold -caption-2 color-black--300"
-          >{{ song.description || t('common.unknownArtist') }}</span
+          >{{ song.description || t("common.unknownArtist") }}</span
         >
       </p>
     </div>
@@ -32,10 +32,13 @@ import Thumbnail from "@/components/common/Thumbnail.vue";
 import { S3_SOURCE_LINK, S3Dir } from "@/domain/enums/aws-link";
 import { useI18n } from "vue-i18n";
 
-const {t} = useI18n()
+const { t } = useI18n();
 
 const props = defineProps({
-  song: Object as PropType<Song>,
+  song: {
+    type: Object as PropType<Song>,
+    required: true,
+  },
 });
 
 const picture = computed(() =>
@@ -87,7 +90,8 @@ defineExpose({ container, id: props.song!.id });
     object-fit: cover;
     border-radius: 1rem;
     overflow: hidden;
-    -webkit-mask-image: -webkit-radial-gradient(white, black);
+    mask-image: linear-gradient(white, black);
+    -webkit-mask-image: -webkit-linear-gradient(white, black);
     position: relative;
 
     img {

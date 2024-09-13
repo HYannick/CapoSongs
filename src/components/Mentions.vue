@@ -17,8 +17,6 @@
 
 <script lang="ts" setup>
 import { useAppStore } from "@/stores/app.store";
-import { onMounted, ref } from "vue";
-import gsap from "gsap";
 import { useI18n } from "vue-i18n";
 import Modal from "@/components/common/Modal.vue";
 

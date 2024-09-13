@@ -1,27 +1,28 @@
 <template>
   <div class="song-list-skeleton">
-    <div ref="container" class="song-item-skeleton" v-for="n in [1,2,3,4, 5,6,7,8,9,10]" :key="n">
+    <div
+      ref="container"
+      class="song-item-skeleton"
+      v-for="n in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]"
+      :key="n"
+    >
       <div class="song-item-skeleton-thumbnail"></div>
       <div class="song-item-skeleton-title">
         <p class="text -bold"></p>
         <span></span>
       </div>
-      <div class="song-item-skeleton-action">
-      </div>
+      <div class="song-item-skeleton-action"></div>
     </div>
   </div>
 </template>
 <script lang="ts" setup>
-import { useI18n } from "vue-i18n";
-const { t } = useI18n();
-
 interface Props {
   title?: string;
   iconSize?: number;
 }
 withDefaults(defineProps<Props>(), {
   title: "",
-  iconSize: 150
+  iconSize: 150,
 });
 </script>
 
@@ -49,7 +50,7 @@ withDefaults(defineProps<Props>(), {
     }
   }
 
-  .load{
+  .load {
     display: flex;
     justify-content: center;
   }
@@ -65,22 +66,19 @@ withDefaults(defineProps<Props>(), {
     animation-direction: alternate;
   }
 
-  .load .two{
+  .load .two {
     animation-delay: 0.1s;
   }
 
   .load .three {
     animation-delay: 0.2s;
   }
-
 }
 
 @keyframes up-and-down {
-
-  to{
+  to {
     opacity: 0.2;
     transform: translateY(-20px);
-
   }
 }
 

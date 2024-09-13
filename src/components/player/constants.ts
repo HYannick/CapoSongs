@@ -13,4 +13,4 @@ export const playerContainerEase = {
 export const playerControlsScale = {
   duration: 0.2,
   scale: 0.9,
-}
+};

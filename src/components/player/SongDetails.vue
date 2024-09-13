@@ -32,14 +32,16 @@
 </template>
 <script lang="ts" setup>
 import type { PropType } from "vue";
-import Icon from "@/components/component-library/Icon.vue";
 import { useI18n } from "vue-i18n";
 import BackButton from "@/components/common/BackButton.vue";
 const { t } = useI18n();
 
 defineProps({
   history: String,
-  songTranslation: Array as PropType<string[]>,
+  songTranslation: {
+    type: Array as PropType<string[]>,
+    required: true,
+  },
 });
 
 defineEmits(["goBack"]);

@@ -1,13 +1,13 @@
 import { describe, it, expect, vi } from "vitest";
 
-import { shallowMount } from "@vue/test-utils";
+import { mount, shallowMount } from "@vue/test-utils";
 import { mockI18n } from "../test-utils/i18n";
 import { mockedSongs, mockSong } from "unit/fixtures/song.fixture";
 import HomeView from "../../src/views/HomeView.vue";
 // @vitest-environment jsdom
 describe("HomeView", () => {
   it("should get no result with invalid song", async () => {
-    const wrapper = shallowMount(HomeView, {
+    const wrapper = mount(HomeView, {
       global: {
         plugins: [mockI18n()],
       },

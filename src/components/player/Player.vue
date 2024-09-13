@@ -2,7 +2,7 @@
   <div
     ref="playerContainerEl"
     class="player-container"
-    :class="{ 'player-container-open': playerVisible }"
+    :class="{ 'player-container-open': featuresVisibility.player }"
   >
     <div ref="playerBodyEl" class="player-body">
       <div class="player-view" ref="playerViewEl">
@@ -145,7 +145,7 @@ const informationViewEl = ref();
 const playerViewEl = ref();
 
 const { hidePlayer } = useAppStore();
-const { playerVisible } = storeToRefs(useAppStore());
+const { featuresVisibility } = storeToRefs(useAppStore());
 const { currentSong } = storeToRefs(useSongStore());
 const { state: historyState } = storeToRefs(useNavigation());
 const { resetSong, setNextSong, setPreviousSong } = useSongStore();
@@ -197,9 +197,9 @@ const playPause = () => {
   if (audioContext.value.state === "suspended") {
     audioContext.value.resume();
   }
-  if (isPlaying.value === false) {
+  if (!isPlaying.value) {
     playSong();
-  } else if (isPlaying.value === true) {
+  } else {
     pauseSong();
   }
 
@@ -606,8 +606,8 @@ onMounted(() => {
 
 .introjs-helperLayer.introjs-fixedTooltip {
   border-radius: 1.5rem;
-  box-shadow: rgba(var(--color-black-50-rgb), 1) 0px 0px 1px 2px,
-    rgba(var(--color-black-50-rgb), 0.8) 0px 0px 0px 500rem !important;
+  box-shadow: rgba(var(--color-black-50-rgb), 1) 0 0 1px 2px,
+    rgba(var(--color-black-50-rgb), 0.8) 0 0 0 500rem !important;
 }
 
 .custom-tooltip {
@@ -622,7 +622,7 @@ onMounted(() => {
   border-radius: 1rem;
 
   * {
-    font-family: var(--text-font-regular);
+    font-family: var(--text-font-regular), sans-serif;
   }
 
   .introjs-arrow {

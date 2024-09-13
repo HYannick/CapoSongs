@@ -85,7 +85,7 @@ import type { SongFilters } from "@/domain/enums/SongFilters";
 import { useNavigation } from "@/stores/navigation.store";
 
 const { t } = useI18n();
-const { filtersVisible } = storeToRefs(useAppStore());
+const { featuresVisibility } = storeToRefs(useAppStore());
 const { hideFilters } = useAppStore();
 const songStore = useSongStore();
 const { fetchingSongs } = storeToRefs(useSongStore());
@@ -97,7 +97,7 @@ const filtersToSet: Ref<SongFilters> = ref({
 });
 
 const sidebarClasses = computed(() => ({
-  "-open": filtersVisible.value,
+  "-open": featuresVisibility.value.filters,
 }));
 
 const applyFilters = async () => {

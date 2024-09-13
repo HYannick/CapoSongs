@@ -30,9 +30,13 @@ onMounted(() => {
 .skeleton {
   width: 100%;
   height: 100%;
-  background: linear-gradient(-45deg, var(--color-primary-100),
+  background: linear-gradient(
+    -45deg,
+    var(--color-primary-100),
     var(--color-primary-400),
-    var(--color-primary-600), var(--color-primary-800));
+    var(--color-primary-600),
+    var(--color-primary-800)
+  );
   background-size: 400% 400%;
   animation: gradient 15s ease infinite;
 }
@@ -48,14 +52,13 @@ onMounted(() => {
 }
 @keyframes gradient {
   0% {
-    background-position: 0% 50%;
+    background-position: 0 50%;
   }
   50% {
     background-position: 100% 50%;
   }
   100% {
-    background-position: 0% 50%;
+    background-position: 0 50%;
   }
 }
-
 </style>

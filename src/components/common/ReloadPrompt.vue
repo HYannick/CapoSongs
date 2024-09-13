@@ -20,24 +20,28 @@ const { t } = useI18n();
       <button aria-label="dismiss reload" class="dismiss-reload" @click="close">
         {{ t("pwaUpdate.dismiss") }}
       </button>
-      <button aria-label="reload pwa" class="reload-pwa" @click="updateServiceWorker()">
+      <button
+        aria-label="reload pwa"
+        class="reload-pwa"
+        @click="updateServiceWorker()"
+      >
         {{ t("pwaUpdate.reload") }}
       </button>
     </div>
   </div>
-<!--  TODO: to implement when offline enabled-->
-<!--  <div class="pwa-toast" :class="{ '-visible': offlineReady }" role="alert">-->
-<!--    <div class="message">-->
-<!--      <span class="text -body">-->
-<!--        {{ t("pwaUpdate.offlineReady") }}-->
-<!--      </span>-->
-<!--    </div>-->
-<!--    <div class="pwa-toast-footer">-->
-<!--      <button class="dismiss-offline" @click="close">-->
-<!--        {{ t("pwaUpdate.dismiss") }}-->
-<!--      </button>-->
-<!--    </div>-->
-<!--  </div>-->
+  <!--  TODO: to implement when offline enabled-->
+  <!--  <div class="pwa-toast" :class="{ '-visible': offlineReady }" role="alert">-->
+  <!--    <div class="message">-->
+  <!--      <span class="text -body">-->
+  <!--        {{ t("pwaUpdate.offlineReady") }}-->
+  <!--      </span>-->
+  <!--    </div>-->
+  <!--    <div class="pwa-toast-footer">-->
+  <!--      <button class="dismiss-offline" @click="close">-->
+  <!--        {{ t("pwaUpdate.dismiss") }}-->
+  <!--      </button>-->
+  <!--    </div>-->
+  <!--  </div>-->
 </template>
 
 <style lang="scss">

@@ -81,38 +81,10 @@
           </div>
           <SwitchInput :checked="isDarkMode" @change="switchTheme" />
         </div>
-<!--        //TODO put in in a modal-->
-<!--        <div class="keyboard-controls">-->
-<!--          <hr />-->
-<!--          <div class="settings-label">-->
-<!--            <Icon class="command" name="command" :size="20" />-->
-<!--            <p class="text -bold">Player controls</p>-->
-<!--          </div>-->
-<!--          <div-->
-<!--            class="keyboard-control"-->
-<!--            v-for="(control, key) in playerSheet"-->
-<!--            :key="key"-->
-<!--          >-->
-<!--            <span class="text -body -bold keyboard-key" v-html="key"></span>-->
-<!--            <span class="text -body function">{{-->
-<!--              t(`sidebars.settings.controls.${control}`)-->
-<!--            }}</span>-->
-<!--          </div>-->
-<!--          <div class="settings-label">-->
-<!--            <Icon class="command" name="command" :size="20" />-->
-<!--            <p class="text -bold">App controls</p>-->
-<!--          </div>-->
-<!--          <div-->
-<!--            class="keyboard-control"-->
-<!--            v-for="(control, key) in appSheet"-->
-<!--            :key="key"-->
-<!--          >-->
-<!--            <span class="text -body -bold keyboard-key">{{ key }}</span>-->
-<!--            <span class="text -body function">{{-->
-<!--              t(`sidebars.settings.controls.${control}`)-->
-<!--            }}</span>-->
-<!--          </div>-->
-<!--        </div>-->
+        <hr />
+        <div class="support-me">
+          <KofiButton />
+        </div>
       </div>
       <div class="settings-footer">
         <button
@@ -138,9 +110,9 @@
         </button>
       </div>
       <div class="copyright">
-      <span class="text -light"
-      >&copy; Copyright {{currentYear}}, Ayho, all rights reserved</span
-      >
+        <span class="text -light"
+          >&copy; Copyright {{ currentYear }}, Ayho, all rights reserved
+        </span>
       </div>
     </div>
     <div class="sidebar-overlay" @click="hideSettings"></div>
@@ -150,7 +122,7 @@
 <script setup lang="ts">
 import { useAppStore } from "@/stores/app.store";
 import { storeToRefs } from "pinia";
-import type { PropType } from "vue";
+import { type PropType, ref } from "vue";
 import { SidebarOrigin } from "@/domain/enums/SideBarOrigin";
 import { computed, onMounted, watch } from "vue";
 import IconButton from "@/components/component-library/IconButton.vue";
@@ -160,14 +132,15 @@ import { useI18n } from "vue-i18n";
 import SwitchInput from "@/components/common/SwitchInput.vue";
 import Icon from "@/components/component-library/Icon.vue";
 import { usePWAInstallation } from "@/stores/pwa.store";
-import { useKeyboardControls } from "@/composables/useKeyboardControls";
 import { useNavigation } from "@/stores/navigation.store";
+import KofiButton from "@/components/common/KofiButton.vue";
 
 const props = defineProps({
   from: String as PropType<SidebarOrigin>,
 });
 const { t, locale } = useI18n();
-const { settingsVisible } = storeToRefs(useAppStore());
+const currentYear = ref(new Date().getFullYear());
+const { featuresVisibility } = storeToRefs(useAppStore());
 const { hideSettings, showMentions, showSupport, showShareApp } = useAppStore();
 const { appInstalled, appInstallationDismissed } = storeToRefs(
   usePWAInstallation()
@@ -176,10 +149,9 @@ const { appInstalled, appInstallationDismissed } = storeToRefs(
 const { isAppleDevice, initInstall, installApp, closeInstallPrompt } =
   usePWAInstallation();
 const { isDarkMode, switchTheme } = useTheme();
-const { playerSheet, appSheet } = useKeyboardControls();
 
 const sidebarClasses = computed(() => ({
-  "-open": settingsVisible.value,
+  "-open": featuresVisibility.value.settings,
   "sidebar-left": props.from === SidebarOrigin.LEFT,
   "sidebar-right": props.from === SidebarOrigin.RIGHT,
 }));
@@ -368,12 +340,13 @@ onMounted(() => {
 }
 
 .copyright {
-  position: absolute;
   text-align: center;
   font-size: 1rem;
-  bottom: 0;
-  right: 1.5rem;
-  left: 1.5rem;
-  text-align: center;
+  margin-top: 0.5rem;
+}
+
+.support-me {
+  display: flex;
+  justify-content: center;
 }
 </style>

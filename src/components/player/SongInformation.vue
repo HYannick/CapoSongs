@@ -49,7 +49,10 @@ const containerRef = ref();
 const { t } = useI18n();
 
 const props = defineProps({
-  song: Object as PropType<Song>,
+  song: {
+    type: Object as PropType<Song>,
+    required: true,
+  },
 });
 
 const picture = computed(() =>
@@ -72,7 +75,8 @@ defineExpose({ containerRef });
   height: 5rem;
   border-radius: 1rem;
   overflow: hidden;
-  -webkit-mask-image: -webkit-radial-gradient(white, black);
+  mask-image: linear-gradient(white, black);
+  -webkit-mask-image: -webkit-linear-gradient(white, black);
   box-shadow: 0 0.4rem 0.4rem rgba(var(--color-primary-950-rgb), 0.25);
   margin-right: 1.5rem;
   img {

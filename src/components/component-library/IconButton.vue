@@ -5,7 +5,7 @@
     :class="[radiusClass, outlinedClass]"
     :disabled="disabled"
   >
-    <span class="icon" :class="{'-filled': filled}">
+    <span class="icon" :class="{ '-filled': filled }">
       <Icon :name="iconName" :size="size" />
     </span>
   </button>
@@ -53,8 +53,8 @@ const outlinedClass = computed(() => props.outlined && `-outlined`);
     path {
       stroke: var(--color-black-950);
       fill: transparent;
-      transition: stroke 0.5s cubic-bezier(0, 0.55, 0.45, 1), fill 0.5s
-      cubic-bezier(0, 0.55, 0.45, 1);
+      transition: stroke 0.5s cubic-bezier(0, 0.55, 0.45, 1),
+        fill 0.5s cubic-bezier(0, 0.55, 0.45, 1);
     }
     &.-filled {
       path {

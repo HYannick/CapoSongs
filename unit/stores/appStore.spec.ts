@@ -5,9 +5,11 @@ import { useAppStore } from "@/stores/app.store";
 const useNavigationMock = {
   pushState: vi.fn(),
 };
+
 vi.mock("@/stores/navigation.store", () => ({
   useNavigation: () => useNavigationMock,
 }));
+
 describe("App Store", () => {
   beforeEach(() => {
     setActivePinia(createPinia());
@@ -16,76 +18,94 @@ describe("App Store", () => {
 
   it("should show/hide settings", () => {
     const appStore = useAppStore();
-    expect(appStore.settingsVisible).toBeFalsy();
+    expect(appStore.featuresVisibility.settings).toBeFalsy();
     appStore.showSettings();
-    expect(appStore.settingsVisible).toBeTruthy();
-    expect(useNavigationMock.pushState).toHaveBeenCalledWith({ settings: true })
+    expect(appStore.featuresVisibility.settings).toBeTruthy();
+    expect(useNavigationMock.pushState).toHaveBeenCalledWith({
+      settings: true,
+    });
     appStore.hideSettings();
-    expect(appStore.settingsVisible).toBeFalsy();
-    expect(useNavigationMock.pushState).toHaveBeenCalledWith({ settings: false })
+    expect(appStore.featuresVisibility.settings).toBeFalsy();
+    expect(useNavigationMock.pushState).toHaveBeenCalledWith({
+      settings: false,
+    });
   });
 
   it("should show/hide favourite songs", () => {
     const appStore = useAppStore();
-    expect(appStore.favouriteSongsVisible).toBeFalsy();
+    expect(appStore.featuresVisibility.favouriteSongs).toBeFalsy();
     appStore.showFavouriteSongs();
-    expect(appStore.favouriteSongsVisible).toBeTruthy();
-    expect(useNavigationMock.pushState).toHaveBeenCalledWith({ favourite: true })
+    expect(appStore.featuresVisibility.favouriteSongs).toBeTruthy();
+    expect(useNavigationMock.pushState).toHaveBeenCalledWith({
+      favourite: true,
+    });
     appStore.hideFavouriteSongs();
-    expect(appStore.favouriteSongsVisible).toBeFalsy();
-    expect(useNavigationMock.pushState).toHaveBeenCalledWith({ favourite: false })
+    expect(appStore.featuresVisibility.favouriteSongs).toBeFalsy();
+    expect(useNavigationMock.pushState).toHaveBeenCalledWith({
+      favourite: false,
+    });
   });
 
   it("should show/hide player", () => {
     const appStore = useAppStore();
-    expect(appStore.playerVisible).toBeFalsy();
+    expect(appStore.featuresVisibility.player).toBeFalsy();
     appStore.showPlayer();
-    expect(appStore.playerVisible).toBeTruthy();
-    expect(useNavigationMock.pushState).toHaveBeenCalledWith({ player: true })
+    expect(appStore.featuresVisibility.player).toBeTruthy();
+    expect(useNavigationMock.pushState).toHaveBeenCalledWith({ player: true });
     appStore.hidePlayer();
-    expect(appStore.playerVisible).toBeFalsy();
-    expect(useNavigationMock.pushState).toHaveBeenCalledWith({ player: false })
+    expect(appStore.featuresVisibility.player).toBeFalsy();
+    expect(useNavigationMock.pushState).toHaveBeenCalledWith({ player: false });
   });
 
   it("should show/hide mentions", () => {
     const appStore = useAppStore();
-    expect(appStore.mentionsVisible).toBeFalsy();
+    expect(appStore.featuresVisibility.mentions).toBeFalsy();
     appStore.showMentions();
-    expect(appStore.mentionsVisible).toBeTruthy();
-    expect(useNavigationMock.pushState).toHaveBeenCalledWith({ settings: false })
+    expect(appStore.featuresVisibility.mentions).toBeTruthy();
+    expect(useNavigationMock.pushState).toHaveBeenCalledWith({
+      settings: false,
+    });
     appStore.hideMentions();
-    expect(appStore.mentionsVisible).toBeFalsy();
+    expect(appStore.featuresVisibility.mentions).toBeFalsy();
   });
 
   it("should toggle settings", () => {
     const appStore = useAppStore();
-    expect(appStore.settingsVisible).toBeFalsy();
+    expect(appStore.featuresVisibility.settings).toBeFalsy();
     appStore.toggleSettings();
-    expect(appStore.settingsVisible).toBeTruthy();
-    expect(useNavigationMock.pushState).toHaveBeenCalledWith({ settings: true })
+    expect(appStore.featuresVisibility.settings).toBeTruthy();
+    expect(useNavigationMock.pushState).toHaveBeenCalledWith({
+      settings: true,
+    });
     appStore.toggleSettings();
-    expect(appStore.settingsVisible).toBeFalsy();
-    expect(useNavigationMock.pushState).toHaveBeenCalledWith({ settings: false })
+    expect(appStore.featuresVisibility.settings).toBeFalsy();
+    expect(useNavigationMock.pushState).toHaveBeenCalledWith({
+      settings: false,
+    });
   });
 
   it("should show/hide favourite songs", () => {
     const appStore = useAppStore();
-    expect(appStore.favouriteSongsVisible).toBeFalsy();
+    expect(appStore.featuresVisibility.favouriteSongs).toBeFalsy();
     appStore.toggleFavouriteSongs();
-    expect(appStore.favouriteSongsVisible).toBeTruthy();
-    expect(useNavigationMock.pushState).toHaveBeenCalledWith({ favourite: true })
+    expect(appStore.featuresVisibility.favouriteSongs).toBeTruthy();
+    expect(useNavigationMock.pushState).toHaveBeenCalledWith({
+      favourite: true,
+    });
     appStore.toggleFavouriteSongs();
-    expect(appStore.favouriteSongsVisible).toBeFalsy();
-    expect(useNavigationMock.pushState).toHaveBeenCalledWith({ favourite: false })
+    expect(appStore.featuresVisibility.favouriteSongs).toBeFalsy();
+    expect(useNavigationMock.pushState).toHaveBeenCalledWith({
+      favourite: false,
+    });
   });
 
   it("should show/hide filters", () => {
     const appStore = useAppStore();
-    expect(appStore.filtersVisible).toBeFalsy();
+    expect(appStore.featuresVisibility.filters).toBeFalsy();
     appStore.showFilters();
-    expect(appStore.filtersVisible).toBeTruthy();
+    expect(appStore.featuresVisibility.filters).toBeTruthy();
     appStore.hideFilters();
-    expect(appStore.filtersVisible).toBeFalsy();
+    expect(appStore.featuresVisibility.filters).toBeFalsy();
     expect(useNavigationMock.pushState).toHaveBeenCalledWith({
       filters: false,
     });
@@ -93,34 +113,34 @@ describe("App Store", () => {
 
   it("should show/hide share app modal", () => {
     const appStore = useAppStore();
-    expect(appStore.shareAppVisible).toBeFalsy();
+    expect(appStore.featuresVisibility.shareApp).toBeFalsy();
     appStore.showShareApp();
-    expect(appStore.shareAppVisible).toBeTruthy();
+    expect(appStore.featuresVisibility.shareApp).toBeTruthy();
     expect(useNavigationMock.pushState).toHaveBeenCalledWith({
       settings: false,
     });
     appStore.hideShareApp();
-    expect(appStore.shareAppVisible).toBeFalsy();
+    expect(appStore.featuresVisibility.shareApp).toBeFalsy();
   });
 
   it("should show/hide support modal", () => {
     const appStore = useAppStore();
-    expect(appStore.supportVisible).toBeFalsy();
+    expect(appStore.featuresVisibility.support).toBeFalsy();
     appStore.showSupport();
-    expect(appStore.supportVisible).toBeTruthy();
+    expect(appStore.featuresVisibility.support).toBeTruthy();
     expect(useNavigationMock.pushState).toHaveBeenCalledWith({
       settings: false,
     });
     appStore.hideSupport();
-    expect(appStore.supportVisible).toBeFalsy();
+    expect(appStore.featuresVisibility.support).toBeFalsy();
   });
 
   it("should show/hide cookies modal", () => {
     const appStore = useAppStore();
-    expect(appStore.cookiesBannerVisible).toBeFalsy();
+    expect(appStore.featuresVisibility.cookiesBanner).toBeFalsy();
     appStore.openCookies();
-    expect(appStore.cookiesBannerVisible).toBeTruthy();
+    expect(appStore.featuresVisibility.cookiesBanner).toBeTruthy();
     appStore.closeCookies();
-    expect(appStore.cookiesBannerVisible).toBeFalsy();
+    expect(appStore.featuresVisibility.cookiesBanner).toBeFalsy();
   });
 });

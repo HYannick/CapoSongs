@@ -35,6 +35,6 @@ export const useKeyboardControls = () => {
       closePlayer: "Escape",
       nextSong: keys["alt+arrowright"],
       prevSong: keys["alt+arrowleft"],
-    }
+    },
   };
 };

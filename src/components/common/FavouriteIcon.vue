@@ -16,7 +16,10 @@ import type { PropType } from "vue";
 import type { Song } from "@/domain/Song";
 
 const props = defineProps({
-  song: Object as PropType<Song>,
+  song: {
+    type: Object as PropType<Song>,
+    required: true,
+  },
 });
 const songStore = useSongStore();
 </script>

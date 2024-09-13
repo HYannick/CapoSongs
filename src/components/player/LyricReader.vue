@@ -30,8 +30,8 @@
 </template>
 <script lang="ts" setup>
 import type { LyricLine } from "@/domain/LyricLine";
-import type { PropType } from "vue";
-import { nextTick, Ref, ref, watch } from "vue";
+import type { Ref } from "vue";
+import { nextTick, ref, watch } from "vue";
 import type { Song } from "@/domain/Song";
 import Liricle from "liricle";
 import { S3_SOURCE_LINK, S3Dir } from "@/domain/enums/aws-link";
@@ -39,10 +39,7 @@ import IconButton from "@/components/component-library/IconButton.vue";
 import { useKeyboardControls } from "@/composables/useKeyboardControls";
 import { useI18n } from "vue-i18n";
 
-const props = defineProps({
-  song: Object as PropType<Song>,
-  audioElementEl: Object as PropType<any>,
-});
+const props = defineProps<{ song: Song; audioElementEl: any }>();
 const lyrics: Ref<LyricLine[]> = ref([]);
 const lyricsContainerEl = ref();
 const currentLineIndex = ref(0);

@@ -7,10 +7,8 @@
 </template>
 <script lang="ts" setup>
 import Icon from "@/components/component-library/Icon.vue";
-import { useI18n } from "vue-i18n";
 import { useAppStore } from "@/stores/app.store";
 const { showSupport } = useAppStore();
-const { t } = useI18n();
 
 interface Props {
   title?: string;

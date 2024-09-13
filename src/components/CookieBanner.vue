@@ -165,8 +165,12 @@
           </div>
         </div>
         <div class="cookie-banner-footer">
-          <button class="cookie-button-cancel" @click="disableTag">{{ t("cookies.dismiss") }}</button>
-          <button class="cookie-button-submit" @click="enableGtag">{{ t("cookies.confirm") }}</button>
+          <button class="cookie-button-cancel" @click="disableTag">
+            {{ t("cookies.dismiss") }}
+          </button>
+          <button class="cookie-button-submit" @click="enableGtag">
+            {{ t("cookies.confirm") }}
+          </button>
         </div>
       </div>
     </div>
@@ -193,7 +197,7 @@ const enableGtag = async () => {
 const disableTag = () => {
   localStorage.setItem("cookies-enabled", "false");
   closeCookies();
-}
+};
 const toggleReadMore = async () => {
   showCookieDetails.value = !showCookieDetails.value;
 };

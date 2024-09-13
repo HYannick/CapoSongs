@@ -1,9 +1,6 @@
 <template>
   <div class="input-radio-container">
-    <label
-      class="input-radio text -bold"
-      :class="{ '-checked': checked }"
-    >
+    <label class="input-radio text -bold" :class="{ '-checked': checked }">
       <input
         class="input"
         type="radio"
@@ -36,12 +33,9 @@ const { name, modelValue, value } = toRefs(props);
 const checked = computed(() => modelValue.value === value.value);
 const emits = defineEmits(["update:modelValue"]);
 
-
 const updateValue = ($event: any) => {
   emits("update:modelValue", $event.target.value);
 };
-
-
 </script>
 
 <style lang="scss">

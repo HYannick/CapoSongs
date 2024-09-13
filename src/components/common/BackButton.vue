@@ -10,8 +10,8 @@
 import Icon from "@/components/component-library/Icon.vue";
 import { useI18n } from "vue-i18n";
 defineProps({
-  label: String
-})
+  label: String,
+});
 const { t } = useI18n();
 </script>
 
