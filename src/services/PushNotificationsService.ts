@@ -29,7 +29,6 @@ export class PushNotificationService {
   async subscribe(options: GetTokenOptions) {
     this.token = await getToken(this.messaging, options);
     localStorage.setItem("notificationToken", this.token);
-    console.log(this.token);
   }
 
   async unSubscribe() {

@@ -6,14 +6,15 @@
     title="Support me on ko-fi.com"
   >
     <Icon name="kofi-cup" :size="20" />
-    Support Me on Ko-fi !
+    {{ t("sidebars.settings.kofiLabel") }}
   </a>
 </template>
 
 <script setup lang="ts">
 import { computed } from "vue";
 import Icon from "@/components/component-library/Icon.vue";
-
+import { useI18n } from "vue-i18n";
+const { t } = useI18n();
 const kofiUrl = computed(() => `https://ko-fi.com/ayaho`);
 </script>
 
@@ -22,7 +23,7 @@ const kofiUrl = computed(() => `https://ko-fi.com/ayaho`);
   display: flex;
   align-items: center;
   padding: 1rem 2rem;
-  width: 20rem;
+  min-width: 20rem;
   gap: 1rem;
   background: var(--color-black-900);
   color: var(--color-black-50);

@@ -46,10 +46,10 @@
 import Modal from "@/components/common/Modal.vue";
 import { useI18n } from "vue-i18n";
 import Icon from "@/components/component-library/Icon.vue";
-import { useNotifications } from "@/composables/usePushNotifications";
+import { usePushNotifications } from "@/composables/usePushNotifications";
 import { useAppStore } from "@/stores/app.store";
 import { storeToRefs } from "pinia";
-const { requestPermission } = useNotifications();
+const { requestPermission } = usePushNotifications();
 const { closeNotificationsModal } = useAppStore();
 const { featuresVisibility } = storeToRefs(useAppStore());
 const { t } = useI18n();

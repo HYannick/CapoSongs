@@ -156,6 +156,7 @@ import Mentions from "@/components/Mentions.vue";
 import Support from "@/components/Support.vue";
 import ShareApp from "@/components/ShareApp.vue";
 import NotificationSwitch from "@/components/sidebar/NotificationSwitch.vue";
+import { useNotificationStore } from "@/stores/notification.store";
 
 const props = defineProps({
   from: String as PropType<SidebarOrigin>,
@@ -170,8 +171,8 @@ const { appInstalled, appInstallationDismissed } = storeToRefs(
 
 const { isAppleDevice, initInstall, installApp, closeInstallPrompt } =
   usePWAInstallation();
+const { notify } = useNotificationStore();
 const { isDarkMode, switchTheme } = useTheme();
-
 const sidebarClasses = computed(() => ({
   "-open": featuresVisibility.value.settings,
   "sidebar-left": props.from === SidebarOrigin.LEFT,

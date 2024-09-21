@@ -27,6 +27,16 @@ export default {
     dismiss: "Refuser",
     confirm: "Accepter",
   },
+  popups: {
+    notification: {
+      activated: "Notifications activées",
+      deactivated: "Notifications désactivées",
+      manualActivation: "Activez les notifications dans vos paramètres",
+    },
+    errors: {
+      songFetch: "Une erreur est survenue.",
+    },
+  },
   cookies: {
     text:
       "Cette application utilise des cookies pour surveiller son traffic. Ceci" +
@@ -92,11 +102,17 @@ export default {
   },
   songList: {
     title: '<span class="color-secondary--600 ">M</span>usiques',
-    notFound: "Aucune chanson trouvée :(",
+    notFound: {
+      title: "Aucune musique trouvée :(",
+      message:
+        "Réinitialise ta recherche, ou <span" +
+        " class='color-primary--600'>écris-nous</span> !",
+    },
+    error: {
+      title: "Une erreur est survenue!",
+      message: "Essaie de réactualiser l'application",
+    },
     loading: "Chargement",
-    notFoundDetails:
-      "Réinitialise ta recherche, ou <span" +
-      " class='color-primary--600'>écris-nous</span> !",
   },
   songDetails: {
     translate: "Traduction",

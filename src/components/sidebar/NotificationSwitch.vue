@@ -3,18 +3,24 @@
 </template>
 <script setup lang="ts">
 import SwitchInput from "@/components/common/SwitchInput.vue";
-import { useNotifications } from "@/composables/usePushNotifications";
+import { usePushNotifications } from "@/composables/usePushNotifications";
+import { useNotificationStore } from "@/stores/notification.store";
+
+const { notify } = useNotificationStore();
 const { requestPermission, revokePermission, isSubscribed } =
-  useNotifications();
+  usePushNotifications();
 
 const toggleNotifications = async () => {
   if (isSubscribed.value) {
     await revokePermission();
+    notify("popups.notification.deactivated", "info");
   } else {
     await requestPermission().then((granted) => {
       if (!granted) {
-        console.log("you need to turn on the notifications");
+        notify("popups.notification.manualActivation", "info");
+        return;
       }
+      notify("popups.notification.activated", "success");
     });
   }
 };

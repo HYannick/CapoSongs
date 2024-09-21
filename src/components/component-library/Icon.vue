@@ -1,6 +1,5 @@
 <template>
   <component
-    :class="{ 'default-color': defaultColor }"
     :is="icon"
     :width="props.size"
     :height="props.size"

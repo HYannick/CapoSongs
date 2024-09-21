@@ -90,12 +90,28 @@ export default {
     dismiss: "Refuser",
     confirm: "Accepter",
   },
+  popups: {
+    notification: {
+      activated: "Notifications activated",
+      deactivated: "Notifications deactivated",
+      manualActivation: "Activate notifications in the settings of your phone",
+    },
+    errors: {
+      songFetch: "An error occurred.",
+    },
+  },
   songList: {
     title: '<span class="color-secondary--600">S</span>ongs',
-    notFound: "Song not found :(",
+    notFound: {
+      title: "No song found :(",
+      message:
+        "Reset your search or <span class='color-primary--600'>send us a new song</span>!",
+    },
+    error: {
+      title: "Oh no. An error occurred!",
+      message: "Try to refresh the application",
+    },
     loading: "Loading",
-    notFoundDetails:
-      "Reset your search or <span class='color-primary--600'>send us a new song</span>!",
   },
   songDetails: {
     translate: "Translation",

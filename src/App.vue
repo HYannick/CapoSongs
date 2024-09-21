@@ -1,25 +1,25 @@
 <script setup lang="ts">
 import HomeView from "@/views/HomeView.vue";
 import { useTheme } from "@/composables/useTheme";
-import { computed, onMounted, ref, watch } from "vue";
+import { computed, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
 import ReloadPrompt from "@/components/common/ReloadPrompt.vue";
 const { setTheme } = useTheme();
-const { getSongs } = useSongStore();
 const { openCookies, openNotificationsModal } = useAppStore();
 const { featuresVisibility } = storeToRefs(useAppStore());
 const { locale } = useI18n();
 
 import { useOnline } from "@vueuse/core";
 import OfflineScreen from "@/components/common/OfflineScreen.vue";
-import { useSongStore } from "@/stores/song.store";
 import { useAppStore } from "@/stores/app.store";
 import NotificationModal from "@/components/NotificationModal.vue";
 import { storeToRefs } from "pinia";
-import { useNotifications } from "@/composables/usePushNotifications";
+import { usePushNotifications } from "@/composables/usePushNotifications";
 import CookieBanner from "@/components/CookieBanner.vue";
-const { isSubscribed, initNotificationService } = useNotifications();
+import Notifications from "@/components/common/Notifications.vue";
+
 const online = useOnline();
+const { isSubscribed, initNotificationService } = usePushNotifications();
 
 const shouldDisplayCookies = !localStorage.getItem("cookies-enabled");
 const shouldDisplayNotifications =
@@ -36,7 +36,6 @@ onMounted(async () => {
   if (shouldDisplayCookies) openCookies();
   if (shouldDisplayNotifications) openNotificationsModal();
   if (isSubscribed.value) await initNotificationService();
-  await getSongs();
 });
 
 const displayCookies = computed(
@@ -64,6 +63,7 @@ const displayNotificationModal = () => {
   <NotificationModal v-if="displayNotifications" />
   <HomeView v-if="online" />
   <OfflineScreen v-else />
+  <Notifications />
 </template>
 
 <style lang="scss">

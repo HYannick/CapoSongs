@@ -78,10 +78,16 @@ export default {
   },
   songList: {
     title: '<span class="color-secondary--600">C</span>anções',
-    notFound: "Música não encontrada :(",
+    notFound: {
+      title: "Música não encontrada :(",
+      message:
+        "Redefina sua pesquisa ou <span class='color-primary--600'>envie-nos uma nova música</span>!",
+    },
+    error: {
+      title: "Ocorreu um erro :(",
+      message: "Tente recarregar o aplicativo",
+    },
     loading: "Carregando",
-    notFoundDetails:
-      "Redefina sua pesquisa ou <span class='color-primary--600'>envie-nos uma nova música</span>!",
   },
   songDetails: {
     translate: "Tradução",
@@ -161,7 +167,16 @@ export default {
     dismiss: "Recusar",
     confirm: "Aceitar",
   },
-
+  popups: {
+    notification: {
+      activated: "Notificações ativadas",
+      deactivated: "Notificações desativadas",
+      manualActivation: "Você pode ativar as notificações nas configurações.",
+    },
+    errors: {
+      songFetch: "Ocorreu um erro.",
+    },
+  },
   share: {
     title: "Compartilhar o aplicativo",
     button: "Compartilhar",

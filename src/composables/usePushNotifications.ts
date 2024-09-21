@@ -1,7 +1,7 @@
 import { computed, ref } from "vue";
-import { PushNotificationService } from "@/PushNotificationsService";
+import { PushNotificationService } from "@/services/PushNotificationsService";
 
-export function useNotifications() {
+export function usePushNotifications() {
   const permission = ref(Notification.permission);
   const notificationService = new PushNotificationService();
   const isSubscribed = ref(notificationService.isSubscribed());
@@ -50,6 +50,7 @@ export function useNotifications() {
     await notificationService.unSubscribe();
     isSubscribed.value = false;
   };
+
   return {
     permissionGranted,
     requestPermission,

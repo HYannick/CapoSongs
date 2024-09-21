@@ -30,7 +30,7 @@
           />
         </div>
       </div>
-      <SongList ref="songListEl" :songs="songStore.songs" />
+      <SongList ref="songListEl" />
     </div>
     <div class="player">
       <Player v-if="songStore.currentSong" />

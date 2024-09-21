@@ -12,12 +12,17 @@
       ></IconButton>
     </div>
     <ListLoader v-if="fetchingSongs" :title="t('songList.loading')" />
+    <ListError
+      v-else-if="songFetchError"
+      :title="t('songList.error.title')"
+      :sub-title="t('songList.error.message')"
+    />
     <NotFound
       v-else-if="songsNotFound"
-      :title="t('songList.notFound')"
-      :sub-title="t('songList.notFoundDetails')"
+      :title="t('songList.notFound.title')"
+      :sub-title="t('songList.notFound.message')"
     />
-    <div ref="el" class="song-list">
+    <div v-else ref="el" class="song-list">
       <SongItem
         ref="songItemRef"
         v-for="song in songs"
@@ -26,12 +31,12 @@
         @selected="setSong"
       />
     </div>
-    <ListLoader small v-if="isloadingMoreSongs" />
+    <ListLoader small v-if="isLoadingMoreSongs" />
   </div>
 </template>
 
 <script setup lang="ts">
-import type { Ref } from "vue";
+import { onMounted, type Ref } from "vue";
 import type { Song } from "@/domain/Song";
 import { useAppStore } from "@/stores/app.store";
 import { useSongStore } from "@/stores/song.store";
@@ -46,23 +51,35 @@ import { useInfiniteScroll, useMediaQuery } from "@vueuse/core";
 import ListLoader from "@/components/common/ListLoader.vue";
 import IconButton from "@/components/component-library/IconButton.vue";
 import { useSearchStore } from "@/stores/search.store";
+import { useNotificationStore } from "@/stores/notification.store";
+import ListError from "@/components/common/ListError.vue";
 
 const containerRef = ref();
 const songItemRef = ref();
 const el = ref<HTMLElement>();
 const songItemRefs: Ref<SongItemRef[]> = ref([]);
 const { showPlayer } = useAppStore();
-const { currentSong, fetchingSongs, isloadingMoreSongs, songs, pageCount } =
+const { currentSong, fetchingSongs, isLoadingMoreSongs, songs, pageCount } =
   storeToRefs(useSongStore());
-const { loadSong, loadMoreSongs } = useSongStore();
+const { loadSong, loadMoreSongs, getSongs } = useSongStore();
 const { currentPage, query, filters } = storeToRefs(useSearchStore());
 const { updatePage } = useSearchStore();
 const { showFilters } = useAppStore();
+const { notify } = useNotificationStore();
 const { t } = useI18n();
 
+const songFetchError = ref(false);
 const songsNotFound = computed(
   () => !songs.value.length && !fetchingSongs.value
 );
+
+onMounted(async () => {
+  await getSongs().catch(() => {
+    notify("popups.errors.songFetch", "error");
+    songFetchError.value = true;
+    fetchingSongs.value = false;
+  });
+});
 
 const fetchMoreSongs = () => {
   if (currentPage.value <= pageCount.value) {
