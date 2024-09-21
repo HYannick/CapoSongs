@@ -6,7 +6,7 @@ import { useI18n } from "vue-i18n";
 import ReloadPrompt from "@/components/common/ReloadPrompt.vue";
 const { setTheme } = useTheme();
 const { getSongs } = useSongStore();
-const { openCookies } = useAppStore();
+const { openCookies, openNotificationsModal } = useAppStore();
 const { featuresVisibility } = storeToRefs(useAppStore());
 const { locale } = useI18n();
 
@@ -20,13 +20,22 @@ import { useNotifications } from "@/composables/usePushNotifications";
 import CookieBanner from "@/components/CookieBanner.vue";
 const { isSubscribed, initNotificationService } = useNotifications();
 const online = useOnline();
+
+const shouldDisplayCookies = !localStorage.getItem("cookies-enabled");
+const shouldDisplayNotifications =
+  !localStorage.getItem("notification-request-triggered") &&
+  localStorage.getItem("cookies-enabled");
+
+const setLocale = () => {
+  locale.value = localStorage.getItem("lang") || "en";
+};
+
 onMounted(async () => {
   setTheme();
-  locale.value = localStorage.getItem("lang") || "fr";
-  if (!localStorage.getItem("cookies-enabled")) openCookies();
-  if (isSubscribed.value) {
-    await initNotificationService();
-  }
+  setLocale();
+  if (shouldDisplayCookies) openCookies();
+  if (shouldDisplayNotifications) openNotificationsModal();
+  if (isSubscribed.value) await initNotificationService();
   await getSongs();
 });
 
@@ -38,7 +47,6 @@ const displayCookies = computed(
 
 const displayNotifications = computed(
   () =>
-    !featuresVisibility.value.cookiesBanner &&
     featuresVisibility.value.notificationsModal &&
     !localStorage.getItem("notification-request-triggered")
 );

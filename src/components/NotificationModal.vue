@@ -1,5 +1,5 @@
 <template>
-  <Modal v-if="featuresVisibility.notificationsModal" @close="close">
+  <Modal @close="close">
     <div class="notification-modal p-22">
       <div class="notification-modal-header">
         <div class="icon-wrapper">
