@@ -10,7 +10,7 @@ const defaultHistoryState: HistoryState = {
   favourite: false,
   filters: false,
   details: false,
-}
+};
 
 export const useNavigation = defineStore("navigation", () => {
   const state: Ref<HistoryState> = ref(defaultHistoryState);

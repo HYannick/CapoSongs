@@ -1,3 +1,3 @@
 /// <reference types="vite/client" />
-declare module 'liricle'
+declare module "liricle";
 /// <reference types="vite-plugin-pwa/client" />

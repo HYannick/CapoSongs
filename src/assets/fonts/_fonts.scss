@@ -64,26 +64,26 @@
 
 .text {
   font-family: var(--text-font-regular);
+}
 
-  &.-light {
-    font-family: var(--text-font-light)
-  }
+.-light {
+  font-family: var(--text-font-light)
+}
 
-  &.-regular {
-    font-family: var(--text-font-regular)
-  }
+.-regular {
+  font-family: var(--text-font-regular)
+}
 
-  &.-bold {
-    font-family: var(--text-font-bold)
-  }
+.-bold {
+  font-family: var(--text-font-bold)
+}
 
-  &.-extra-bold {
-    font-family: var(--text-font-extra-bold)
-  }
+.-extra-bold {
+  font-family: var(--text-font-extra-bold)
+}
 
-  &.-black {
-    font-family: var(--text-font-black)
-  }
+.-black {
+  font-family: var(--text-font-black)
 }
 
 .text {

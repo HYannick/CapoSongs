@@ -40,6 +40,6 @@ export const useSearchStore = defineStore("search", () => {
     updatePage,
     resetCurrentPage,
     resetAllFilters,
-    resetSearch
+    resetSearch,
   };
 });

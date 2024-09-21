@@ -10,6 +10,7 @@ import { VitePWA } from "vite-plugin-pwa";
 export default defineConfig({
   build: {
     target: "esnext",
+    sourcemap: true,
   },
   plugins: [
     vue(),
@@ -46,8 +47,12 @@ export default defineConfig({
           },
         ],
       },
+      strategies: "injectManifest",
+      srcDir: "src",
+      filename: "sw.ts",
       devOptions: {
         enabled: true,
+        type: "module",
       },
     }),
     VueI18nPlugin({

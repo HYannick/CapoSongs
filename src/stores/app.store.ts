@@ -1,4 +1,4 @@
-import { reactive, ref } from "vue";
+import { reactive } from "vue";
 import { defineStore } from "pinia";
 import { useNavigation } from "@/stores/navigation.store";
 
@@ -12,9 +12,18 @@ export const useAppStore = defineStore("app", () => {
     filters: false,
     shareApp: false,
     cookiesBanner: false,
+    notificationsModal: false,
   });
 
   const { pushState } = useNavigation();
+
+  const closeNotificationsModal = () => {
+    featuresVisibility.notificationsModal = false;
+  };
+
+  const openNotificationsModal = () => {
+    featuresVisibility.notificationsModal = true;
+  };
 
   const closeCookies = () => {
     featuresVisibility.cookiesBanner = false;
@@ -118,5 +127,7 @@ export const useAppStore = defineStore("app", () => {
     closeCookies,
     showShareApp,
     hideShareApp,
+    openNotificationsModal,
+    closeNotificationsModal,
   };
 });

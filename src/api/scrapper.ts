@@ -23,7 +23,9 @@ const fs = require("fs");
   const root = new Root(); //The root object fetches the startUrl, and starts the process.
 
   //Any valid cheerio-advanced-selectors selector can be passed. For further reference: https://cheerio.js.org/
-  const article = new OpenLinks(".card.beige .btn.btn-warning.mr-1", { name: "article" }); //Opens each article page.
+  const article = new OpenLinks(".card.beige .btn.btn-warning.mr-1", {
+    name: "article",
+  }); //Opens each article page.
   const title = new CollectContent("h1", { name: "title" });
   const category = new CollectContent("h5", { name: "type" }); //"Collects" the text from each H1
   const story = new CollectContent(".card.border-dark.mb-3 p", {
@@ -33,7 +35,7 @@ const fs = require("fs");
   const translations = new CollectContent(".col-md-12.px-5 i", {
     name: "translations",
   });
-  root.addOperation(article)
+  root.addOperation(article);
   article.addOperation(title);
   article.addOperation(category);
   article.addOperation(story);
@@ -44,7 +46,7 @@ const fs = require("fs");
 
   const articles = root.getData(); //Will return an array of all article objects(from all
 
-  const sanitizedArticles = articles.data[0].data.map(song => {
+  const sanitizedArticles = articles.data[0].data.map((song) => {
     const scrapped = song.data.reduce((acc, curr) => {
       acc[curr.name] = curr.data;
       return acc;
@@ -63,8 +65,7 @@ const fs = require("fs");
         }, [])
         .join("\n"),
     };
-  })
-
+  });
 
   // categories), each
   //containing its "children"(titles,stories and the downloaded image urls)
