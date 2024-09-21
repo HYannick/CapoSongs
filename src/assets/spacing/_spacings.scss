@@ -1,0 +1,39 @@
+@mixin generate-spacing-classes($name, $properties...) {
+  @each $size, $value in (
+          '0': 0,
+          '5': 0.5rem,
+          '10': 1rem,
+          '12': 1.2rem,
+          '14': 1.4rem,
+          '16': 1.6rem,
+          '18': 1.8rem,
+          '22': 2.2rem,
+          '24': 2.4rem,
+          '32': 3.2rem,
+          '40': 4rem,
+          '48': 4.8rem,
+          '56': 5.6rem,
+          '64': 6.4rem
+  ) {
+    .#{$name}-#{$size} {
+      @each $property in $properties {
+        #{$property}: $value;
+      }
+    }
+  }
+}
+
+@include generate-spacing-classes('mt', 'margin-top');
+@include generate-spacing-classes('mr', 'margin-right');
+@include generate-spacing-classes('mb', 'margin-bottom');
+@include generate-spacing-classes('ml', 'margin-left');
+@include generate-spacing-classes('mx', 'margin-left', 'margin-right');
+@include generate-spacing-classes('my', 'margin-top', 'margin-bottom');
+
+@include generate-spacing-classes('p', 'padding');
+@include generate-spacing-classes('pt', 'padding-top');
+@include generate-spacing-classes('pr', 'padding-right');
+@include generate-spacing-classes('pb', 'padding-bottom');
+@include generate-spacing-classes('pl', 'padding-left');
+@include generate-spacing-classes('px', 'padding-left', 'padding-right');
+@include generate-spacing-classes('py', 'padding-top', 'padding-bottom');

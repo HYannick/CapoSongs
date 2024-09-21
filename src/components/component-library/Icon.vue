@@ -1,7 +1,7 @@
 <template>
   <component
+    :class="{ 'default-color': defaultColor }"
     :is="icon"
-    class="icon-wrapper"
     :width="props.size"
     :height="props.size"
   />
@@ -14,13 +14,21 @@ export interface Props {
   name: string;
   filled?: boolean;
   size?: number;
+  defaultColor?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   size: 16,
+  defaultColor: false,
 });
 
 const icon = defineAsyncComponent(
   () => import(`../../assets/svg/${props.name}.svg`)
 );
 </script>
+
+<style>
+.default-color path {
+  stroke: var(--color-black-950);
+}
+</style>

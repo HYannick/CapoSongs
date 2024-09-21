@@ -7,7 +7,6 @@ import { i18n } from "@/lang/i18n";
 import { MotionPlugin } from "@vueuse/motion";
 
 const app = createApp(App);
-
 app.use(MotionPlugin);
 app.use(i18n);
 app.use(createPinia());
@@ -17,3 +16,14 @@ app.use(VueGtag, {
 });
 
 app.mount("#app");
+
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker
+    .register("/sw.js", { type: "module", scope: "/" })
+    .then((registration) => {
+      console.log("Service Worker registered with scope:", registration.scope);
+    })
+    .catch((error) => {
+      console.error("Service Worker registration failed:", error);
+    });
+}

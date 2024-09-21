@@ -20,7 +20,17 @@
   --color-primary-10: #FFFAF4;
 
   // Secondary ----------------
+  --color-secondary---color-secondary-700: #3A9C7A;
+  --color-secondary-900: #23645E;
+  --color-secondary-800: #2E7F6C;
   --color-secondary-600: #46AC88;
+  --color-secondary-500: #5BC49A;
+  --color-secondary-400: #70CBA2;
+  --color-secondary-300: #85D3AB;
+  --color-secondary-200: #9ADBB3;
+  --color-secondary-100: #B0E3BC;
+  --color-secondary-50: #C5EBC4;
+  --color-secondary-10: #DAF3CD;
   --color-secondary-600-rgb: #{hexToRGB(#46AC88)};
 
   // Black --------------------
@@ -52,7 +62,7 @@
 
   // Background --------------
   --color-background: #EBE7E6;
-  --color-background-rgb:#{hexToRGB(#EBE7E6)};
+  --color-background-rgb: #{hexToRGB(#EBE7E6)};
 
   // Logo --------------------
   --color-logo-outline: var(--color-black-800);
@@ -110,7 +120,7 @@
 
   // Background --------------
   --color-background: #16191D;
-  --color-background-rgb:#{hexToRGB(#16191D)};
+  --color-background-rgb: #{hexToRGB(#16191D)};
 
   // Logo --------------------
   --color-logo-outline: var(--color-black-800);

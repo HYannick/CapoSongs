@@ -129,6 +129,8 @@ export default {
         pt: "Português",
       },
       theme: "Tema",
+      notifications: "Notificações",
+      kofiLabel: "Apoie-me no Ko-fi!",
       controls: {
         space: "Reproduzir/Pausar",
         songDetails: "Exibir detalhes da música",
@@ -144,6 +146,22 @@ export default {
       },
     },
   },
+  notificationModal: {
+    title: "Fique atualizado com nossas últimas músicas",
+    description:
+      "Ative as notificações e nós te manteremos informado sobre todas as novidades musicais.",
+    perk_1:
+      '<span class="color-secondary--600 -bold">Receba notificações instantâneas</span> quando' +
+      " adicionarmos novas músicas" +
+      " à nossa biblioteca.",
+    perk_2:
+      '<span class="color-secondary--600 -bold">Não perca o ritmo</span> com atualizações oportunas.',
+    disclaimer:
+      "Você pode ativar ou desativar as notificações a qualquer momento nas configurações.",
+    dismiss: "Recusar",
+    confirm: "Aceitar",
+  },
+
   share: {
     title: "Compartilhar o aplicativo",
     button: "Compartilhar",

@@ -4,13 +4,15 @@
     "unit/**/*.ts", "src/**/*.json"
   ],
   "exclude": ["src/**/__tests__/*"],
+  "preserveSymlinks": true,
   "compilerOptions": {
     "composite": true,
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
       "@cypress/*": ["./cypress/*"],
-      "@unit/*": ["./unit/*"]
+      "@unit/*": ["./unit/*"],
+
     }
   }
 }

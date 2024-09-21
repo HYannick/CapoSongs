@@ -1,6 +1,11 @@
 <template>
   <label class="input-switch">
-    <input type="checkbox" @change="$emit('change')" :checked="checked" />
+    <input
+      type="checkbox"
+      @change="$emit('change')"
+      :checked="checked"
+      :class="{ checked }"
+    />
     <span class="slider round"></span>
   </label>
 </template>
@@ -24,7 +29,7 @@ defineEmits(["change"]);
   width: 0;
   height: 0;
 
-  &:checked + .slider {
+  &.checked + .slider {
     background-color: var(--color-primary-600);
   }
 
@@ -32,7 +37,7 @@ defineEmits(["change"]);
     box-shadow: 0 0 0.1rem var(--color-primary-600);
   }
 
-  &:checked + .slider:before {
+  &.checked + .slider:before {
     transform: translateX(2.6rem);
   }
 }

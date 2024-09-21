@@ -12,7 +12,7 @@ export const useSongStore = defineStore("songs", () => {
   const currentSong: Ref<Song | null> = ref(null);
   const favouriteSongs: Ref<Song[]> = ref([]);
   const fetchingSongs = ref(false);
-  const isloadingMoreSongs = ref(false);
+  const isLoadingMoreSongs = ref(false);
   const pageCount = ref(0);
 
   const replay = ref(false);
@@ -28,7 +28,11 @@ export const useSongStore = defineStore("songs", () => {
   ) => {
     fetchingSongs.value = true;
     const { getSongs } = songResource();
-    const { results, pagination } = await getSongs({ page }, searchQuery, filters);
+    const { results, pagination } = await getSongs(
+      { page },
+      searchQuery,
+      filters
+    );
     songs.value = results;
     fetchingSongs.value = false;
     pageCount.value = pagination.pageCount;
@@ -39,11 +43,11 @@ export const useSongStore = defineStore("songs", () => {
     searchQuery?: string,
     filters?: SongFilters
   ) => {
-    isloadingMoreSongs.value = true;
+    isLoadingMoreSongs.value = true;
     const { getSongs } = songResource();
     const { results } = await getSongs({ page }, searchQuery, filters);
     songs.value = [...songs.value, ...results];
-    isloadingMoreSongs.value = false;
+    isLoadingMoreSongs.value = false;
   };
 
   const enableReplay = () => {
@@ -94,7 +98,7 @@ export const useSongStore = defineStore("songs", () => {
       return;
     }
     favouriteSongs.value = [...favouriteSongs.value, songToAdd];
-    await localStorage.setItem(
+    localStorage.setItem(
       FAVOURITE_SONGS_STORAGE_KEY,
       JSON.stringify(favouriteSongs.value)
     );
@@ -104,7 +108,7 @@ export const useSongStore = defineStore("songs", () => {
     favouriteSongs.value = favouriteSongs.value.filter(
       (song) => song.id !== songId
     );
-    await localStorage.setItem(
+    localStorage.setItem(
       FAVOURITE_SONGS_STORAGE_KEY,
       JSON.stringify(favouriteSongs.value)
     );
@@ -149,7 +153,7 @@ export const useSongStore = defineStore("songs", () => {
     fetchingSongs,
     resetSongs,
     loadMoreSongs,
-    isloadingMoreSongs,
+    isLoadingMoreSongs,
     pageCount,
   };
 });

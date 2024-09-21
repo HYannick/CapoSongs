@@ -4,7 +4,8 @@
     "types": ["vitest/globals",  "vite-plugin-pwa/client"],
     "module": "esnext",
     "moduleResolution": "node",
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "lib": ["WebWorker"]
   },
   "references": [
     {

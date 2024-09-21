@@ -6,8 +6,8 @@ import fr from "@/lang/fr";
 const commonI18n = { en, fr, pt };
 
 export const i18n = createI18n({
-  locale: "fr",
-  fallbackLocale: "fr",
+  locale: "en",
+  fallbackLocale: "en",
   messages: commonI18n,
   legacy: false,
 });

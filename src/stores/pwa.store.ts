@@ -55,6 +55,6 @@ export const usePWAInstallation = defineStore("pwa", () => {
     installApp,
     closeInstallPrompt,
     isAppleDevice,
-    deferredPrompt
+    deferredPrompt,
   };
 });

@@ -74,7 +74,7 @@
           </div>
         </div>
         <hr />
-        <div class="settings-option">
+        <div class="settings-option centered">
           <div class="settings-label">
             <Icon class="dark-mode" name="moon" :size="20" />
             <p class="text -bold">{{ t("sidebars.settings.theme") }}</p>
@@ -82,10 +82,19 @@
           <SwitchInput :checked="isDarkMode" @change="switchTheme" />
         </div>
         <hr />
+        <div class="settings-option centered">
+          <div class="settings-label">
+            <Icon class="notification" name="bell" :size="20" />
+            <p class="text -bold">{{ t("sidebars.settings.notifications") }}</p>
+          </div>
+          <NotificationSwitch />
+        </div>
+        <hr />
         <div class="support-me">
           <KofiButton />
         </div>
       </div>
+
       <div class="settings-footer">
         <button
           aria-label="share the app"
@@ -116,6 +125,15 @@
       </div>
     </div>
     <div class="sidebar-overlay" @click="hideSettings"></div>
+    <Teleport to="body">
+      <Mentions v-if="featuresVisibility.mentions" />
+    </Teleport>
+    <Teleport to="body" v-if="featuresVisibility.support">
+      <Support />
+    </Teleport>
+    <Teleport to="body" v-if="featuresVisibility.shareApp">
+      <ShareApp />
+    </Teleport>
   </div>
 </template>
 
@@ -134,6 +152,10 @@ import Icon from "@/components/component-library/Icon.vue";
 import { usePWAInstallation } from "@/stores/pwa.store";
 import { useNavigation } from "@/stores/navigation.store";
 import KofiButton from "@/components/common/KofiButton.vue";
+import Mentions from "@/components/Mentions.vue";
+import Support from "@/components/Support.vue";
+import ShareApp from "@/components/ShareApp.vue";
+import NotificationSwitch from "@/components/sidebar/NotificationSwitch.vue";
 
 const props = defineProps({
   from: String as PropType<SidebarOrigin>,
@@ -162,6 +184,7 @@ watch(
     localStorage.setItem("lang", locale);
   }
 );
+
 const { state: historyState } = storeToRefs(useNavigation());
 watch(
   () => historyState.value.settings,
@@ -268,12 +291,18 @@ onMounted(() => {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-
+  &.centered {
+    align-items: center;
+  }
   .lang path {
     fill: var(--color-black-950);
   }
 
   .dark-mode path {
+    stroke: var(--color-black-950);
+  }
+
+  .notification path {
     stroke: var(--color-black-950);
   }
 

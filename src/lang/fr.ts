@@ -4,14 +4,28 @@ export default {
   onboarding: {
     player: {
       step1: {
-        title: 'Le Chœur',
-        text: 'Mets en valeur le choeur dans les paroles pour te focaliser dessus !',
+        title: "Le Chœur",
+        text: "Mets en valeur le choeur dans les paroles pour te focaliser dessus !",
       },
       step2: {
-        title: 'Histoire/Traductions',
+        title: "Histoire/Traductions",
         text: "Découvre l'histoire et les traductions de la musique",
-      }
-    }
+      },
+    },
+  },
+  notificationModal: {
+    title: "Restez à jour avec nos dernières chansons",
+    description:
+      "Activez les notifications et nous vous tiendrons informé de toutes les dernières chansons.",
+    perk_1:
+      '<span class="color-secondary--600 -bold">Recevez des notifications instantanées</span> lorsque nous ajoutons de nouvelles musiques' +
+      " à notre bibliothèque.",
+    perk_2:
+      '<span class="color-secondary--600 -bold">Ne ratez jamais le rythme</span> avec des mises à jour en temps réel.',
+    disclaimer:
+      "Vous pouvez activer ou désactiver les notifications à tout moment dans les paramètres.",
+    dismiss: "Refuser",
+    confirm: "Accepter",
   },
   cookies: {
     text:
@@ -77,7 +91,7 @@ export default {
     },
   },
   songList: {
-    title: '<span class="color-secondary--600">M</span>usiques',
+    title: '<span class="color-secondary--600 ">M</span>usiques',
     notFound: "Aucune chanson trouvée :(",
     loading: "Chargement",
     notFoundDetails:
@@ -93,7 +107,7 @@ export default {
       title: "Filtres",
       apply: "Appliquer les filtres",
       genres: {
-        title: 'Genres',
+        title: "Genres",
         LADAINHA: "Ladainha",
         CORRIDO: "Corrido",
         MACULELE: "Maculele",
@@ -106,7 +120,7 @@ export default {
         OTHERS: "Autres",
       },
       themes: {
-        title: 'Thèmes',
+        title: "Thèmes",
         MESTRES: "Mestres",
         SLAVERY: "Esclavage",
         ABOUT_CAPOEIRA: "Capoeira",
@@ -130,6 +144,8 @@ export default {
         pt: "Portugais",
       },
       theme: "Thème",
+      notifications: "Notifications",
+      kofiLabel: "Soutiens-moi sur Ko-fi!",
       controls: {
         space: "Play/Pause",
         songDetails: "Détail de la musique",

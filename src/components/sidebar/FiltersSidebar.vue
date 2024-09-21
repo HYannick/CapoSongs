@@ -28,7 +28,9 @@
       <hr />
       <div class="filters-body">
         <div class="filters-section">
-          <h4 class="text -bold -body">{{t('sidebars.filters.genres.title')}}</h4>
+          <h4 class="text -bold -body">
+            {{ t("sidebars.filters.genres.title") }}
+          </h4>
           <div class="input-checkbox-wrapper">
             <InputCheckbox
               v-for="type in songType"
@@ -42,7 +44,9 @@
           </div>
         </div>
         <div class="filters-section">
-          <h4 class="text -bold -body">{{t('sidebars.filters.themes.title')}}</h4>
+          <h4 class="text -bold -body">
+            {{ t("sidebars.filters.themes.title") }}
+          </h4>
           <div class="input-checkbox-wrapper">
             <InputCheckbox
               v-for="theme in songTheme"

@@ -188,14 +188,17 @@ import Icon from "@/components/component-library/Icon.vue";
 const { closeCookies } = useAppStore();
 const { t } = useI18n();
 const showCookieDetails = ref(false);
+const emits = defineEmits(["close"]);
 
 const enableGtag = async () => {
   await bootstrap();
   localStorage.setItem("cookies-enabled", "true");
+  emits("close");
   closeCookies();
 };
 const disableTag = () => {
   localStorage.setItem("cookies-enabled", "false");
+  emits("close");
   closeCookies();
 };
 const toggleReadMore = async () => {

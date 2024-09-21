@@ -39,10 +39,6 @@
     <SettingsSidebar :from="SidebarOrigin.RIGHT" />
     <FavouritesSidebar :from="SidebarOrigin.LEFT" />
     <FiltersSidebar />
-    <Mentions v-if="appStore.featuresVisibility.mentions" />
-    <Support v-if="appStore.featuresVisibility.support" />
-    <ShareApp v-if="appStore.featuresVisibility.shareApp" />
-    <CookieBanner v-if="displayCookies" />
   </main>
 </template>
 
@@ -59,7 +55,6 @@ import { useSongStore } from "@/stores/song.store";
 import { useI18n } from "vue-i18n";
 import gsap from "gsap";
 import { useAppStore } from "@/stores/app.store";
-import Mentions from "@/components/Mentions.vue";
 import HomePlaceholder from "@/components/HomePlaceholder.vue";
 import { useDebounce, useInfiniteScroll, useMediaQuery } from "@vueuse/core";
 import { useTheme } from "@/composables/useTheme";
@@ -69,9 +64,6 @@ import { useSearchStore } from "@/stores/search.store";
 import { storeToRefs } from "pinia";
 import IconButton from "@/components/component-library/IconButton.vue";
 import { useNavigation } from "@/stores/navigation.store";
-import Support from "@/components/Support.vue";
-import CookieBanner from "@/components/CookieBanner.vue";
-import ShareApp from "@/components/ShareApp.vue";
 
 const songStore = useSongStore();
 const appStore = useAppStore();
@@ -92,12 +84,6 @@ const { app } = useKeyboardControls();
 const mergedFilters = computed(() => {
   return [...filters.value.genres, ...filters.value.themes];
 });
-
-const displayCookies = computed(
-  () =>
-    appStore.featuresVisibility.cookiesBanner &&
-    !localStorage.getItem("cookies-enabled")
-);
 const fetchMoreSongs = () => {
   if (currentPage.value <= songStore.pageCount) {
     updatePage();

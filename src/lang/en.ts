@@ -75,6 +75,21 @@ export default {
       OTHER: "Other",
     },
   },
+  notificationModal: {
+    title: "Stay Updated with Our Latest Songs",
+    description:
+      "Turn on notifications and we'll keep you in the loop with all the latest tunes.",
+    perk_1:
+      '<span class="color-secondary--600 -bold">Receive instant notifications</span> when we add new' +
+      " musics" +
+      " to our library.",
+    perk_2:
+      '<span class="color-secondary--600 -bold">Never miss a beat</span> with timely updates.',
+    disclaimer:
+      "You can activate or deactivate notifications at any time in the settings.",
+    dismiss: "Refuser",
+    confirm: "Accepter",
+  },
   songList: {
     title: '<span class="color-secondary--600">S</span>ongs',
     notFound: "Song not found :(",
@@ -128,6 +143,8 @@ export default {
         pt: "Portuguese",
       },
       theme: "Theme",
+      notifications: "Notifications",
+      kofiLabel: "Support me on Ko-fi!",
       controls: {
         space: "Play/Pause",
         songDetails: "View Song Details",

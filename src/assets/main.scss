@@ -1,10 +1,14 @@
 @import "./base";
+@import "./mixins";
 @import "./sidebar";
 @import "./sidebar-bottom";
 @import "./fonts/fonts";
 @import "./colors/colors";
 @import "./radius/radius";
-
+@import "./spacing/spacings";
+@import "./aligns/flex";
+@import "./aligns/gap";
+@import "./aligns/grid";
 #app {
   font-weight: normal;
   font-family: var(--text-font-regular);
