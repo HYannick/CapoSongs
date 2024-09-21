@@ -23,7 +23,7 @@ const { t } = useI18n();
       <button
         aria-label="reload pwa"
         class="reload-pwa"
-        @click="updateServiceWorker(true)"
+        @click="updateServiceWorker()"
       >
         {{ t("pwaUpdate.reload") }}
       </button>

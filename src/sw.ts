@@ -5,12 +5,12 @@ import { firebaseConfig } from "@/firebaseConfig";
 
 declare let self: ServiceWorkerGlobalScope;
 
-// self.addEventListener("message", (event) => {
-//   console.log("message");
-//   if (event.data && event.data.type === "SKIP_WAITING") {
-//     self.skipWaiting();
-//   }
-// });
+self.addEventListener("message", (event) => {
+  console.log("message");
+  if (event.data && event.data.type === "SKIP_WAITING") {
+    self.skipWaiting();
+  }
+});
 
 cleanupOutdatedCaches();
 precacheAndRoute(self.__WB_MANIFEST);
