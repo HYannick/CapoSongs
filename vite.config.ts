@@ -28,18 +28,18 @@ export default defineConfig({
         display: 'standalone',
         icons: [
           {
-            src: '/android/android-launchericon-192-192.png',
+            src: '/android-launchericon-192-192.png',
             sizes: '192x192',
             type: 'image/png',
             purpose: 'any maskable',
           },
           {
-            src: '/android/android-launchericon-192-192.png',
+            src: '/android-launchericon-256-256.png',
             sizes: '256x256',
             type: 'image/png',
           },
           {
-            src: '/android/android-launchericon-512-512.png',
+            src: '/android-launchericon-512-512.png',
             sizes: '512x512',
             type: 'image/png',
           },
