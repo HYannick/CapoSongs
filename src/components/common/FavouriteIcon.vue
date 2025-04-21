@@ -10,16 +10,16 @@
   />
 </template>
 <script setup lang="ts">
-import { useSongStore } from "@/stores/song.store";
-import IconButton from "@/components/component-library/IconButton.vue";
-import type { PropType } from "vue";
-import type { Song } from "@/domain/Song";
+import IconButton from '@/components/component-library/IconButton.vue'
+import type { Song } from '@/domain/Song'
+import { useSongStore } from '@/stores/song.store'
+import type { PropType } from 'vue'
 
 const props = defineProps({
   song: {
     type: Object as PropType<Song>,
     required: true,
   },
-});
-const songStore = useSongStore();
+})
+const songStore = useSongStore()
 </script>

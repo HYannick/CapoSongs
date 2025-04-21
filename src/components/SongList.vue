@@ -36,135 +36,135 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, type Ref } from "vue";
-import type { Song } from "@/domain/Song";
-import { useAppStore } from "@/stores/app.store";
-import { useSongStore } from "@/stores/song.store";
-import { useI18n } from "vue-i18n";
-import { computed, nextTick, ref, watch } from "vue";
-import gsap from "gsap";
-import SongItem from "@/components/SongItem.vue";
-import NotFound from "@/components/common/NotFound.vue";
-import { storeToRefs } from "pinia";
-import type { SongItemRef } from "@/domain/SongItem";
-import { useInfiniteScroll, useMediaQuery } from "@vueuse/core";
-import ListLoader from "@/components/common/ListLoader.vue";
-import IconButton from "@/components/component-library/IconButton.vue";
-import { useSearchStore } from "@/stores/search.store";
-import { useNotificationStore } from "@/stores/notification.store";
-import ListError from "@/components/common/ListError.vue";
+import SongItem from '@/components/SongItem.vue'
+import ListError from '@/components/common/ListError.vue'
+import ListLoader from '@/components/common/ListLoader.vue'
+import NotFound from '@/components/common/NotFound.vue'
+import IconButton from '@/components/component-library/IconButton.vue'
+import type { Song } from '@/domain/Song'
+import type { SongItemRef } from '@/domain/SongItem'
+import { useAppStore } from '@/stores/app.store'
+import { useNotificationStore } from '@/stores/notification.store'
+import { useSearchStore } from '@/stores/search.store'
+import { useSongStore } from '@/stores/song.store'
+import { useInfiniteScroll, useMediaQuery } from '@vueuse/core'
+import gsap from 'gsap'
+import { storeToRefs } from 'pinia'
+import { type Ref, onMounted } from 'vue'
+import { computed, nextTick, ref, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
 
-const containerRef = ref();
-const songItemRef = ref();
-const el = ref<HTMLElement>();
-const songItemRefs: Ref<SongItemRef[]> = ref([]);
-const { showPlayer } = useAppStore();
+const containerRef = ref()
+const songItemRef = ref()
+const el = ref<HTMLElement>()
+const songItemRefs: Ref<SongItemRef[]> = ref([])
+const { showPlayer } = useAppStore()
 const { currentSong, fetchingSongs, isLoadingMoreSongs, songs, pageCount } =
-  storeToRefs(useSongStore());
-const { loadSong, loadMoreSongs, getSongs } = useSongStore();
-const { currentPage, query, filters } = storeToRefs(useSearchStore());
-const { updatePage } = useSearchStore();
-const { showFilters } = useAppStore();
-const { notify } = useNotificationStore();
-const { t } = useI18n();
+  storeToRefs(useSongStore())
+const { loadSong, loadMoreSongs, getSongs } = useSongStore()
+const { currentPage, query, filters } = storeToRefs(useSearchStore())
+const { updatePage } = useSearchStore()
+const { showFilters } = useAppStore()
+const { notify } = useNotificationStore()
+const { t } = useI18n()
 
-const songFetchError = ref(false);
+const songFetchError = ref(false)
 const songsNotFound = computed(
-  () => !songs.value.length && !fetchingSongs.value
-);
+  () => !songs.value.length && !fetchingSongs.value,
+)
 
 onMounted(async () => {
   await getSongs().catch(() => {
-    notify("popups.errors.songFetch", "error");
-    songFetchError.value = true;
-    fetchingSongs.value = false;
-  });
-});
+    notify('popups.errors.songFetch', 'error')
+    songFetchError.value = true
+    fetchingSongs.value = false
+  })
+})
 
 const fetchMoreSongs = () => {
   if (currentPage.value <= pageCount.value) {
-    updatePage();
-    loadMoreSongs(currentPage.value, query.value, filters.value);
+    updatePage()
+    loadMoreSongs(currentPage.value, query.value, filters.value)
   }
-  songItemRefs.value = Array.from(songItemRef.value) as SongItemRef[];
-  if (currentSong.value) animateOnSongSelected(currentSong.value);
-};
-const isLargeScreen = useMediaQuery("(min-width: 1024px)");
+  songItemRefs.value = Array.from(songItemRef.value) as SongItemRef[]
+  if (currentSong.value) animateOnSongSelected(currentSong.value)
+}
+const isLargeScreen = useMediaQuery('(min-width: 1024px)')
 if (isLargeScreen.value) {
   useInfiniteScroll(el, fetchMoreSongs, {
     distance: 10,
-  });
+  })
 }
 
 const opacity = (opacity: number) => ({
   duration: 0.3,
   opacity,
-});
+})
 
 const setSong = (song: Song) => {
-  loadSong(song);
-  showPlayer();
-};
+  loadSong(song)
+  showPlayer()
+}
 
 const animateOnSongSelected = (song: Song) => {
-  const currentSongItem = songItemRefs.value.find((el) => el.id === song.id);
-  if (!currentSongItem) return;
+  const currentSongItem = songItemRefs.value.find((el) => el.id === song.id)
+  if (!currentSongItem) return
   const songItems = songItemRefs.value
     .filter((el) => el.id !== currentSongItem!.id)
-    .map((el) => el.container);
+    .map((el) => el.container)
 
   if (currentSongItem) {
-    gsap.fromTo(currentSongItem.container, opacity(0.4), opacity(1));
-    gsap.to(songItems, opacity(0.4));
+    gsap.fromTo(currentSongItem.container, opacity(0.4), opacity(1))
+    gsap.to(songItems, opacity(0.4))
   } else {
-    gsap.to(songItems, opacity(1));
+    gsap.to(songItems, opacity(1))
   }
-};
+}
 const fadeInAllSongItems = () => {
   gsap.to(
     songItemRefs.value.map((el) => el.container),
     {
       duration: 0.7,
       opacity: 1,
-    }
-  );
-};
+    },
+  )
+}
 const staggerShowAllSongItems = () => {
   gsap.from(
     songItemRefs.value.map((el) => el.container),
     {
       duration: 0.7,
-      ease: "back",
+      ease: 'back',
       opacity: 0,
-      y: "10px",
+      y: '10px',
       stagger: 0.1,
-    }
-  );
-};
+    },
+  )
+}
 
 watch(
   () => currentSong.value,
   (song) => {
-    if (!isLargeScreen.value) return;
+    if (!isLargeScreen.value) return
     if (!song) {
-      fadeInAllSongItems();
-      return;
+      fadeInAllSongItems()
+      return
     }
-    animateOnSongSelected(song);
-  }
-);
+    animateOnSongSelected(song)
+  },
+)
 
 watch(
   () => fetchingSongs.value,
   async () => {
-    await nextTick();
-    if (!songItemRef.value) return;
-    songItemRefs.value = Array.from(songItemRef.value) as SongItemRef[];
-    staggerShowAllSongItems();
-  }
-);
+    await nextTick()
+    if (!songItemRef.value) return
+    songItemRefs.value = Array.from(songItemRef.value) as SongItemRef[]
+    staggerShowAllSongItems()
+  },
+)
 
-defineExpose({ containerRef });
+defineExpose({ containerRef })
 </script>
 
 <style lang="scss">

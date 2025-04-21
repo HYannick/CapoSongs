@@ -1,5 +1,5 @@
 {
-  "extends": "@vue/tsconfig/tsconfig.web.json",
+  "extends": "@vue/tsconfig/tsconfig.json",
   "include": ["env.d.ts", "src/**/*", "src/**/*.vue", "i18n.ts",
     "unit/**/*.ts", "src/**/*.json"
   ],
@@ -12,7 +12,6 @@
       "@/*": ["./src/*"],
       "@cypress/*": ["./cypress/*"],
       "@unit/*": ["./unit/*"],
-
     }
   }
 }

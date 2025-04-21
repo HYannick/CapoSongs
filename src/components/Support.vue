@@ -47,32 +47,32 @@
 </template>
 
 <script lang="ts" setup>
-import { useAppStore } from "@/stores/app.store";
-import { computed, ref } from "vue";
-import { useI18n } from "vue-i18n";
-import Modal from "@/components/common/Modal.vue";
+import Modal from '@/components/common/Modal.vue'
+import { useAppStore } from '@/stores/app.store'
+import { computed, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 
-const { hideSupport } = useAppStore();
-const { t } = useI18n();
+const { hideSupport } = useAppStore()
+const { t } = useI18n()
 
 const form = ref({
-  type: "",
-  details: "",
-});
+  type: '',
+  details: '',
+})
 
 const mailTo = computed(
   () =>
-    `mailto:fococapoeiramusicas@gmail.com?subject=${form.value.type}&body=${form.value.details}`
-);
+    `mailto:fococapoeiramusicas@gmail.com?subject=${form.value.type}&body=${form.value.details}`,
+)
 
 const sendMail = () => {
-  const mailingLink = document.createElement("a");
-  mailingLink.classList.add("mailer");
-  mailingLink.setAttribute("href", mailTo.value);
-  mailingLink.click();
-  mailingLink.remove();
-  hideSupport();
-};
+  const mailingLink = document.createElement('a')
+  mailingLink.classList.add('mailer')
+  mailingLink.setAttribute('href', mailTo.value)
+  mailingLink.click()
+  mailingLink.remove()
+  hideSupport()
+}
 </script>
 
 <style lang="scss">

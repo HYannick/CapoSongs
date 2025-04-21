@@ -6,20 +6,20 @@
   </div>
 </template>
 <script lang="ts" setup>
-import Icon from "@/components/component-library/Icon.vue";
-import { useAppStore } from "@/stores/app.store";
-const { showSupport } = useAppStore();
+import Icon from '@/components/component-library/Icon.vue'
+import { useAppStore } from '@/stores/app.store'
+const { showSupport } = useAppStore()
 
 interface Props {
-  title?: string;
-  subTitle?: string;
-  iconSize?: number;
+  title?: string
+  subTitle?: string
+  iconSize?: number
 }
 withDefaults(defineProps<Props>(), {
-  title: "",
-  subTitle: "",
+  title: '',
+  subTitle: '',
   iconSize: 150,
-});
+})
 </script>
 
 <style lang="scss">

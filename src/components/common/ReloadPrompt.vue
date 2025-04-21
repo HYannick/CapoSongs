@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import { useRegisterSW } from "virtual:pwa-register/vue";
-import { useI18n } from "vue-i18n";
+import { useRegisterSW } from 'virtual:pwa-register/vue'
+import { useI18n } from 'vue-i18n'
 
-const { needRefresh, updateServiceWorker } = useRegisterSW();
+const { needRefresh, updateServiceWorker } = useRegisterSW()
 
 const close = async () => {
-  needRefresh.value = false;
-};
+  needRefresh.value = false
+}
 
-const { t } = useI18n();
+const { t } = useI18n()
 </script>
 
 <template>

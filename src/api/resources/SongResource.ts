@@ -1,11 +1,11 @@
-import type { Song } from "@/domain/Song";
-import type { RestSongData } from "@/api/rest/RestSong";
-import { toSong } from "@/api/rest/RestSong";
-import { AuthorizationHeader } from "@/api/auth-headers";
-import { SongsNotFoundException } from "@/common/domain/SongsNotFoundException";
-import type { SongFilters } from "@/domain/enums/SongFilters";
-import { paramsSerializer } from "@/api/paramsSerializer";
-import type { Page } from "@/domain/Page";
+import { AuthorizationHeader } from '@/api/auth-headers'
+import { paramsSerializer } from '@/api/paramsSerializer'
+import type { RestSongData } from '@/api/rest/RestSong'
+import { toSong } from '@/api/rest/RestSong'
+import { SongsNotFoundException } from '@/common/domain/SongsNotFoundException'
+import type { Page } from '@/domain/Page'
+import type { Song } from '@/domain/Song'
+import type { SongFilters } from '@/domain/enums/SongFilters'
 
 export const songResource = () => {
   const getSongs = async (
@@ -14,7 +14,7 @@ export const songResource = () => {
     filters: SongFilters = {
       genres: [],
       themes: [],
-    }
+    },
   ): Promise<Page<Song>> => {
     try {
       const query = paramsSerializer({
@@ -32,24 +32,24 @@ export const songResource = () => {
             $in: filters.themes,
           },
         },
-        populate: "*",
-      });
+        populate: '*',
+      })
       const res = await fetch(
         `${import.meta.env.VITE_STRAPI_API_URL}/songs?${query}`,
         {
           ...AuthorizationHeader(import.meta.env.VITE_STRAPI_TOKEN),
-        }
-      );
-      const response: RestSongData = await res.json();
+        },
+      )
+      const response: RestSongData = await res.json()
       return {
         results: response.data.map((restSong) => toSong(restSong)),
         pagination: response.meta.pagination,
-      };
+      }
     } catch (e) {
-      throw new SongsNotFoundException();
+      throw new SongsNotFoundException()
     }
-  };
+  }
   return {
     getSongs,
-  };
-};
+  }
+}

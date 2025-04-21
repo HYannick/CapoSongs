@@ -59,47 +59,47 @@
 </template>
 
 <script setup lang="ts">
-import { useAppStore } from "@/stores/app.store";
-import { storeToRefs } from "pinia";
-import { computed, type PropType, ref, watch } from "vue";
-import { SidebarOrigin } from "@/domain/enums/SideBarOrigin";
-import IconButton from "@/components/component-library/IconButton.vue";
-import { useSongStore } from "@/stores/song.store";
-import type { Song } from "@/domain/Song";
-import Icon from "@/components/component-library/Icon.vue";
-import { useI18n } from "vue-i18n";
-import gsap from "gsap";
-import NotFound from "@/components/common/NotFound.vue";
-import { useNavigation } from "@/stores/navigation.store";
+import NotFound from '@/components/common/NotFound.vue'
+import Icon from '@/components/component-library/Icon.vue'
+import IconButton from '@/components/component-library/IconButton.vue'
+import type { Song } from '@/domain/Song'
+import { SidebarOrigin } from '@/domain/enums/SideBarOrigin'
+import { useAppStore } from '@/stores/app.store'
+import { useNavigation } from '@/stores/navigation.store'
+import { useSongStore } from '@/stores/song.store'
+import gsap from 'gsap'
+import { storeToRefs } from 'pinia'
+import { type PropType, computed, ref, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
 
 const props = defineProps({
   from: String as PropType<SidebarOrigin>,
-});
-const favouriteSongItemRef = ref();
-const { featuresVisibility } = storeToRefs(useAppStore());
-const { hideFavouriteSongs, showPlayer } = useAppStore();
-const { favouriteSongs } = storeToRefs(useSongStore());
-const { clearFavourites, loadSong, removeFromFavourite } = useSongStore();
-const { t } = useI18n();
+})
+const favouriteSongItemRef = ref()
+const { featuresVisibility } = storeToRefs(useAppStore())
+const { hideFavouriteSongs, showPlayer } = useAppStore()
+const { favouriteSongs } = storeToRefs(useSongStore())
+const { clearFavourites, loadSong, removeFromFavourite } = useSongStore()
+const { t } = useI18n()
 const sidebarClasses = computed(() => ({
-  "-open": featuresVisibility.value.favouriteSongs,
-  "sidebar-left": props.from === SidebarOrigin.LEFT,
-  "sidebar-right": props.from === SidebarOrigin.RIGHT,
-}));
+  '-open': featuresVisibility.value.favouriteSongs,
+  'sidebar-left': props.from === SidebarOrigin.LEFT,
+  'sidebar-right': props.from === SidebarOrigin.RIGHT,
+}))
 
 const setSong = (song: Song) => {
-  loadSong(song);
-  hideFavouriteSongs();
-  showPlayer();
-};
+  loadSong(song)
+  hideFavouriteSongs()
+  showPlayer()
+}
 
-const { state: historyState } = storeToRefs(useNavigation());
+const { state: historyState } = storeToRefs(useNavigation())
 watch(
   () => historyState.value.favourite,
   (value) => {
-    if (!value) hideFavouriteSongs();
-  }
-);
+    if (!value) hideFavouriteSongs()
+  },
+)
 
 watch(
   () => featuresVisibility.value.favouriteSongs,
@@ -109,36 +109,36 @@ watch(
         favouriteSongItemRef.value,
         {
           opacity: 0,
-          x: "-5px",
+          x: '-5px',
         },
         {
           delay: 0.3,
           duration: 0.7,
-          ease: "back",
+          ease: 'back',
           opacity: 1,
-          x: "0",
+          x: '0',
           stagger: 0.05,
-        }
-      );
+        },
+      )
     } else {
       gsap.fromTo(
         favouriteSongItemRef.value,
         {
           opacity: 1,
-          x: "0",
+          x: '0',
         },
         {
           delay: 0.3,
           duration: 0.7,
-          ease: "back",
+          ease: 'back',
           opacity: 0,
-          x: "-5px",
+          x: '-5px',
           stagger: 0.05,
-        }
-      );
+        },
+      )
     }
-  }
-);
+  },
+)
 </script>
 
 <style lang="scss">

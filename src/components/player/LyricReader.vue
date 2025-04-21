@@ -29,94 +29,94 @@
   </div>
 </template>
 <script lang="ts" setup>
-import type { LyricLine } from "@/domain/LyricLine";
-import type { Ref } from "vue";
-import { nextTick, ref, watch } from "vue";
-import type { Song } from "@/domain/Song";
-import Liricle from "liricle";
-import { S3_SOURCE_LINK, S3Dir } from "@/domain/enums/aws-link";
-import IconButton from "@/components/component-library/IconButton.vue";
-import { useKeyboardControls } from "@/composables/useKeyboardControls";
-import { useI18n } from "vue-i18n";
+import IconButton from '@/components/component-library/IconButton.vue'
+import { useKeyboardControls } from '@/composables/useKeyboardControls'
+import type { LyricLine } from '@/domain/LyricLine'
+import type { Song } from '@/domain/Song'
+import { S3Dir, S3_SOURCE_LINK } from '@/domain/enums/aws-link'
+import Liricle from 'liricle'
+import type { Ref } from 'vue'
+import { nextTick, ref, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
 
-const props = defineProps<{ song: Song; audioElementEl: any }>();
-const lyrics: Ref<LyricLine[]> = ref([]);
-const lyricsContainerEl = ref();
-const currentLineIndex = ref(0);
-const coroHighlighted = ref(false);
-const { t } = useI18n();
-let liricleInstance: any;
+const props = defineProps<{ song: Song; audioElementEl: any }>()
+const lyrics: Ref<LyricLine[]> = ref([])
+const lyricsContainerEl = ref()
+const currentLineIndex = ref(0)
+const coroHighlighted = ref(false)
+const { t } = useI18n()
+let liricleInstance: any
 
-const { player } = useKeyboardControls();
+const { player } = useKeyboardControls()
 watch(player.highlightCoro, (v) => {
-  if (v) highlightCoro();
-});
+  if (v) highlightCoro()
+})
 
 const resetLineIndex = () => {
-  currentLineIndex.value = 0;
-};
+  currentLineIndex.value = 0
+}
 
 const highlightCoro = () => {
-  coroHighlighted.value = !coroHighlighted.value;
-};
+  coroHighlighted.value = !coroHighlighted.value
+}
 
 const initLyricReader = (lyricsLink: string) => {
-  if (!lyricsLink) return;
-  liricleInstance = new Liricle();
-  liricleInstance.offset = 1000;
-  liricleInstance.on("load", (data: any) => {
+  if (!lyricsLink) return
+  liricleInstance = new Liricle()
+  liricleInstance.offset = 1000
+  liricleInstance.on('load', (data: any) => {
     lyrics.value = data.lines.map(
       (line: LyricLine, index: number): LyricLine => ({
         ...line,
         index,
-        text: line.text.replace(":margin:", "").replace(":coro:", ""),
-        isCoro: line.text.includes(":coro:"),
-        spaced: line.text.includes(":margin:"),
-      })
-    ) as LyricLine[];
-  });
-  liricleInstance.on("sync", (line: LyricLine) => {
-    currentLineIndex.value = line.index;
-  });
+        text: line.text.replace(':margin:', '').replace(':coro:', ''),
+        isCoro: line.text.includes(':coro:'),
+        spaced: line.text.includes(':margin:'),
+      }),
+    ) as LyricLine[]
+  })
+  liricleInstance.on('sync', (line: LyricLine) => {
+    currentLineIndex.value = line.index
+  })
   liricleInstance.load({
     url: S3_SOURCE_LINK(S3Dir.LYRICS, lyricsLink),
-  });
-  props.audioElementEl.addEventListener("timeupdate", () => {
-    liricleInstance.sync(props.audioElementEl.currentTime);
-  });
-  return liricleInstance;
-};
+  })
+  props.audioElementEl.addEventListener('timeupdate', () => {
+    liricleInstance.sync(props.audioElementEl.currentTime)
+  })
+  return liricleInstance
+}
 
 const scrollIntoLine = () => {
-  const currentLine = lyricsContainerEl.value.querySelector(".-highlighted");
+  const currentLine = lyricsContainerEl.value.querySelector('.-highlighted')
   currentLine.scrollIntoView({
-    behavior: "smooth",
-    block: "center",
-    inline: "center",
-  });
-};
+    behavior: 'smooth',
+    block: 'center',
+    inline: 'center',
+  })
+}
 
 const reloadLyrics = (song?: Song) => {
-  if (!song) return;
-  resetLineIndex();
-  initLyricReader(song.lyrics_link);
-  nextTick().then(scrollIntoLine);
-};
+  if (!song) return
+  resetLineIndex()
+  initLyricReader(song.lyrics_link)
+  nextTick().then(scrollIntoLine)
+}
 
-watch(() => currentLineIndex.value, scrollIntoLine);
+watch(() => currentLineIndex.value, scrollIntoLine)
 
 watch(
   () => props.audioElementEl,
   (audioRef) => {
-    if (!audioRef) return;
-    initLyricReader(props.song!.lyrics_link);
+    if (!audioRef) return
+    initLyricReader(props.song!.lyrics_link)
   },
-  { immediate: true }
-);
+  { immediate: true },
+)
 
-watch(() => props.song, reloadLyrics);
+watch(() => props.song, reloadLyrics)
 
-defineExpose({ containerRef: lyricsContainerEl });
+defineExpose({ containerRef: lyricsContainerEl })
 </script>
 
 <style lang="scss">

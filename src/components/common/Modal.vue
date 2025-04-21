@@ -8,39 +8,39 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref } from "vue";
-import gsap from "gsap";
-const modalContainerRef = ref();
-const overlayRef = ref();
-let timeline: any;
-const emits = defineEmits(["onClose"]);
+import gsap from 'gsap'
+import { onMounted, ref } from 'vue'
+const modalContainerRef = ref()
+const overlayRef = ref()
+let timeline: any
+const emits = defineEmits(['onClose'])
 const closeModale = () => {
-  timeline.timeScale(2).reverse();
-};
+  timeline.timeScale(2).reverse()
+}
 
 onMounted(() => {
-  timeline = gsap.timeline({ onReverseComplete: () => emits("onClose") });
+  timeline = gsap.timeline({ onReverseComplete: () => emits('onClose') })
   timeline
     .from(
       overlayRef.value,
       {
         duration: 0.5,
-        ease: "back",
+        ease: 'back',
         opacity: 0,
       },
-      "-=0.3"
+      '-=0.3',
     )
     .from(
       modalContainerRef.value,
       {
         duration: 0.7,
-        ease: "back",
+        ease: 'back',
         opacity: 0,
         y: 50,
       },
-      "-=0.4"
-    );
-});
+      '-=0.4',
+    )
+})
 </script>
 
 <style lang="scss">

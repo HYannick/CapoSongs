@@ -20,17 +20,17 @@
 </template>
 
 <script setup lang="ts">
-import { storeToRefs } from "pinia";
-import { useNotificationStore } from "@/stores/notification.store";
-import IconButton from "@/components/component-library/IconButton.vue";
-import { useI18n } from "vue-i18n";
+import IconButton from '@/components/component-library/IconButton.vue'
+import { useNotificationStore } from '@/stores/notification.store'
+import { storeToRefs } from 'pinia'
+import { useI18n } from 'vue-i18n'
 
-const { t } = useI18n();
-const { removeNotification } = useNotificationStore();
-const { notifications } = storeToRefs(useNotificationStore());
+const { t } = useI18n()
+const { removeNotification } = useNotificationStore()
+const { notifications } = storeToRefs(useNotificationStore())
 
 function remove(id: number) {
-  removeNotification(id);
+  removeNotification(id)
 }
 </script>
 

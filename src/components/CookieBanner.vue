@@ -178,32 +178,32 @@
 </template>
 
 <script lang="ts" setup>
-import { useAppStore } from "@/stores/app.store";
-import { ref } from "vue";
-import { useI18n } from "vue-i18n";
-import Modal from "@/components/common/Modal.vue";
-import { bootstrap } from "vue-gtag";
-import Icon from "@/components/component-library/Icon.vue";
+import Modal from '@/components/common/Modal.vue'
+import Icon from '@/components/component-library/Icon.vue'
+import { useAppStore } from '@/stores/app.store'
+import { ref } from 'vue'
+import { bootstrap } from 'vue-gtag'
+import { useI18n } from 'vue-i18n'
 
-const { closeCookies } = useAppStore();
-const { t } = useI18n();
-const showCookieDetails = ref(false);
-const emits = defineEmits(["close"]);
+const { closeCookies } = useAppStore()
+const { t } = useI18n()
+const showCookieDetails = ref(false)
+const emits = defineEmits(['close'])
 
 const enableGtag = async () => {
-  await bootstrap();
-  localStorage.setItem("cookies-enabled", "true");
-  emits("close");
-  closeCookies();
-};
+  await bootstrap()
+  localStorage.setItem('cookies-enabled', 'true')
+  emits('close')
+  closeCookies()
+}
 const disableTag = () => {
-  localStorage.setItem("cookies-enabled", "false");
-  emits("close");
-  closeCookies();
-};
+  localStorage.setItem('cookies-enabled', 'false')
+  emits('close')
+  closeCookies()
+}
 const toggleReadMore = async () => {
-  showCookieDetails.value = !showCookieDetails.value;
-};
+  showCookieDetails.value = !showCookieDetails.value
+}
 </script>
 
 <style lang="scss">

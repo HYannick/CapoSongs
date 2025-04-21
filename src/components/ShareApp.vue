@@ -24,27 +24,27 @@
 </template>
 
 <script lang="ts" setup>
-import { useAppStore } from "@/stores/app.store";
-import { useI18n } from "vue-i18n";
-import { useClipboard } from "@vueuse/core";
-import Modal from "@/components/common/Modal.vue";
-import Icon from "@/components/component-library/Icon.vue";
-import { ref } from "vue";
+import Modal from '@/components/common/Modal.vue'
+import Icon from '@/components/component-library/Icon.vue'
+import { useAppStore } from '@/stores/app.store'
+import { useClipboard } from '@vueuse/core'
+import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 
-const { hideShareApp } = useAppStore();
-const { t } = useI18n();
-const source = ref("https://focamu.com");
-const { copy, copied, isSupported } = useClipboard({ source });
+const { hideShareApp } = useAppStore()
+const { t } = useI18n()
+const source = ref('https://focamu.com')
+const { copy, copied, isSupported } = useClipboard({ source })
 
 const shareApp = () => {
   if (navigator.share) {
     navigator.share({
-      title: "Focamu",
-      text: t("share.action.text"),
-      url: "https://focamu.com",
-    });
+      title: 'Focamu',
+      text: t('share.action.text'),
+      url: 'https://focamu.com',
+    })
   }
-};
+}
 </script>
 
 <style lang="scss">

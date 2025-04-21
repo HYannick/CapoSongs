@@ -98,269 +98,270 @@
 </template>
 
 <script setup lang="ts">
-import Icon from "@/components/component-library/Icon.vue";
-import { useAppStore } from "@/stores/app.store";
-import { storeToRefs } from "pinia";
-import { useSongStore } from "@/stores/song.store";
-import { computed, onMounted, ref, watch } from "vue";
-import { usePlayerProgress } from "@/composables/usePlayerProgress";
-import gsap from "gsap";
-import LyricReader from "@/components/player/LyricReader.vue";
-import SongInformation from "@/components/player/SongInformation.vue";
-import SongDetails from "@/components/player/SongDetails.vue";
-import { S3_SOURCE_LINK, S3Dir } from "@/domain/enums/aws-link";
-import { onKeyStroke, useMediaQuery } from "@vueuse/core";
-import IconButton from "@/components/component-library/IconButton.vue";
-import { useKeyboardControls } from "@/composables/useKeyboardControls";
+import Icon from '@/components/component-library/Icon.vue'
+import IconButton from '@/components/component-library/IconButton.vue'
+import LyricReader from '@/components/player/LyricReader.vue'
+import SongDetails from '@/components/player/SongDetails.vue'
+import SongInformation from '@/components/player/SongInformation.vue'
 import {
   fadeInAnimation,
   playerContainerEase,
   playerControlsScale,
-} from "@/components/player/constants";
-import { VIEWS } from "@/components/player/enums";
-import { useNavigation } from "@/stores/navigation.store";
+} from '@/components/player/constants'
+import { VIEWS } from '@/components/player/enums'
+import { useKeyboardControls } from '@/composables/useKeyboardControls'
+import { usePlayerProgress } from '@/composables/usePlayerProgress'
+import { S3Dir, S3_SOURCE_LINK } from '@/domain/enums/aws-link'
+import { useAppStore } from '@/stores/app.store'
+import { useNavigation } from '@/stores/navigation.store'
+import { useSongStore } from '@/stores/song.store'
+import { onKeyStroke, useMediaQuery } from '@vueuse/core'
+import gsap from 'gsap'
+import { storeToRefs } from 'pinia'
+import { computed, onMounted, ref, watch } from 'vue'
 
-import introJS from "intro.js";
-import "intro.js/introjs.css";
+import introJS from 'intro.js'
+import 'intro.js/introjs.css'
 
-const isPlaying = ref(false);
-const mousedown = ref(false);
+const isPlaying = ref(false)
+const mousedown = ref(false)
 
-const audioContext = ref();
+const audioContext = ref()
 
-const currentView = ref(VIEWS.PLAYER);
+const currentView = ref(VIEWS.PLAYER)
 
-const audioElementEl = ref();
-const progressBarEl = ref();
-const playerContainerEl = ref();
-const songInformationEl = ref();
-const playerProgressEl = ref();
-const playerTimerEl = ref();
-const playButtonEl = ref();
-const nextButtonEl = ref();
-const prevButtonEl = ref();
-const lyricsEl = ref();
-const playerBodyEl = ref();
-const informationViewEl = ref();
-const playerViewEl = ref();
+const audioElementEl = ref()
+const progressBarEl = ref()
+const playerContainerEl = ref()
+const songInformationEl = ref()
+const playerProgressEl = ref()
+const playerTimerEl = ref()
+const playButtonEl = ref()
+const nextButtonEl = ref()
+const prevButtonEl = ref()
+const lyricsEl = ref()
+const playerBodyEl = ref()
+const informationViewEl = ref()
+const playerViewEl = ref()
 
-const { hidePlayer } = useAppStore();
-const { featuresVisibility } = storeToRefs(useAppStore());
-const { currentSong } = storeToRefs(useSongStore());
-const { state: historyState } = storeToRefs(useNavigation());
-const { resetSong, setNextSong, setPreviousSong } = useSongStore();
+const { hidePlayer } = useAppStore()
+const { featuresVisibility } = storeToRefs(useAppStore())
+const { currentSong } = storeToRefs(useSongStore())
+const { state: historyState } = storeToRefs(useNavigation())
+const { resetSong, setNextSong, setPreviousSong } = useSongStore()
 
-const isLargeScreen = useMediaQuery("(min-width: 1024px)");
-const { player } = useKeyboardControls();
+const isLargeScreen = useMediaQuery('(min-width: 1024px)')
+const { player } = useKeyboardControls()
 const { percent, currentTime, songDuration, scrub, setTimers, getTime } =
-  usePlayerProgress(audioElementEl, progressBarEl);
+  usePlayerProgress(audioElementEl, progressBarEl)
 
 const songSource = computed(() =>
-  currentSong.value ? S3_SOURCE_LINK(S3Dir.SONGS, currentSong.value.source) : ""
-);
+  currentSong.value
+    ? S3_SOURCE_LINK(S3Dir.SONGS, currentSong.value.source)
+    : '',
+)
 
 const songTranslation = computed(() => {
-  if (!(currentSong.value && currentSong.value.translation)) return [];
+  if (!(currentSong.value && currentSong.value.translation)) return []
 
-  return currentSong.value.translation.split("\n");
-});
+  return currentSong.value.translation.split('\n')
+})
 
 const closeSong = () => {
   gsap.to(playerContainerEl.value, {
     duration: 0.7,
-    ease: "power4.out",
+    ease: 'power4.out',
     opacity: 0.7,
-    y: "100vh",
+    y: '100vh',
     onComplete: () => {
-      resetSong();
-      hidePlayer();
+      resetSong()
+      hidePlayer()
     },
-  });
-};
+  })
+}
 
 const updateProgress = ($event: any) => {
-  if (!mousedown.value) return;
-  scrub($event);
-};
+  if (!mousedown.value) return
+  scrub($event)
+}
 
 const playSong = () => {
-  audioElementEl.value.play();
-  isPlaying.value = true;
-};
+  audioElementEl.value.play()
+  isPlaying.value = true
+}
 
 const pauseSong = () => {
-  audioElementEl.value.pause();
-  isPlaying.value = false;
-};
+  audioElementEl.value.pause()
+  isPlaying.value = false
+}
 
 const playPause = () => {
-  if (audioContext.value.state === "suspended") {
-    audioContext.value.resume();
+  if (audioContext.value.state === 'suspended') {
+    audioContext.value.resume()
   }
   if (!isPlaying.value) {
-    playSong();
+    playSong()
   } else {
-    pauseSong();
+    pauseSong()
   }
 
-  gsap.from(playButtonEl.value, playerControlsScale);
-};
+  gsap.from(playButtonEl.value, playerControlsScale)
+}
 
 const goNext = () => {
-  setNextSong();
-  gsap.from(nextButtonEl.value, playerControlsScale);
-};
+  setNextSong()
+  gsap.from(nextButtonEl.value, playerControlsScale)
+}
 
 const goPrev = () => {
-  setPreviousSong();
-  gsap.from(prevButtonEl.value, playerControlsScale);
-};
+  setPreviousSong()
+  gsap.from(prevButtonEl.value, playerControlsScale)
+}
 
 const viewInformation = () => {
-  currentView.value = VIEWS.DETAILS;
+  currentView.value = VIEWS.DETAILS
   if (isLargeScreen.value) {
     gsap.to(playerViewEl.value, {
-      opacity: "0.3",
+      opacity: '0.3',
       ...playerContainerEase,
-    });
+    })
     gsap.to(informationViewEl.value, {
-      x: "0",
-      opacity: "1",
+      x: '0',
+      opacity: '1',
       ...playerContainerEase,
-    });
-    return;
+    })
+    return
   }
   gsap.to(playerBodyEl.value, {
-    x: "-100vw",
+    x: '-100vw',
     ...playerContainerEase,
-  });
-};
+  })
+}
 
 const viewPlayer = () => {
-  currentView.value = VIEWS.PLAYER;
+  currentView.value = VIEWS.PLAYER
   if (isLargeScreen.value) {
     gsap.to(playerViewEl.value, {
-      opacity: "1",
+      opacity: '1',
       ...playerContainerEase,
-    });
+    })
     gsap.to(informationViewEl.value, {
-      x: "60rem",
-      opacity: "0.5",
+      x: '60rem',
+      opacity: '0.5',
       ...playerContainerEase,
-    });
-    return;
+    })
+    return
   }
   gsap.to(playerBodyEl.value, {
-    x: "0",
-    ease: "circ.inOut",
-    duration: "0.6",
-  });
-};
+    x: '0',
+    ease: 'circ.inOut',
+    duration: '0.6',
+  })
+}
 
 const initAudioFile = () => {
-  const AudioContext =
-    window.AudioContext || (window as any).webkitAudioContext;
-  audioContext.value = new AudioContext();
-  audioElementEl.value.crossOrigin = "anonymous";
+  const AudioContext = window.AudioContext || (window as any).webkitAudioContext
+  audioContext.value = new AudioContext()
+  audioElementEl.value.crossOrigin = 'anonymous'
 
   const track = audioContext.value.createMediaElementSource(
-    audioElementEl.value
-  );
+    audioElementEl.value,
+  )
 
-  track.connect(audioContext.value.destination);
+  track.connect(audioContext.value.destination)
 
-  track.mediaElement.addEventListener("loadedmetadata", setTimers);
-  track.mediaElement.addEventListener("canplaythrough", playSong);
-  track.mediaElement.addEventListener("ended", () => {
-    isPlaying.value = false;
-    setNextSong();
-  });
-};
+  track.mediaElement.addEventListener('loadedmetadata', setTimers)
+  track.mediaElement.addEventListener('canplaythrough', playSong)
+  track.mediaElement.addEventListener('ended', () => {
+    isPlaying.value = false
+    setNextSong()
+  })
+}
 
 onKeyStroke(player.playPause, (e) => {
-  e.preventDefault();
-  playPause();
-});
+  e.preventDefault()
+  playPause()
+})
 
 onKeyStroke(player.decProgress, (e) => {
-  e.preventDefault();
-  audioElementEl.value.currentTime -= 1;
-});
+  e.preventDefault()
+  audioElementEl.value.currentTime -= 1
+})
 
 onKeyStroke(player.incProgress, (e) => {
-  e.preventDefault();
-  audioElementEl.value.currentTime += 1;
-});
+  e.preventDefault()
+  audioElementEl.value.currentTime += 1
+})
 
 onKeyStroke(player.closePlayer, (e) => {
-  e.preventDefault();
+  e.preventDefault()
   if (currentView.value === VIEWS.PLAYER) {
-    closeSong();
+    closeSong()
   } else {
-    viewPlayer();
+    viewPlayer()
   }
-});
+})
 
 watch(player.songDetails, (v) => {
   if (v) {
     if (currentView.value === VIEWS.PLAYER) {
-      viewInformation();
+      viewInformation()
     } else {
-      viewPlayer();
+      viewPlayer()
     }
   }
-});
+})
 
 watch(player.prevSong, (v) => {
-  if (v) goPrev();
-});
+  if (v) goPrev()
+})
 
 watch(player.nextSong, (v) => {
-  if (v) goNext();
-});
+  if (v) goNext()
+})
 
 watch(
   () => historyState.value.player,
   (value) => {
-    if (!value) closeSong();
-  }
-);
+    if (!value) closeSong()
+  },
+)
 
 const startOnboarding = () => {
-  if (!localStorage.getItem("notNewPlayer")) {
-    pauseSong();
+  if (!localStorage.getItem('notNewPlayer')) {
+    pauseSong()
     introJS()
       .setOptions({
         showBullets: false,
         disableInteraction: true,
-        tooltipClass: "custom-tooltip",
+        tooltipClass: 'custom-tooltip',
         exitOnOverlayClick: false,
       })
       .onexit(() => {
-        localStorage.setItem("notNewPlayer", "true");
-        playSong();
+        localStorage.setItem('notNewPlayer', 'true')
+        playSong()
       })
-      .start();
+      .start()
   }
-};
+}
 
 onMounted(() => {
-  const t1 = gsap.timeline({ onComplete: startOnboarding });
+  const t1 = gsap.timeline({ onComplete: startOnboarding })
   t1.from(playerContainerEl.value, {
     duration: 0.7,
-    ease: "expo.out",
+    ease: 'expo.out',
     opacity: 0.7,
-    y: "100vh",
+    y: '100vh',
   })
-    .from(songInformationEl.value.containerRef, fadeInAnimation, "-=0.45")
-    .from(lyricsEl.value.containerRef, fadeInAnimation, "-=0.55")
-    .from(playerProgressEl.value, fadeInAnimation, "-=0.5")
-    .from(playerTimerEl.value, fadeInAnimation, "-=0.6")
-    .from(playButtonEl.value, fadeInAnimation, "-=0.7")
-    .from(prevButtonEl.value, fadeInAnimation, "-=0.65")
-    .from(nextButtonEl.value, fadeInAnimation, "-=0.65");
-  initAudioFile();
-});
+    .from(songInformationEl.value.containerRef, fadeInAnimation, '-=0.45')
+    .from(lyricsEl.value.containerRef, fadeInAnimation, '-=0.55')
+    .from(playerProgressEl.value, fadeInAnimation, '-=0.5')
+    .from(playerTimerEl.value, fadeInAnimation, '-=0.6')
+    .from(playButtonEl.value, fadeInAnimation, '-=0.7')
+    .from(prevButtonEl.value, fadeInAnimation, '-=0.65')
+    .from(nextButtonEl.value, fadeInAnimation, '-=0.65')
+  initAudioFile()
+})
 </script>
 
 <style lang="scss">

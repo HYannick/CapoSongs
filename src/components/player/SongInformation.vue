@@ -35,33 +35,33 @@
   </div>
 </template>
 <script lang="ts" setup>
-import type { PropType } from "vue";
-import { computed, ref } from "vue";
-import type { Song } from "@/domain/Song";
-import FavouriteIcon from "@/components/common/FavouriteIcon.vue";
-import IconButton from "@/components/component-library/IconButton.vue";
-import Thumbnail from "@/components/common/Thumbnail.vue";
-import { S3_SOURCE_LINK, S3Dir } from "@/domain/enums/aws-link";
-import { useI18n } from "vue-i18n";
+import FavouriteIcon from '@/components/common/FavouriteIcon.vue'
+import Thumbnail from '@/components/common/Thumbnail.vue'
+import IconButton from '@/components/component-library/IconButton.vue'
+import type { Song } from '@/domain/Song'
+import { S3Dir, S3_SOURCE_LINK } from '@/domain/enums/aws-link'
+import type { PropType } from 'vue'
+import { computed, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 
-const containerRef = ref();
+const containerRef = ref()
 
-const { t } = useI18n();
+const { t } = useI18n()
 
 const props = defineProps({
   song: {
     type: Object as PropType<Song>,
     required: true,
   },
-});
+})
 
 const picture = computed(() =>
-  props.song ? S3_SOURCE_LINK(S3Dir.PICTURES, props.song.thumbnail) : ""
-);
+  props.song ? S3_SOURCE_LINK(S3Dir.PICTURES, props.song.thumbnail) : '',
+)
 
-defineEmits(["viewInformationClick"]);
+defineEmits(['viewInformationClick'])
 
-defineExpose({ containerRef });
+defineExpose({ containerRef })
 </script>
 <style lang="scss">
 .player-song {

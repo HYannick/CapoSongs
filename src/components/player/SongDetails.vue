@@ -31,10 +31,10 @@
   </div>
 </template>
 <script lang="ts" setup>
-import type { PropType } from "vue";
-import { useI18n } from "vue-i18n";
-import BackButton from "@/components/common/BackButton.vue";
-const { t } = useI18n();
+import BackButton from '@/components/common/BackButton.vue'
+import type { PropType } from 'vue'
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
 
 defineProps({
   history: String,
@@ -42,9 +42,9 @@ defineProps({
     type: Array as PropType<string[]>,
     required: true,
   },
-});
+})
 
-defineEmits(["goBack"]);
+defineEmits(['goBack'])
 </script>
 
 <style lang="scss">

@@ -10,15 +10,15 @@
 </template>
 <script lang="ts" setup>
 interface Props {
-  title?: string;
-  iconSize?: number;
-  small?: boolean;
+  title?: string
+  iconSize?: number
+  small?: boolean
 }
 withDefaults(defineProps<Props>(), {
-  title: "",
+  title: '',
   iconSize: 150,
   small: false,
-});
+})
 </script>
 
 <style lang="scss">

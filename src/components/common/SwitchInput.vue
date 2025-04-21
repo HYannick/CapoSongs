@@ -12,8 +12,8 @@
 <script lang="ts" setup>
 defineProps({
   checked: Boolean,
-});
-defineEmits(["change"]);
+})
+defineEmits(['change'])
 </script>
 
 <style lang="scss">

@@ -43,25 +43,25 @@
   </Modal>
 </template>
 <script setup lang="ts">
-import Modal from "@/components/common/Modal.vue";
-import { useI18n } from "vue-i18n";
-import Icon from "@/components/component-library/Icon.vue";
-import { usePushNotifications } from "@/composables/usePushNotifications";
-import { useAppStore } from "@/stores/app.store";
-import { storeToRefs } from "pinia";
-const { requestPermission } = usePushNotifications();
-const { closeNotificationsModal } = useAppStore();
-const { featuresVisibility } = storeToRefs(useAppStore());
-const { t } = useI18n();
+import Modal from '@/components/common/Modal.vue'
+import Icon from '@/components/component-library/Icon.vue'
+import { usePushNotifications } from '@/composables/usePushNotifications'
+import { useAppStore } from '@/stores/app.store'
+import { storeToRefs } from 'pinia'
+import { useI18n } from 'vue-i18n'
+const { requestPermission } = usePushNotifications()
+const { closeNotificationsModal } = useAppStore()
+const { featuresVisibility } = storeToRefs(useAppStore())
+const { t } = useI18n()
 const close = () => {
-  closeNotificationsModal();
-  localStorage.setItem("notification-request-triggered", "true");
-};
+  closeNotificationsModal()
+  localStorage.setItem('notification-request-triggered', 'true')
+}
 
 const enableNotifications = () => {
-  requestPermission();
-  closeNotificationsModal();
-};
+  requestPermission()
+  closeNotificationsModal()
+}
 </script>
 <style lang="scss">
 .icon-wrapper {

@@ -7,12 +7,12 @@
   </button>
 </template>
 <script setup lang="ts">
-import Icon from "@/components/component-library/Icon.vue";
-import { useI18n } from "vue-i18n";
+import Icon from '@/components/component-library/Icon.vue'
+import { useI18n } from 'vue-i18n'
 defineProps({
   label: String,
-});
-const { t } = useI18n();
+})
+const { t } = useI18n()
 </script>
 
 <style lang="scss">

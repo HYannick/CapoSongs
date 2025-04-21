@@ -16,12 +16,12 @@
 </template>
 
 <script lang="ts" setup>
-import { useAppStore } from "@/stores/app.store";
-import { useI18n } from "vue-i18n";
-import Modal from "@/components/common/Modal.vue";
+import Modal from '@/components/common/Modal.vue'
+import { useAppStore } from '@/stores/app.store'
+import { useI18n } from 'vue-i18n'
 
-const { hideMentions } = useAppStore();
-const { t } = useI18n();
+const { hideMentions } = useAppStore()
+const { t } = useI18n()
 </script>
 
 <style lang="scss">

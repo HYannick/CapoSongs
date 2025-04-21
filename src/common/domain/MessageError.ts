@@ -1,4 +1,4 @@
 export interface MessageError {
-  getType(): string;
-  getMessage(): string;
+  getType(): string
+  getMessage(): string
 }

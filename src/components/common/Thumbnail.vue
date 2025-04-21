@@ -9,21 +9,21 @@
   />
 </template>
 <script lang="ts" setup>
-import { onMounted, ref } from "vue";
-import imagesLoaded from "imagesloaded";
+import imagesLoaded from 'imagesloaded'
+import { onMounted, ref } from 'vue'
 
 defineProps({
   src: String,
   alt: String,
-});
+})
 
-const thumbnailRef = ref();
-const loaded = ref(false);
+const thumbnailRef = ref()
+const loaded = ref(false)
 onMounted(() => {
   imagesLoaded(thumbnailRef.value, () => {
-    loaded.value = true;
-  });
-});
+    loaded.value = true
+  })
+})
 </script>
 
 <style lang="scss">

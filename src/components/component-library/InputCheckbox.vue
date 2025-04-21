@@ -14,30 +14,30 @@
 </template>
 
 <script setup lang="ts">
-import { computed, defineEmits, toRefs } from "vue";
+import { computed, defineEmits, toRefs } from 'vue'
 export interface Props {
-  name: string;
-  disabled?: boolean;
-  value: string;
-  label: string;
-  modelValue: string[];
+  name: string
+  disabled?: boolean
+  value: string
+  label: string
+  modelValue: string[]
 }
 
 const props = withDefaults(defineProps<Props>(), {
   disabled: false,
-  label: "Some label",
-});
-const { name, modelValue, value } = toRefs(props);
-const emit = defineEmits(["update:modelValue"]);
-const checked = computed(() => modelValue.value.includes(value.value));
+  label: 'Some label',
+})
+const { name, modelValue, value } = toRefs(props)
+const emit = defineEmits(['update:modelValue'])
+const checked = computed(() => modelValue.value.includes(value.value))
 const model = computed({
   get() {
-    return props.modelValue;
+    return props.modelValue
   },
   set(value) {
-    emit("update:modelValue", value);
+    emit('update:modelValue', value)
   },
-});
+})
 </script>
 
 <style lang="scss">

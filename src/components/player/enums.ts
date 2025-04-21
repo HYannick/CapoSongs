@@ -1,4 +1,4 @@
 export enum VIEWS {
-  PLAYER = "PLAYER",
-  DETAILS = "DETAILS",
+  PLAYER = 'PLAYER',
+  DETAILS = 'DETAILS',
 }

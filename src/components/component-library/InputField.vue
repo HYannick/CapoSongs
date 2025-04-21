@@ -24,32 +24,32 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
-import Icon from "@/components/component-library/Icon.vue";
+import Icon from '@/components/component-library/Icon.vue'
+import { computed } from 'vue'
 
 export interface Props {
-  placeholder?: string;
-  name: string;
-  type: string;
-  disabled?: boolean;
-  modelValue: string;
-  icon?: string;
-  actionIcon?: string;
+  placeholder?: string
+  name: string
+  type: string
+  disabled?: boolean
+  modelValue: string
+  icon?: string
+  actionIcon?: string
 }
 
-defineEmits(["update:modelValue", "actionClick"]);
+defineEmits(['update:modelValue', 'actionClick'])
 
 const props = withDefaults(defineProps<Props>(), {
-  placeholder: "Some text",
-  type: "text",
+  placeholder: 'Some text',
+  type: 'text',
   disabled: false,
-  icon: "",
-  actionIcon: "",
-});
+  icon: '',
+  actionIcon: '',
+})
 
 const inputClasses = computed(() => ({
-  "-disabled": props.disabled,
-}));
+  '-disabled': props.disabled,
+}))
 </script>
 
 <style lang="scss">

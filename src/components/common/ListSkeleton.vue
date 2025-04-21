@@ -17,13 +17,13 @@
 </template>
 <script lang="ts" setup>
 interface Props {
-  title?: string;
-  iconSize?: number;
+  title?: string
+  iconSize?: number
 }
 withDefaults(defineProps<Props>(), {
-  title: "",
+  title: '',
   iconSize: 150,
-});
+})
 </script>
 
 <style lang="scss">

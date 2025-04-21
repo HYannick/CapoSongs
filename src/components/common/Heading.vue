@@ -25,22 +25,22 @@
 </template>
 
 <script setup lang="ts">
-import IconButton from "@/components/component-library/IconButton.vue";
-import { useAppStore } from "@/stores/app.store";
-import { ref } from "vue";
-import Icon from "@/components/component-library/Icon.vue";
-const containerRef = ref();
-const appStore = useAppStore();
+import Icon from '@/components/component-library/Icon.vue'
+import IconButton from '@/components/component-library/IconButton.vue'
+import { useAppStore } from '@/stores/app.store'
+import { ref } from 'vue'
+const containerRef = ref()
+const appStore = useAppStore()
 
 const showFavouriteSongs = () => {
-  appStore.showFavouriteSongs();
-};
+  appStore.showFavouriteSongs()
+}
 
 const showSettings = () => {
-  appStore.showSettings();
-};
+  appStore.showSettings()
+}
 
-defineExpose({ containerRef });
+defineExpose({ containerRef })
 </script>
 <style lang="scss">
 .heading-container {

@@ -11,11 +11,11 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
-import Icon from "@/components/component-library/Icon.vue";
-import { useI18n } from "vue-i18n";
-const { t } = useI18n();
-const kofiUrl = computed(() => `https://ko-fi.com/ayaho`);
+import Icon from '@/components/component-library/Icon.vue'
+import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
+const kofiUrl = computed(() => `https://ko-fi.com/ayaho`)
 </script>
 
 <style lang="scss" scoped>

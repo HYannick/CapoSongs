@@ -12,31 +12,31 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
-import Icon from "@/components/component-library/Icon.vue";
+import Icon from '@/components/component-library/Icon.vue'
+import { computed } from 'vue'
 
 export interface Props {
-  label?: string;
-  radius?: "rounded" | "circle" | "";
-  disabled?: boolean;
-  ariaLabel?: string;
-  outlined?: boolean;
-  iconName: string;
-  size?: number;
-  filled?: boolean;
+  label?: string
+  radius?: 'rounded' | 'circle' | ''
+  disabled?: boolean
+  ariaLabel?: string
+  outlined?: boolean
+  iconName: string
+  size?: number
+  filled?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  radius: "",
-  ariaLabel: "Icon button",
+  radius: '',
+  ariaLabel: 'Icon button',
   disabled: false,
   outlined: false,
   filled: false,
   size: 30,
-});
+})
 
-const radiusClass = computed(() => props.radius && `-${props.radius}`);
-const outlinedClass = computed(() => props.outlined && `-outlined`);
+const radiusClass = computed(() => props.radius && `-${props.radius}`)
+const outlinedClass = computed(() => props.outlined && `-outlined`)
 </script>
 
 <style lang="scss">

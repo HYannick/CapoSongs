@@ -17,12 +17,12 @@
   </div>
 </template>
 <script lang="ts" setup>
-import Icon from "@/components/component-library/Icon.vue";
-import { useI18n } from "vue-i18n";
+import Icon from '@/components/component-library/Icon.vue'
+import { useI18n } from 'vue-i18n'
 
-const { t } = useI18n();
+const { t } = useI18n()
 
 const reloadPage = () => {
-  window.location.reload();
-};
+  window.location.reload()
+}
 </script>

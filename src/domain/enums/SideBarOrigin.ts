@@ -1,4 +1,4 @@
 export enum SidebarOrigin {
-  LEFT = "LEFT",
-  RIGHT = "RIGHT",
+  LEFT = 'LEFT',
+  RIGHT = 'RIGHT',
 }

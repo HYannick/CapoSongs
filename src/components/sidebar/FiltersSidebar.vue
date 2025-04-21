@@ -74,72 +74,72 @@
 </template>
 
 <script setup lang="ts">
-import { songType } from "@/domain/enums/SongType";
-import { useAppStore } from "@/stores/app.store";
-import { storeToRefs } from "pinia";
-import { computed, onMounted, Ref, ref, watch } from "vue";
-import IconButton from "@/components/component-library/IconButton.vue";
-import { useI18n } from "vue-i18n";
-import Icon from "@/components/component-library/Icon.vue";
-import InputCheckbox from "@/components/component-library/InputCheckbox.vue";
-import { songTheme } from "@/domain/enums/SongTheme";
-import { useSongStore } from "@/stores/song.store";
-import { useSearchStore } from "@/stores/search.store";
-import type { SongFilters } from "@/domain/enums/SongFilters";
-import { useNavigation } from "@/stores/navigation.store";
+import Icon from '@/components/component-library/Icon.vue'
+import IconButton from '@/components/component-library/IconButton.vue'
+import InputCheckbox from '@/components/component-library/InputCheckbox.vue'
+import type { SongFilters } from '@/domain/enums/SongFilters'
+import { songTheme } from '@/domain/enums/SongTheme'
+import { songType } from '@/domain/enums/SongType'
+import { useAppStore } from '@/stores/app.store'
+import { useNavigation } from '@/stores/navigation.store'
+import { useSearchStore } from '@/stores/search.store'
+import { useSongStore } from '@/stores/song.store'
+import { storeToRefs } from 'pinia'
+import { Ref, computed, onMounted, ref, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
 
-const { t } = useI18n();
-const { featuresVisibility } = storeToRefs(useAppStore());
-const { hideFilters } = useAppStore();
-const songStore = useSongStore();
-const { fetchingSongs } = storeToRefs(useSongStore());
-const { filters, currentPage } = storeToRefs(useSearchStore());
-const { setFilters, resetCurrentPage, resetAllFilters } = useSearchStore();
+const { t } = useI18n()
+const { featuresVisibility } = storeToRefs(useAppStore())
+const { hideFilters } = useAppStore()
+const songStore = useSongStore()
+const { fetchingSongs } = storeToRefs(useSongStore())
+const { filters, currentPage } = storeToRefs(useSearchStore())
+const { setFilters, resetCurrentPage, resetAllFilters } = useSearchStore()
 const filtersToSet: Ref<SongFilters> = ref({
   genres: [],
   themes: [],
-});
+})
 
 const sidebarClasses = computed(() => ({
-  "-open": featuresVisibility.value.filters,
-}));
+  '-open': featuresVisibility.value.filters,
+}))
 
 const applyFilters = async () => {
   setFilters({
     genres: filtersToSet.value.genres,
     themes: filtersToSet.value.themes,
-  });
-  songStore.resetSongs();
-  resetCurrentPage();
+  })
+  songStore.resetSongs()
+  resetCurrentPage()
   await songStore.getSongs(currentPage.value, undefined, {
     genres: filters.value.genres,
     themes: filters.value.themes,
-  });
-  hideFilters();
-};
+  })
+  hideFilters()
+}
 
 const resetAll = () => {
   filtersToSet.value = {
     genres: [],
     themes: [],
-  };
-  resetAllFilters();
-  applyFilters();
-};
-const { state: historyState } = storeToRefs(useNavigation());
+  }
+  resetAllFilters()
+  applyFilters()
+}
+const { state: historyState } = storeToRefs(useNavigation())
 watch(
   () => historyState.value.filters,
   (value) => {
-    if (!value) hideFilters();
-  }
-);
+    if (!value) hideFilters()
+  },
+)
 watch(
   () => filters.value,
   (filters: SongFilters) => {
-    filtersToSet.value = filters;
+    filtersToSet.value = filters
   },
-  { deep: true }
-);
+  { deep: true },
+)
 </script>
 
 <style lang="scss">

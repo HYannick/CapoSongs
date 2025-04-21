@@ -138,65 +138,65 @@
 </template>
 
 <script setup lang="ts">
-import { useAppStore } from "@/stores/app.store";
-import { storeToRefs } from "pinia";
-import { type PropType, ref } from "vue";
-import { SidebarOrigin } from "@/domain/enums/SideBarOrigin";
-import { computed, onMounted, watch } from "vue";
-import IconButton from "@/components/component-library/IconButton.vue";
-import InputRadio from "@/components/component-library/InputRadio.vue";
-import { useTheme } from "@/composables/useTheme";
-import { useI18n } from "vue-i18n";
-import SwitchInput from "@/components/common/SwitchInput.vue";
-import Icon from "@/components/component-library/Icon.vue";
-import { usePWAInstallation } from "@/stores/pwa.store";
-import { useNavigation } from "@/stores/navigation.store";
-import KofiButton from "@/components/common/KofiButton.vue";
-import Mentions from "@/components/Mentions.vue";
-import Support from "@/components/Support.vue";
-import ShareApp from "@/components/ShareApp.vue";
-import NotificationSwitch from "@/components/sidebar/NotificationSwitch.vue";
-import { useNotificationStore } from "@/stores/notification.store";
+import Mentions from '@/components/Mentions.vue'
+import ShareApp from '@/components/ShareApp.vue'
+import Support from '@/components/Support.vue'
+import KofiButton from '@/components/common/KofiButton.vue'
+import SwitchInput from '@/components/common/SwitchInput.vue'
+import Icon from '@/components/component-library/Icon.vue'
+import IconButton from '@/components/component-library/IconButton.vue'
+import InputRadio from '@/components/component-library/InputRadio.vue'
+import NotificationSwitch from '@/components/sidebar/NotificationSwitch.vue'
+import { useTheme } from '@/composables/useTheme'
+import { SidebarOrigin } from '@/domain/enums/SideBarOrigin'
+import { useAppStore } from '@/stores/app.store'
+import { useNavigation } from '@/stores/navigation.store'
+import { useNotificationStore } from '@/stores/notification.store'
+import { usePWAInstallation } from '@/stores/pwa.store'
+import { storeToRefs } from 'pinia'
+import { type PropType, ref } from 'vue'
+import { computed, onMounted, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
 
 const props = defineProps({
   from: String as PropType<SidebarOrigin>,
-});
-const { t, locale } = useI18n();
-const currentYear = ref(new Date().getFullYear());
-const { featuresVisibility } = storeToRefs(useAppStore());
-const { hideSettings, showMentions, showSupport, showShareApp } = useAppStore();
+})
+const { t, locale } = useI18n()
+const currentYear = ref(new Date().getFullYear())
+const { featuresVisibility } = storeToRefs(useAppStore())
+const { hideSettings, showMentions, showSupport, showShareApp } = useAppStore()
 const { appInstalled, appInstallationDismissed } = storeToRefs(
-  usePWAInstallation()
-);
+  usePWAInstallation(),
+)
 
 const { isAppleDevice, initInstall, installApp, closeInstallPrompt } =
-  usePWAInstallation();
-const { notify } = useNotificationStore();
-const { isDarkMode, switchTheme } = useTheme();
+  usePWAInstallation()
+const { notify } = useNotificationStore()
+const { isDarkMode, switchTheme } = useTheme()
 const sidebarClasses = computed(() => ({
-  "-open": featuresVisibility.value.settings,
-  "sidebar-left": props.from === SidebarOrigin.LEFT,
-  "sidebar-right": props.from === SidebarOrigin.RIGHT,
-}));
+  '-open': featuresVisibility.value.settings,
+  'sidebar-left': props.from === SidebarOrigin.LEFT,
+  'sidebar-right': props.from === SidebarOrigin.RIGHT,
+}))
 
 watch(
   () => locale.value,
   (locale) => {
-    localStorage.setItem("lang", locale);
-  }
-);
+    localStorage.setItem('lang', locale)
+  },
+)
 
-const { state: historyState } = storeToRefs(useNavigation());
+const { state: historyState } = storeToRefs(useNavigation())
 watch(
   () => historyState.value.settings,
   (value) => {
-    if (!value) hideSettings();
-  }
-);
+    if (!value) hideSettings()
+  },
+)
 
 onMounted(() => {
-  initInstall();
-});
+  initInstall()
+})
 </script>
 
 <style lang="scss">

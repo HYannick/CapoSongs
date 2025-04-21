@@ -9,7 +9,7 @@
     </div>
     <div class="song-item-title">
       <p class="text -bold">
-        {{ song.title }}
+        <span class="title-asset">{{ song.title }}</span>
         <span
           style="display: block"
           class="text -bold -caption-2 color-black--300"
@@ -23,32 +23,32 @@
   </div>
 </template>
 <script lang="ts" setup>
-import FavouriteIcon from "@/components/common/FavouriteIcon.vue";
-import Icon from "@/components/component-library/Icon.vue";
-import type { PropType } from "vue";
-import { computed, ref } from "vue";
-import type { Song } from "@/domain/Song";
-import Thumbnail from "@/components/common/Thumbnail.vue";
-import { S3_SOURCE_LINK, S3Dir } from "@/domain/enums/aws-link";
-import { useI18n } from "vue-i18n";
+import FavouriteIcon from '@/components/common/FavouriteIcon.vue'
+import Thumbnail from '@/components/common/Thumbnail.vue'
+import Icon from '@/components/component-library/Icon.vue'
+import type { Song } from '@/domain/Song'
+import { S3Dir, S3_SOURCE_LINK } from '@/domain/enums/aws-link'
+import type { PropType } from 'vue'
+import { computed, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 
-const { t } = useI18n();
+const { t } = useI18n()
 
 const props = defineProps({
   song: {
     type: Object as PropType<Song>,
     required: true,
   },
-});
+})
 
 const picture = computed(() =>
-  props.song ? S3_SOURCE_LINK(S3Dir.PICTURES, props.song.thumbnail) : ""
-);
+  props.song ? S3_SOURCE_LINK(S3Dir.PICTURES, props.song.thumbnail) : '',
+)
 
-defineEmits(["selected"]);
+defineEmits(['selected'])
 
-const container = ref();
-defineExpose({ container, id: props.song!.id });
+const container = ref()
+defineExpose({ container, id: props.song!.id })
 </script>
 <style lang="scss">
 .song-item {

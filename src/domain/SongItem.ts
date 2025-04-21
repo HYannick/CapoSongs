@@ -1,3 +1,3 @@
-import type { Ref } from "vue";
+import type { Ref } from 'vue'
 
-export type SongItemRef = { container: Ref; id: number };
+export type SongItemRef = { container: Ref; id: number }

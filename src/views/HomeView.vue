@@ -43,137 +43,137 @@
 </template>
 
 <script setup lang="ts">
-import Heading from "@/components/common/Heading.vue";
-import SettingsSidebar from "@/components/sidebar/SettingsSidebar.vue";
-import FavouritesSidebar from "@/components/sidebar/FavouritesSidebar.vue";
-import Player from "@/components/player/Player.vue";
-import { SidebarOrigin } from "@/domain/enums/SideBarOrigin";
-import { computed, onMounted, ref, watch } from "vue";
-import InputField from "@/components/component-library/InputField.vue";
-import SongList from "@/components/SongList.vue";
-import { useSongStore } from "@/stores/song.store";
-import { useI18n } from "vue-i18n";
-import gsap from "gsap";
-import { useAppStore } from "@/stores/app.store";
-import HomePlaceholder from "@/components/HomePlaceholder.vue";
-import { useDebounce, useInfiniteScroll, useMediaQuery } from "@vueuse/core";
-import { useTheme } from "@/composables/useTheme";
-import { useKeyboardControls } from "@/composables/useKeyboardControls";
-import FiltersSidebar from "@/components/sidebar/FiltersSidebar.vue";
-import { useSearchStore } from "@/stores/search.store";
-import { storeToRefs } from "pinia";
-import IconButton from "@/components/component-library/IconButton.vue";
-import { useNavigation } from "@/stores/navigation.store";
+import HomePlaceholder from '@/components/HomePlaceholder.vue'
+import SongList from '@/components/SongList.vue'
+import Heading from '@/components/common/Heading.vue'
+import IconButton from '@/components/component-library/IconButton.vue'
+import InputField from '@/components/component-library/InputField.vue'
+import Player from '@/components/player/Player.vue'
+import FavouritesSidebar from '@/components/sidebar/FavouritesSidebar.vue'
+import FiltersSidebar from '@/components/sidebar/FiltersSidebar.vue'
+import SettingsSidebar from '@/components/sidebar/SettingsSidebar.vue'
+import { useKeyboardControls } from '@/composables/useKeyboardControls'
+import { useTheme } from '@/composables/useTheme'
+import { SidebarOrigin } from '@/domain/enums/SideBarOrigin'
+import { useAppStore } from '@/stores/app.store'
+import { useNavigation } from '@/stores/navigation.store'
+import { useSearchStore } from '@/stores/search.store'
+import { useSongStore } from '@/stores/song.store'
+import { useDebounce, useInfiniteScroll, useMediaQuery } from '@vueuse/core'
+import gsap from 'gsap'
+import { storeToRefs } from 'pinia'
+import { computed, onMounted, ref, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
 
-const songStore = useSongStore();
-const appStore = useAppStore();
-const { initHistoryState } = useNavigation();
+const songStore = useSongStore()
+const appStore = useAppStore()
+const { initHistoryState } = useNavigation()
 const { updatePage, resetCurrentPage, resetAllFilters, resetSearch } =
-  useSearchStore();
-const { query, filters, currentPage } = storeToRefs(useSearchStore());
-const { t } = useI18n();
-const headingEl = ref();
-const searchEl = ref();
-const songListEl = ref();
-const el = ref();
-const { switchTheme } = useTheme();
-const debounced = useDebounce(query, 500);
+  useSearchStore()
+const { query, filters, currentPage } = storeToRefs(useSearchStore())
+const { t } = useI18n()
+const headingEl = ref()
+const searchEl = ref()
+const songListEl = ref()
+const el = ref()
+const { switchTheme } = useTheme()
+const debounced = useDebounce(query, 500)
 
-const { app } = useKeyboardControls();
+const { app } = useKeyboardControls()
 
 const mergedFilters = computed(() => {
-  return [...filters.value.genres, ...filters.value.themes];
-});
+  return [...filters.value.genres, ...filters.value.themes]
+})
 const fetchMoreSongs = () => {
   if (currentPage.value <= songStore.pageCount) {
-    updatePage();
-    songStore.loadMoreSongs(currentPage.value, query.value, filters.value);
+    updatePage()
+    songStore.loadMoreSongs(currentPage.value, query.value, filters.value)
   }
   // songItemRefs.value = Array.from(songItemRef.value) as SongItemRef[];
   // if (currentSong.value) animateOnSongSelected(currentSong.value);
-};
-const isLargeScreen = useMediaQuery("(min-width: 1024px)");
+}
+const isLargeScreen = useMediaQuery('(min-width: 1024px)')
 if (!isLargeScreen.value) {
   useInfiniteScroll(el, fetchMoreSongs, {
     distance: 10,
-  });
+  })
 }
 
 const applyFilters = async () => {
-  songStore.resetSongs();
-  resetCurrentPage();
+  songStore.resetSongs()
+  resetCurrentPage()
   await songStore.getSongs(currentPage.value, undefined, {
     genres: filters.value.genres,
     themes: filters.value.themes,
-  });
-};
+  })
+}
 
 const resetAll = () => {
-  resetAllFilters();
-  applyFilters();
-};
+  resetAllFilters()
+  applyFilters()
+}
 
 watch(app.settings, (v) => {
-  if (v) appStore.toggleSettings();
-});
+  if (v) appStore.toggleSettings()
+})
 
 watch(app.favourites, (v) => {
-  if (v) appStore.toggleFavouriteSongs();
-});
+  if (v) appStore.toggleFavouriteSongs()
+})
 
 watch(app.darkMode, (v) => {
-  if (v) switchTheme();
-});
+  if (v) switchTheme()
+})
 
 watch(
   () => debounced.value,
   (searchQuery) => {
-    resetCurrentPage();
-    songStore.resetSongs();
-    songStore.getSongs(currentPage.value, searchQuery);
-  }
-);
+    resetCurrentPage()
+    songStore.resetSongs()
+    songStore.getSongs(currentPage.value, searchQuery)
+  },
+)
 watch(
   () => appStore.featuresVisibility.player,
   (visible) => {
     if (visible) {
-      document.body.style.overflow = "hidden";
+      document.body.style.overflow = 'hidden'
     } else {
-      document.body.style.overflow = "initial";
+      document.body.style.overflow = 'initial'
     }
-  }
-);
+  },
+)
 
 onMounted(async () => {
-  initHistoryState();
-  await songStore.setFavouriteSongs();
-  const t1 = gsap.timeline();
+  initHistoryState()
+  await songStore.setFavouriteSongs()
+  const t1 = gsap.timeline()
   t1.from(headingEl.value.containerRef, {
     duration: 0.7,
-    ease: "back",
+    ease: 'back',
     opacity: 0,
-    y: "10px",
+    y: '10px',
   })
     .from(
       searchEl.value,
       {
         duration: 0.7,
-        ease: "back",
+        ease: 'back',
         opacity: 0,
-        y: "10px",
+        y: '10px',
       },
-      "-=0.45"
+      '-=0.45',
     )
     .from(
       songListEl.value.containerRef,
       {
         opacity: 0,
-        y: "10px",
-        ease: "back",
+        y: '10px',
+        ease: 'back',
       },
-      "-=0.55"
-    );
-});
+      '-=0.55',
+    )
+})
 </script>
 <style lang="scss">
 .search-container {

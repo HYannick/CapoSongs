@@ -18,30 +18,30 @@
   </div>
 </template>
 <script lang="ts" setup>
-import Icon from "@/components/component-library/Icon.vue";
-import { onMounted, ref } from "vue";
-import gsap from "gsap";
-import { useI18n } from "vue-i18n";
+import Icon from '@/components/component-library/Icon.vue'
+import gsap from 'gsap'
+import { onMounted, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 
-const { t } = useI18n();
+const { t } = useI18n()
 
-const imageRef = ref();
-const contentRef = ref();
+const imageRef = ref()
+const contentRef = ref()
 
 onMounted(() => {
   gsap.to(imageRef.value, {
     opacity: 0.1,
     duration: 0.7,
     delay: 0.5,
-  });
+  })
   gsap.from(contentRef.value, {
     y: 50,
     delay: 0.5,
     duration: 0.7,
     opacity: 0,
-    ease: "back",
-  });
-});
+    ease: 'back',
+  })
+})
 </script>
 
 <style lang="scss">

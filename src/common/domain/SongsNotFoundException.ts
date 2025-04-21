@@ -1,5 +1,5 @@
 export class SongsNotFoundException extends Error {
   constructor() {
-    super(`Could not get songs`);
+    super(`Could not get songs`)
   }
 }

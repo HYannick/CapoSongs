@@ -1,60 +1,60 @@
 <script setup lang="ts">
-import HomeView from "@/views/HomeView.vue";
-import { useTheme } from "@/composables/useTheme";
-import { computed, onMounted } from "vue";
-import { useI18n } from "vue-i18n";
-import ReloadPrompt from "@/components/common/ReloadPrompt.vue";
-const { setTheme } = useTheme();
-const { openCookies, openNotificationsModal } = useAppStore();
-const { featuresVisibility } = storeToRefs(useAppStore());
-const { locale } = useI18n();
+import ReloadPrompt from '@/components/common/ReloadPrompt.vue'
+import { useTheme } from '@/composables/useTheme'
+import HomeView from '@/views/HomeView.vue'
+import { computed, onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
+const { setTheme } = useTheme()
+const { openCookies, openNotificationsModal } = useAppStore()
+const { featuresVisibility } = storeToRefs(useAppStore())
+const { locale } = useI18n()
 
-import { useOnline } from "@vueuse/core";
-import OfflineScreen from "@/components/common/OfflineScreen.vue";
-import { useAppStore } from "@/stores/app.store";
-import NotificationModal from "@/components/NotificationModal.vue";
-import { storeToRefs } from "pinia";
-import { usePushNotifications } from "@/composables/usePushNotifications";
-import CookieBanner from "@/components/CookieBanner.vue";
-import Notifications from "@/components/common/Notifications.vue";
+import CookieBanner from '@/components/CookieBanner.vue'
+import NotificationModal from '@/components/NotificationModal.vue'
+import Notifications from '@/components/common/Notifications.vue'
+import OfflineScreen from '@/components/common/OfflineScreen.vue'
+import { usePushNotifications } from '@/composables/usePushNotifications'
+import { useAppStore } from '@/stores/app.store'
+import { useOnline } from '@vueuse/core'
+import { storeToRefs } from 'pinia'
 
-const online = useOnline();
-const { isSubscribed, initNotificationService } = usePushNotifications();
+const online = useOnline()
+const { isSubscribed, initNotificationService } = usePushNotifications()
 
-const shouldDisplayCookies = !localStorage.getItem("cookies-enabled");
+const shouldDisplayCookies = !localStorage.getItem('cookies-enabled')
 const shouldDisplayNotifications =
-  !localStorage.getItem("notification-request-triggered") &&
-  localStorage.getItem("cookies-enabled");
+  !localStorage.getItem('notification-request-triggered') &&
+  localStorage.getItem('cookies-enabled')
 
 const setLocale = () => {
-  locale.value = localStorage.getItem("lang") || "en";
-};
+  locale.value = localStorage.getItem('lang') || 'en'
+}
 
 onMounted(async () => {
-  setTheme();
-  setLocale();
-  if (shouldDisplayCookies) openCookies();
-  if (shouldDisplayNotifications) openNotificationsModal();
-  if (isSubscribed.value) await initNotificationService();
-});
+  setTheme()
+  setLocale()
+  if (shouldDisplayCookies) openCookies()
+  if (shouldDisplayNotifications) openNotificationsModal()
+  if (isSubscribed.value) await initNotificationService()
+})
 
 const displayCookies = computed(
   () =>
     featuresVisibility.value.cookiesBanner &&
-    !localStorage.getItem("cookies-enabled")
-);
+    !localStorage.getItem('cookies-enabled'),
+)
 
 const displayNotifications = computed(
   () =>
     featuresVisibility.value.notificationsModal &&
-    !localStorage.getItem("notification-request-triggered")
-);
+    !localStorage.getItem('notification-request-triggered'),
+)
 
 const displayNotificationModal = () => {
   featuresVisibility.value.notificationsModal = !localStorage.getItem(
-    "notification-request-triggered"
-  );
-};
+    'notification-request-triggered',
+  )
+}
 </script>
 
 <template>
