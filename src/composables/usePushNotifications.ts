@@ -1,8 +1,8 @@
 import { PushNotificationService } from '@/services/PushNotificationsService'
 import { computed, ref } from 'vue'
 
-export function usePushNotifications() {
-  const permission = ref(Notification.permission)
+export function usePushNotifications(notificationSupported: boolean = 'Notification' in window) {
+  const permission = ref(notificationSupported ? Notification.permission : false)
   const notificationService = new PushNotificationService()
   const isSubscribed = ref(notificationService.isSubscribed())
 

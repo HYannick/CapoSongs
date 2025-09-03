@@ -19,7 +19,12 @@ import { useOnline } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
 
 const online = useOnline()
-const { isSubscribed, initNotificationService } = usePushNotifications()
+const notificationSupported = computed(() =>
+  'Notification' in window &&
+  'serviceWorker' in navigator &&
+  'PushManager' in window);
+
+const { isSubscribed, initNotificationService } = usePushNotifications(notificationSupported)
 
 const shouldDisplayCookies = !localStorage.getItem('cookies-enabled')
 const shouldDisplayNotifications =
@@ -29,11 +34,6 @@ const shouldDisplayNotifications =
 const setLocale = () => {
   locale.value = localStorage.getItem('lang') || 'en'
 }
-
-const notificationSupported = computed(() =>
-  'Notification' in window &&
-  'serviceWorker' in navigator &&
-  'PushManager' in window);
 
 onMounted(async () => {
   setTheme()
