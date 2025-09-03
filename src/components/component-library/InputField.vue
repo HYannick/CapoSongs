@@ -71,7 +71,7 @@ const inputClasses = computed(() => ({
   -webkit-appearance: none;
   background-color: var(--color-black-900);
   outline: transparent;
-  border-radius: 1rem;
+  border-radius: 2rem;
   font-family: var(--text-font-extra-bold), sans-serif;
   color: var(--color-black-50);
   font-size: 1.7rem;

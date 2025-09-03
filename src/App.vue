@@ -30,6 +30,11 @@ const setLocale = () => {
   locale.value = localStorage.getItem('lang') || 'en'
 }
 
+const notificationSupported = computed(() =>
+  'Notification' in window &&
+  'serviceWorker' in navigator &&
+  'PushManager' in window);
+
 onMounted(async () => {
   setTheme()
   setLocale()
@@ -46,8 +51,9 @@ const displayCookies = computed(
 
 const displayNotifications = computed(
   () =>
+    notificationSupported.value && (
     featuresVisibility.value.notificationsModal &&
-    !localStorage.getItem('notification-request-triggered'),
+    !localStorage.getItem('notification-request-triggered')),
 )
 
 const displayNotificationModal = () => {

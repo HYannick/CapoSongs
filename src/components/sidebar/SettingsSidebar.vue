@@ -87,7 +87,7 @@
             <Icon class="notification" name="bell" :size="20" />
             <p class="text -bold">{{ t("sidebars.settings.notifications") }}</p>
           </div>
-          <NotificationSwitch />
+          <NotificationSwitch v-if="notificationSupported" />
         </div>
         <hr />
         <div class="support-me">
@@ -161,6 +161,11 @@ import { useI18n } from 'vue-i18n'
 const props = defineProps({
   from: String as PropType<SidebarOrigin>,
 })
+
+const notificationSupported = computed(() =>
+  'Notification' in window &&
+  'serviceWorker' in navigator &&
+  'PushManager' in window);
 const { t, locale } = useI18n()
 const currentYear = ref(new Date().getFullYear())
 const { featuresVisibility } = storeToRefs(useAppStore())
