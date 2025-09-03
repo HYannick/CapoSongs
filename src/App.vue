@@ -24,7 +24,7 @@ const notificationSupported = computed(() =>
   'serviceWorker' in navigator &&
   'PushManager' in window);
 
-const { isSubscribed, initNotificationService } = usePushNotifications(notificationSupported)
+const { isSubscribed, initNotificationService } = usePushNotifications(notificationSupported.value)
 
 const shouldDisplayCookies = !localStorage.getItem('cookies-enabled')
 const shouldDisplayNotifications =
