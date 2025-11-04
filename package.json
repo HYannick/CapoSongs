@@ -9,6 +9,7 @@
     "preview": "vite preview",
     "test:unit": "vitest --environment jsdom --root unit",
     "build-only": "vite build",
+    "generate-pwa-assets": "pwa-assets-generator",
     "type-check": "vue-tsc --noEmit -p tsconfig.vitest.json --composite false",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
   },
@@ -46,6 +47,7 @@
     "@types/qs": "^6.9.18",
     "@types/request": "^2.48.13",
     "@types/uuid": "^10.0.0",
+    "@vite-pwa/assets-generator": "^1.0.2",
     "@vitejs/plugin-vue": "^5.2.3",
     "@vitest/ui": "^3.1.1",
     "@vue/test-utils": "^2.4.6",
@@ -59,5 +61,10 @@
     "vite-plugin-pwa": "^1.0.0",
     "vitest": "^3.1.1",
     "vue-tsc": "^2.2.8"
+  },
+
+  "resolutions": {
+    "sharp": "0.32.6",
+    "sharp-ico": "0.1.5"
   }
 }
