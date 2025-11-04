@@ -122,6 +122,7 @@ import { computed, onMounted, ref, watch } from 'vue'
 
 import introJS from 'intro.js'
 import 'intro.js/introjs.css'
+import { useHapticsFeedback } from "@/composables/useHapticsFeedback.ts";
 
 const isPlaying = ref(false)
 const mousedown = ref(false)
@@ -155,6 +156,7 @@ const { player } = useKeyboardControls()
 const { percent, currentTime, songDuration, scrub, setTimers, getTime } =
   usePlayerProgress(audioElementEl, progressBarEl)
 
+const {triggerHaptics} = useHapticsFeedback();
 const songSource = computed(() =>
   currentSong.value
     ? S3_SOURCE_LINK(S3Dir.SONGS, currentSong.value.source)
@@ -168,6 +170,7 @@ const songTranslation = computed(() => {
 })
 
 const closeSong = () => {
+  triggerHaptics();
   gsap.to(playerContainerEl.value, {
     duration: 0.7,
     ease: 'power4.out',
@@ -196,6 +199,7 @@ const pauseSong = () => {
 }
 
 const playPause = () => {
+  triggerHaptics();
   if (audioContext.value.state === 'suspended') {
     audioContext.value.resume()
   }
@@ -209,16 +213,19 @@ const playPause = () => {
 }
 
 const goNext = () => {
+  triggerHaptics();
   setNextSong()
   gsap.from(nextButtonEl.value, playerControlsScale)
 }
 
 const goPrev = () => {
+  triggerHaptics();
   setPreviousSong()
   gsap.from(prevButtonEl.value, playerControlsScale)
 }
 
 const viewInformation = () => {
+  triggerHaptics();
   currentView.value = VIEWS.DETAILS
   if (isLargeScreen.value) {
     gsap.to(playerViewEl.value, {
@@ -239,6 +246,7 @@ const viewInformation = () => {
 }
 
 const viewPlayer = () => {
+  triggerHaptics();
   currentView.value = VIEWS.PLAYER
   if (isLargeScreen.value) {
     gsap.to(playerViewEl.value, {

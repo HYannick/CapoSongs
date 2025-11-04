@@ -13,6 +13,7 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
   },
   "dependencies": {
+    "@capacitor/haptics": "^7.0.2",
     "@pinia/testing": "1.0.1",
     "@vueuse/core": "^9.13.0",
     "@vueuse/motion": "^3.0.3",
@@ -21,6 +22,7 @@
     "imagesloaded": "^5.0.0",
     "intro.js": "^7.2.0",
     "liricle": "^4.2.0",
+    "lucide-vue-next": "^0.552.0",
     "nodejs-web-scraper": "^6.1.3",
     "pinia": "^3.0.2",
     "qs": "^6.14.0",

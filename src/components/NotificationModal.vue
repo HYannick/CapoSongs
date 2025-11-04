@@ -25,20 +25,20 @@
           {{ t("notificationModal.disclaimer") }}
         </p>
       </div>
-      <div class="notification-modal-footer">
-        <button
-          class="settings-button outline-color-black--200 background-color-black--50 color-black--950"
-          @click="close"
-        >
-          {{ t("notificationModal.dismiss") }}
-        </button>
-        <button
-          class="settings-button background-color-secondary--600 color-black--10"
-          @click="enableNotifications"
-        >
-          {{ t("notificationModal.confirm") }}
-        </button>
-      </div>
+<!--      <div class="notification-modal-footer">-->
+<!--        <button-->
+<!--          class="settings-button outline-color-black&#45;&#45;200 background-color-black&#45;&#45;50 color-black&#45;&#45;950"-->
+<!--          @click="close"-->
+<!--        >-->
+<!--          {{ t("notificationModal.dismiss") }}-->
+<!--        </button>-->
+<!--        <button-->
+<!--          class="settings-button background-color-secondary&#45;&#45;600 color-black&#45;&#45;10"-->
+<!--          @click="enableNotifications"-->
+<!--        >-->
+<!--          {{ t("notificationModal.confirm") }}-->
+<!--        </button>-->
+<!--      </div>-->
     </div>
   </Modal>
 </template>
@@ -49,7 +49,7 @@ import { usePushNotifications } from '@/composables/usePushNotifications'
 import { useAppStore } from '@/stores/app.store'
 import { storeToRefs } from 'pinia'
 import { useI18n } from 'vue-i18n'
-const { requestPermission } = usePushNotifications()
+// const { requestPermission } = usePushNotifications()
 const { closeNotificationsModal } = useAppStore()
 const { featuresVisibility } = storeToRefs(useAppStore())
 const { t } = useI18n()
@@ -59,7 +59,7 @@ const close = () => {
 }
 
 const enableNotifications = () => {
-  requestPermission()
+  // requestPermission()
   closeNotificationsModal()
 }
 </script>

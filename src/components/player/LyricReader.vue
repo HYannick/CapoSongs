@@ -38,6 +38,7 @@ import Liricle from 'liricle'
 import type { Ref } from 'vue'
 import { nextTick, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { useHapticsFeedback } from "@/composables/useHapticsFeedback.ts";
 
 const props = defineProps<{ song: Song; audioElementEl: any }>()
 const lyrics: Ref<LyricLine[]> = ref([])
@@ -45,6 +46,7 @@ const lyricsContainerEl = ref()
 const currentLineIndex = ref(0)
 const coroHighlighted = ref(false)
 const { t } = useI18n()
+const {triggerHaptics} = useHapticsFeedback();
 let liricleInstance: any
 
 const { player } = useKeyboardControls()
@@ -57,6 +59,7 @@ const resetLineIndex = () => {
 }
 
 const highlightCoro = () => {
+  triggerHaptics();
   coroHighlighted.value = !coroHighlighted.value
 }
 

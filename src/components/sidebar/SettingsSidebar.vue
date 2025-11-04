@@ -81,14 +81,14 @@
           </div>
           <SwitchInput :checked="isDarkMode" @change="switchTheme" />
         </div>
-        <hr />
-        <div class="settings-option centered">
-          <div class="settings-label">
-            <Icon class="notification" name="bell" :size="20" />
-            <p class="text -bold">{{ t("sidebars.settings.notifications") }}</p>
-          </div>
-          <NotificationSwitch v-if="notificationSupported" />
-        </div>
+<!--        <hr />-->
+<!--        <div class="settings-option centered">-->
+<!--          <div class="settings-label">-->
+<!--            <Icon class="notification" name="bell" :size="20" />-->
+<!--            <p class="text -bold">{{ t("sidebars.settings.notifications") }}</p>-->
+<!--          </div>-->
+<!--          <NotificationSwitch v-if="notificationSupported" />-->
+<!--        </div>-->
         <hr />
         <div class="support-me">
           <KofiButton />

@@ -86,19 +86,6 @@ export const useSongStore = defineStore('songs', () => {
     }
   }
 
-  const populateExistingFavouriteSongs = () => {
-    const songsFromStorage = localStorage.getItem(
-      FAVOURITE_SONGS_STORAGE_KEY,
-    )
-
-    if (!songsFromStorage) {
-      favouriteSongs.value = []
-      return
-    }
-
-    favouriteSongs.value = JSON.parse(songsFromStorage)
-    localStorage.setItem(FAVOURITE_SONGS_STORAGE_KEY, JSON.stringify(songs))
-  }
 
   const isFavourite = (songId: number) =>
     computed(() => !!favouriteSongs.value.find((song) => song.id === songId))
@@ -169,6 +156,5 @@ export const useSongStore = defineStore('songs', () => {
     loadMoreSongs,
     isLoadingMoreSongs,
     pageCount,
-    populateExistingFavouriteSongs
   }
 })

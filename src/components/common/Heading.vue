@@ -14,11 +14,9 @@
         <span>Songs</span>
       </div>
     </div>
-    <IconButton
-      type="button"
-      aria-label="show settings"
-      icon-name="settings"
-      radius="circle"
+    <LucideBolt
+      class="icon-button"
+      :size="32"
       @click="showSettings"
     />
   </header>
@@ -26,17 +24,24 @@
 
 <script setup lang="ts">
 import Icon from '@/components/component-library/Icon.vue'
-import IconButton from '@/components/component-library/IconButton.vue'
 import { useAppStore } from '@/stores/app.store'
 import { ref } from 'vue'
+import {LucideBolt} from 'lucide-vue-next'
+import IconButton from "@/components/component-library/IconButton.vue";
+import { Haptics, ImpactStyle } from "@capacitor/haptics";
 const containerRef = ref()
 const appStore = useAppStore()
 
+const triggerHaptics = async () => {
+  return Haptics.impact({ style: ImpactStyle.Medium });
+}
 const showFavouriteSongs = () => {
+  triggerHaptics();
   appStore.showFavouriteSongs()
 }
 
 const showSettings = () => {
+  triggerHaptics();
   appStore.showSettings()
 }
 

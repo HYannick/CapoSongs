@@ -24,7 +24,7 @@ const notificationSupported = computed(() =>
   'serviceWorker' in navigator &&
   'PushManager' in window);
 
-const { isSubscribed, initNotificationService } = usePushNotifications(notificationSupported.value)
+// const { isSubscribed, initNotificationService } = usePushNotifications(notificationSupported.value)
 
 const shouldDisplayCookies = !localStorage.getItem('cookies-enabled')
 const shouldDisplayNotifications =
@@ -40,7 +40,7 @@ onMounted(async () => {
   setLocale()
   if (shouldDisplayCookies) openCookies()
   if (shouldDisplayNotifications) openNotificationsModal()
-  if (isSubscribed.value) await initNotificationService()
+  // if (isSubscribed.value) await initNotificationService()
 })
 
 const displayCookies = computed(
@@ -65,7 +65,7 @@ const displayNotificationModal = () => {
 
 <template>
   <ReloadPrompt />
-  <CookieBanner v-if="displayCookies" @close="displayNotificationModal" />
+<!--  <CookieBanner v-if="displayCookies" @close="displayNotificationModal" />-->
   <NotificationModal v-if="displayNotifications" />
   <HomeView v-if="online" />
   <OfflineScreen v-else />

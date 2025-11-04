@@ -5,11 +5,11 @@
         class="text-dot -left text -extra-bold"
         v-html="t('songList.title')"
       ></h2>
-      <IconButton
+      <LucideListFilter
         icon-name="filters"
-        :size="24"
+        :size="32"
         @click="showFilters"
-      ></IconButton>
+      ></LucideListFilter>
     </div>
     <ListLoader v-if="fetchingSongs" :title="t('songList.loading')" />
     <ListError
@@ -40,7 +40,6 @@ import SongItem from '@/components/SongItem.vue'
 import ListError from '@/components/common/ListError.vue'
 import ListLoader from '@/components/common/ListLoader.vue'
 import NotFound from '@/components/common/NotFound.vue'
-import IconButton from '@/components/component-library/IconButton.vue'
 import type { Song } from '@/domain/Song'
 import type { SongItemRef } from '@/domain/SongItem'
 import { useAppStore } from '@/stores/app.store'
@@ -53,6 +52,9 @@ import { storeToRefs } from 'pinia'
 import { type Ref, onMounted } from 'vue'
 import { computed, nextTick, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { LucideListFilter } from "lucide-vue-next";
+import { useHapticsFeedback } from "@/composables/useHapticsFeedback.ts";
+
 
 const containerRef = ref()
 const songItemRef = ref()
@@ -66,6 +68,7 @@ const { currentPage, query, filters } = storeToRefs(useSearchStore())
 const { updatePage } = useSearchStore()
 const { showFilters } = useAppStore()
 const { notify } = useNotificationStore()
+const { triggerHaptics } = useHapticsFeedback();
 const { t } = useI18n()
 
 const songFetchError = ref(false)
@@ -102,6 +105,7 @@ const opacity = (opacity: number) => ({
 })
 
 const setSong = (song: Song) => {
+  triggerHaptics();
   loadSong(song)
   showPlayer()
 }
