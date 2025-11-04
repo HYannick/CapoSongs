@@ -145,6 +145,7 @@ watch(
 )
 
 onMounted(async () => {
+  songStore.populateExistingFavouriteSongs();
   initHistoryState()
   await songStore.setFavouriteSongs()
   const t1 = gsap.timeline()

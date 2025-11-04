@@ -10,9 +10,5 @@ const app = createApp(App)
 app.use(MotionPlugin)
 app.use(i18n)
 app.use(createPinia())
-app.use(VueGtag, {
-  bootstrap: false,
-  config: { id: import.meta.env.VITE_G4_ID },
-})
 
 app.mount('#app')
