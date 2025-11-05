@@ -25,7 +25,6 @@ const notificationSupported = computed(() =>
   'serviceWorker' in navigator &&
   'PushManager' in window);
 
-// const { isSubscribed, initNotificationService } = usePushNotifications(notificationSupported.value)
 const {trackAppLoad} = useTracking();
 const shouldDisplayCookies = !localStorage.getItem('cookies-enabled')
 const shouldDisplayNotifications =
@@ -41,7 +40,6 @@ onMounted(async () => {
   setLocale()
   if (shouldDisplayCookies) openCookies()
   if (shouldDisplayNotifications) openNotificationsModal()
-  // if (isSubscribed.value) await initNotificationService()
   trackAppLoad();
 })
 
@@ -50,25 +48,11 @@ const displayCookies = computed(
     featuresVisibility.value.cookiesBanner &&
     !localStorage.getItem('cookies-enabled'),
 )
-
-const displayNotifications = computed(
-  () =>
-    notificationSupported.value && (
-    featuresVisibility.value.notificationsModal &&
-    !localStorage.getItem('notification-request-triggered')),
-)
-
-const displayNotificationModal = () => {
-  featuresVisibility.value.notificationsModal = !localStorage.getItem(
-    'notification-request-triggered',
-  )
-}
 </script>
 
 <template>
   <ReloadPrompt />
-  <CookieBanner v-if="displayCookies" @close="displayNotificationModal" />
-<!--  <NotificationModal v-if="displayNotifications" />-->
+  <CookieBanner v-if="displayCookies" />
   <HomeView v-if="online" />
   <OfflineScreen v-else />
   <Notifications />

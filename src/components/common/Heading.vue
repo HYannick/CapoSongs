@@ -16,7 +16,7 @@
     </div>
     <LucideBolt
       class="icon-button"
-      :size="32"
+      :size="28"
       @click="showSettings"
     />
   </header>
@@ -130,6 +130,7 @@ defineExpose({ containerRef })
   }
   .heading-container {
     align-items: center;
+    gap: 1rem;
     .icon-button {
       svg {
         width: 2.5rem;
