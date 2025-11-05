@@ -123,6 +123,7 @@ import { computed, onMounted, ref, watch } from 'vue'
 import introJS from 'intro.js'
 import 'intro.js/introjs.css'
 import { useHapticsFeedback } from "@/composables/useHapticsFeedback.ts";
+import { useTracking } from "@/composables/useTracking.ts";
 
 const isPlaying = ref(false)
 const mousedown = ref(false)
@@ -153,6 +154,7 @@ const { resetSong, setNextSong, setPreviousSong } = useSongStore()
 
 const isLargeScreen = useMediaQuery('(min-width: 1024px)')
 const { player } = useKeyboardControls()
+const {trackSongPlay, trackSongInfoView} = useTracking();
 const { percent, currentTime, songDuration, scrub, setTimers, getTime } =
   usePlayerProgress(audioElementEl, progressBarEl)
 
@@ -189,6 +191,7 @@ const updateProgress = ($event: any) => {
 }
 
 const playSong = () => {
+  trackSongPlay(currentSong.value!.id);
   audioElementEl.value.play()
   isPlaying.value = true
 }
@@ -225,6 +228,7 @@ const goPrev = () => {
 }
 
 const viewInformation = () => {
+  trackSongInfoView(currentSong.value!.id);
   triggerHaptics();
   currentView.value = VIEWS.DETAILS
   if (isLargeScreen.value) {

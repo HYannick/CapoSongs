@@ -54,6 +54,7 @@ import { computed, nextTick, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { LucideListFilter } from "lucide-vue-next";
 import { useHapticsFeedback } from "@/composables/useHapticsFeedback.ts";
+import { useTracking } from "@/composables/useTracking.ts";
 
 
 const containerRef = ref()
@@ -69,6 +70,7 @@ const { updatePage } = useSearchStore()
 const { showFilters } = useAppStore()
 const { notify } = useNotificationStore()
 const { triggerHaptics } = useHapticsFeedback();
+const {trackSongClicked} = useTracking();
 const { t } = useI18n()
 
 const songFetchError = ref(false)
@@ -105,6 +107,7 @@ const opacity = (opacity: number) => ({
 })
 
 const setSong = (song: Song) => {
+  trackSongClicked(song.id);
   triggerHaptics();
   loadSong(song)
   showPlayer()

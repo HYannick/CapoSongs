@@ -8,8 +8,8 @@ const fs = require("fs");
 
 (async () => {
   const config = {
-    baseSiteUrl: `https://www.lalaue.com/capoeira-music/all-songs`,
-    startUrl: `https://www.lalaue.com/capoeira-music/all-songs`,
+    baseSiteUrl: `https://www.lalaue.com/capoeira-music`,
+    startUrl: `https://www.lalaue.com/capoeira-music`,
     filePath: "./data/",
     concurrency: 10, //Maximum concurrent jobs. More than 10 is not recommended.Default is 3.
     maxRetries: 3, //The scraper will try to repeat a failed request few times(excluding 404). Default is 5.
@@ -23,19 +23,17 @@ const fs = require("fs");
   const root = new Root(); //The root object fetches the startUrl, and starts the process.
 
   //Any valid cheerio-advanced-selectors selector can be passed. For further reference: https://cheerio.js.org/
-  const article = new OpenLinks(".card.beige .btn.btn-warning.mr-1", {
-    name: "article",
-  }); //Opens each article page.
+  const article = new OpenLinks(".card.beige .btn.btn-warning.mr-1", { name: "article" }); //Opens each article page.
   const title = new CollectContent("h1", { name: "title" });
   const category = new CollectContent("h5", { name: "type" }); //"Collects" the text from each H1
   const story = new CollectContent(".card.border-dark.mb-3 p", {
     name: "story",
   });
-  const lyrics = new CollectContent(".col-md-12.px-5 .h5", { name: "lyrics" });
-  const translations = new CollectContent(".col-md-12.px-5 i", {
+  const lyrics = new CollectContent(".ml-2.mx-md-4 .h5", { name: "lyrics" });
+  const translations = new CollectContent(".ml-2.mx-md-4 i", {
     name: "translations",
   });
-  root.addOperation(article);
+  root.addOperation(article)
   article.addOperation(title);
   article.addOperation(category);
   article.addOperation(story);
@@ -46,7 +44,7 @@ const fs = require("fs");
 
   const articles = root.getData(); //Will return an array of all article objects(from all
 
-  const sanitizedArticles = articles.data[0].data.map((song) => {
+  const sanitizedArticles = articles.data[0].data.map(song => {
     const scrapped = song.data.reduce((acc, curr) => {
       acc[curr.name] = curr.data;
       return acc;
@@ -65,7 +63,8 @@ const fs = require("fs");
         }, [])
         .join("\n"),
     };
-  });
+  })
+
 
   // categories), each
   //containing its "children"(titles,stories and the downloaded image urls)

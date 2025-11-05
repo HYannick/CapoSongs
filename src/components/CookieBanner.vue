@@ -1,5 +1,5 @@
 <template>
-  <Modal @onClose="disableTag">
+  <Modal @onClose="disableTracking">
     <div class="cookie-banner">
       <div class="cookie-banner-container">
         <div class="cookie-banner-heading">
@@ -14,7 +14,7 @@
             <h2>Cookies Policy</h2>
             <hr />
             <p>
-              Our Cookies Policy was last updated on 21 Jan 2023.<br />
+              Our Cookies Policy was last updated on 5 Nov 2025.<br />
               This Cookies Policy explains what Cookies are and how We use them.
               You should read this policy so You can understand what type of
               cookies We use, or the information We collect using Cookies and
@@ -160,15 +160,15 @@
             <p>
               Contact Us If you have any questions about this Cookies Policy,
               You can contact us: By visiting this page on our website:
-              focamu.com By sending us an email: focamu@gmail.com
+              focamu.com By sending us an email: fococapoeiramusicas@gmail.com@gmail.com
             </p>
           </div>
         </div>
         <div class="cookie-banner-footer">
-          <button class="cookie-button-cancel" @click="disableTag">
+          <button class="cookie-button-cancel" @click="disableTracking">
             {{ t("cookies.dismiss") }}
           </button>
-          <button class="cookie-button-submit" @click="enableGtag">
+          <button class="cookie-button-submit" @click="enableTracking">
             {{ t("cookies.confirm") }}
           </button>
         </div>
@@ -182,7 +182,6 @@ import Modal from '@/components/common/Modal.vue'
 import Icon from '@/components/component-library/Icon.vue'
 import { useAppStore } from '@/stores/app.store'
 import { ref } from 'vue'
-import { bootstrap } from 'vue-gtag'
 import { useI18n } from 'vue-i18n'
 
 const { closeCookies } = useAppStore()
@@ -190,13 +189,13 @@ const { t } = useI18n()
 const showCookieDetails = ref(false)
 const emits = defineEmits(['close'])
 
-const enableGtag = async () => {
-  await bootstrap()
+const enableTracking = async () => {
+  window.umami.track('cookies_accepted')
   localStorage.setItem('cookies-enabled', 'true')
   emits('close')
   closeCookies()
 }
-const disableTag = () => {
+const disableTracking = () => {
   localStorage.setItem('cookies-enabled', 'false')
   emits('close')
   closeCookies()

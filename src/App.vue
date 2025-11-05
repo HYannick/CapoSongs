@@ -17,6 +17,7 @@ import { usePushNotifications } from '@/composables/usePushNotifications'
 import { useAppStore } from '@/stores/app.store'
 import { useOnline } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
+import { useTracking } from "@/composables/useTracking.ts";
 
 const online = useOnline()
 const notificationSupported = computed(() =>
@@ -25,7 +26,7 @@ const notificationSupported = computed(() =>
   'PushManager' in window);
 
 // const { isSubscribed, initNotificationService } = usePushNotifications(notificationSupported.value)
-
+const {trackAppLoad} = useTracking();
 const shouldDisplayCookies = !localStorage.getItem('cookies-enabled')
 const shouldDisplayNotifications =
   !localStorage.getItem('notification-request-triggered') &&
@@ -41,6 +42,7 @@ onMounted(async () => {
   if (shouldDisplayCookies) openCookies()
   if (shouldDisplayNotifications) openNotificationsModal()
   // if (isSubscribed.value) await initNotificationService()
+  trackAppLoad();
 })
 
 const displayCookies = computed(
@@ -65,8 +67,8 @@ const displayNotificationModal = () => {
 
 <template>
   <ReloadPrompt />
-<!--  <CookieBanner v-if="displayCookies" @close="displayNotificationModal" />-->
-  <NotificationModal v-if="displayNotifications" />
+  <CookieBanner v-if="displayCookies" @close="displayNotificationModal" />
+<!--  <NotificationModal v-if="displayNotifications" />-->
   <HomeView v-if="online" />
   <OfflineScreen v-else />
   <Notifications />
