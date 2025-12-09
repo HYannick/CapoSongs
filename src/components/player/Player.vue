@@ -191,7 +191,7 @@ const updateProgress = ($event: any) => {
 }
 
 const playSong = () => {
-  trackSongPlay(currentSong.value!.id);
+  trackSongPlay(currentSong.value);
   audioElementEl.value.play()
   isPlaying.value = true
 }
@@ -228,7 +228,7 @@ const goPrev = () => {
 }
 
 const viewInformation = () => {
-  trackSongInfoView(currentSong.value!.id);
+  trackSongInfoView(currentSong.value);
   triggerHaptics();
   currentView.value = VIEWS.DETAILS
   if (isLargeScreen.value) {
