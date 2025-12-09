@@ -13,13 +13,16 @@ export const useTracking = () => {
   }
 
   const trackSongPlay = (song?: Song) => {
+    console.log(song)
     if(trackingEnabled.value) {
+      console.log(song)
       if(!song) return;
       window.umami.track('song_play', { songId: song.id.toString(), songName: song.title })
     }
   }
 
   const trackSongClicked = (song?: Song) => {
+    console.log(song)
     if(trackingEnabled.value) {
       if(!song) return;
       window.umami.track('song_clicked', { songId: song.id.toString(), songName: song.title })
@@ -27,6 +30,7 @@ export const useTracking = () => {
   }
 
   const trackSongInfoView = (song?: Song) => {
+    console.log(song)
     if(trackingEnabled.value) {
       if(!song) return;
       window.umami.track('song_info_view',{ songId: song.id.toString(), songName: song.title })
