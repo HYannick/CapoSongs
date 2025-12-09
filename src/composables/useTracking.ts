@@ -12,20 +12,23 @@ export const useTracking = () => {
     }
   }
 
-  const trackSongPlay = (song: Song) => {
+  const trackSongPlay = (song?: Song) => {
     if(trackingEnabled.value) {
+      if(!song) return;
       window.umami.track('song_play', { songId: song.id.toString(), songName: song.title })
     }
   }
 
-  const trackSongClicked = (song: Song) => {
+  const trackSongClicked = (song?: Song) => {
     if(trackingEnabled.value) {
+      if(!song) return;
       window.umami.track('song_clicked', { songId: song.id.toString(), songName: song.title })
     }
   }
 
-  const trackSongInfoView = (song: Song) => {
+  const trackSongInfoView = (song?: Song) => {
     if(trackingEnabled.value) {
+      if(!song) return;
       window.umami.track('song_info_view',{ songId: song.id.toString(), songName: song.title })
     }
   }
