@@ -107,7 +107,7 @@ const opacity = (opacity: number) => ({
 })
 
 const setSong = (song: Song) => {
-  trackSongClicked(song.id);
+  trackSongClicked(song);
   triggerHaptics();
   loadSong(song)
   showPlayer()
